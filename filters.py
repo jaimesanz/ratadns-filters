@@ -112,18 +112,53 @@ class Identity(object):
     def reset(self):
         self.l = []
 
+class OnlyQueries(object):
+    def __init__(self, f):
+        self.f = f
+        self.l = []
+    def __call__(self, d):
+        #flags = d['flags']
+	flags =  int(d['flags'], 16)
+        is_answer = (flags & ( 1 << 15 )) == (1 << 15)
+        #print str(flags)
+	if not is_answer:
+            self.l.append(d)
+    def get_data(self):
+        return self.l
+    def get_file(self):
+        return self.f
+    def reset(self):
+        self.l = []
+
+
+def hextoip(h):
+   o1 = int(h[0:1], 16)
+   o2 = int(h[2:3], 16)
+   o3 = int(h[4:5], 16)
+   o4 = int(h[6:7], 16)
+   return str(o1) + "." + str(o2) + "." + str(o3) + "." + str(o4)
+   
+
 class PacketHasUnderscore(object):
     def __init__(self, f):
         self.f = f
         self.names = {}
 
     def __call__(self, d):
-        qname = d['queries'][0]['qname']
-        if "_" in qname:
-            if self.names.has_key(qname):
-                self.names[qname] += 1
-            else:
-                self.names[qname] = 1
+	flags =  int(d['flags'], 16)
+        is_answer = (flags & ( 1 << 15 )) == (1 << 15)
+	if not is_answer:
+            query = d['queries'][0]
+            qname = query['qname']
+            qtype = int(query['qtype'], 16)
+            sender = d['source']
+            if "_" in qname and qtype in [1, 2, 6, 15]:
+                if self.names.has_key(sender):
+                    self.names[sender]['cnt'] += 1
+                    self.names[sender]['queries'].append(query)
+                    self.names[sender]['sender'].append(sender)
+                else:
+                    self.names[sender] = { 'cnt' : 1 , 'queries' : [query] }
 
     def get_data(self):
         return self.names
@@ -146,16 +181,21 @@ def openfifo(path, fifos):
 if __name__ == '__main__':
     window = 1000
 
-    fifos = [] # To close files
+    #files = [] # To close files
+    #files.append(open("first20.json", "w"))
+    #files.append(open("pps.json", "w"))
+    #files.append(open("phu.json", "w"))
 
-    flist = []
-    #flist.append(FirstN(openfifo('first_20.fifo', fifos), 20))
-    #flist.append(FirstN(sys.stdout, 20))
-    #flist.append(PacketsPerSecond(openfifo('packets_per_second.fifo', fifos)))
-    #flist.append(PacketsPerSecond(sys.stdout))
-    #flist.append(PacketHasUnderscore(sys.stdout))
-    #flist.append(PacketHasUnderscore(sys.stdout))
-    #flist.append(Identity(sys.stdout))
-    flist.append(NameCounter(sys.stdout))
+    fs = []
+    
+    #fs.append(FirstN(files[0], 20))
+    #fs.append(PacketsPerSecond(files[1]))
+    fs.append(PacketHasUnderscore(sys.stdout))
+    #fs.append(Identity(sys.stdout))
+    #fs.append(OnlyQueries(sys.stdout))
+    #fs.append(NameCounter(sys.stdout))
 
-    main_loop(flist, window)
+    main_loop(fs, window)
+
+    #for fil in files:
+	#fil.close()
