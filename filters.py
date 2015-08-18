@@ -156,7 +156,6 @@ class PacketHasUnderscore(object):
                 if self.names.has_key(sender):
                     self.names[sender]['cnt'] += 1
                     self.names[sender]['queries'].append(query)
-                    self.names[sender]['sender'].append(sender)
                 else:
                     self.names[sender] = { 'cnt' : 1 , 'queries' : [query] }
 
@@ -181,21 +180,21 @@ def openfifo(path, fifos):
 if __name__ == '__main__':
     window = 1000
 
-    #files = [] # To close files
-    #files.append(open("first20.json", "w"))
-    #files.append(open("pps.json", "w"))
-    #files.append(open("phu.json", "w"))
+    files = [] # To close files
+    files.append(open("first100.json", "a"))
+    files.append(open("phu.json", "a"))
+    files.append(open("pps.json", "a"))
 
     fs = []
     
-    #fs.append(FirstN(files[0], 20))
-    #fs.append(PacketsPerSecond(files[1]))
-    fs.append(PacketHasUnderscore(sys.stdout))
+    fs.append(FirstN(files[0], 100))
+    fs.append(PacketHasUnderscore(files[1]))
+    fs.append(PacketsPerSecond(files[2]))
     #fs.append(Identity(sys.stdout))
     #fs.append(OnlyQueries(sys.stdout))
     #fs.append(NameCounter(sys.stdout))
 
     main_loop(fs, window)
 
-    #for fil in files:
-	#fil.close()
+    for fil in files:
+	fil.close()
