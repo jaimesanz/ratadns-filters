@@ -15,7 +15,7 @@ class AnswersPerSecond(object):
             self.counter += 1
 
     def get_data(self):
-        data = { 'pps' : self.counter / (time.time() - self.start) }
+        data = { 'aps' : self.counter / (time.time() - self.start) }
         return data
 
     def get_file(self):

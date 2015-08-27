@@ -15,7 +15,7 @@ class QueriesPerSecond(object):
             self.counter += 1
 
     def get_data(self):
-        data = { 'pps' : self.counter / (time.time() - self.start) }
+        data = { 'qps' : self.counter / (time.time() - self.start) }
         return data
 
     def get_file(self):
