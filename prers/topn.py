@@ -1,5 +1,4 @@
 __author__ = 'franchoco'
-from .. import core
 from core import utils
 
 class TopN(object):
