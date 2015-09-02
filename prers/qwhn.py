@@ -14,7 +14,7 @@ class QueriesWithUnderscoredName(object):
         is_answer = (flags & ( 1 << 15 )) == (1 << 15)
         if not is_answer:
             query = d['queries'][0]
-            qname = query['qname']
+            qname = query['qname'].lower()
             qtype = int(query['qtype'], 16)
             sender = d['source']
             server = d['dest']
