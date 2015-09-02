@@ -7,7 +7,7 @@ class OnlyQueries(object):
     def __call__(self, d):
         #flags = d['flags']
 	flags =  int(d['flags'], 16)
-    is_answer = (flags & ( 1 << 15 )) == (1 << 15)
+    	is_answer = (flags & ( 1 << 15 )) == (1 << 15)
         #print str(flags)
 	if not is_answer:
             self.l.append(d)
