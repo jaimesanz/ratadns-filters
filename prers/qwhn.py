@@ -21,7 +21,7 @@ class QueriesWithUnderscoredName(object):
             if "_" in qname and qtype in [1, 2, 6, 15]:
                 if not self.names.has_key(qname):
                     self.names[qname] = []
-                newQuery = {'sender': sender, 'server': server, 'query' : [query]}
+                newQuery = {'sender': sender, 'server': server, 'query' : query}
                 self.names[qname].append(newQuery)
 
     def get_data(self):
