@@ -1,10 +1,10 @@
 __author__ = 'franchoco'
-from .. import core
 from core import utils
+from prer import PreR
 
-class TopNQ(object):
+class TopNQ(PreR):
     def __init__(self, f, n):
-        self.f = f
+        PreR.__init__(self, f)
         self.names = {}
         self.n = n
 
@@ -22,9 +22,6 @@ class TopNQ(object):
     def get_data(self):
         last_n = dict(utils.keyswithmaxvals(self.names, self.n))
         return last_n
-
-    def get_file(self):
-        return self.f
 
     def reset(self):
         self.names.clear()

@@ -1,8 +1,8 @@
 __author__ = 'franchoco'
-
-class OnlyQueries(object):
+from prer import PreR
+class OnlyQueries(PreR):
     def __init__(self, f):
-        self.f = f
+        PreR.__init__(self, f)
         self.l = []
     def __call__(self, d):
         #flags = d['flags']
@@ -13,7 +13,5 @@ class OnlyQueries(object):
             self.l.append(d)
     def get_data(self):
         return self.l
-    def get_file(self):
-        return self.f
     def reset(self):
         self.l = []

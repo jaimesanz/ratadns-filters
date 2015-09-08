@@ -1,8 +1,8 @@
 __author__ = 'franchoco'
-
-class NameCounter(object):
+from prer import PreR
+class NameCounter(PreR):
     def __init__(self, f):
-        self.f = f
+        PreR.__init__(self, f)
         self.names = {}
 
     def __call__(self, d):
@@ -14,9 +14,6 @@ class NameCounter(object):
 
     def get_data(self):
         return self.names
-
-    def get_file(self):
-        return self.f
 
     def reset(self):
         self.names = {}
