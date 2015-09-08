@@ -1,0 +1,18 @@
+__author__ = 'sking32'
+
+class PreR():
+
+    def __init__(self, f):
+        self.__f = f
+
+    def __call__(self, d):
+        raise NotImplementedError('Method __call__ not implemented')
+
+    def get_data(self):
+        raise NotImplementedError('Method get_data not implemented')
+
+    def get_file(self):
+        return self.__f
+
+    def reset(self):
+        raise NotImplementedError('Method reset not implemented')
