@@ -3,6 +3,7 @@ __author__ = 'sking32'
 import unittest
 import StringIO
 
+from packetsexample import PacketsExample
 from prers.ap import AlonePackets
 
 
@@ -15,11 +16,42 @@ class TestAlonePackets(unittest.TestCase):
         self.__p2 = AlonePackets(self.__stringBuffer2)
 
     def dataExample(self):
-        data = []
-        data.append({'flags' : '8000', 'id' : '1111'}) #Answer without query
-        data.append({'flags' : '0', 'id' : '12cb'})
-        data.append({'flags' : '8000', 'id' : '12cb'})
-        data.append({'flags' : '0', 'id' : '3333'}) #Query without answer
+        data = PacketsExample({'queries' : 2, 'answers' : 2})
+        answerWithoutQuery = {'flags' : '8000', 'id' : '1111'}
+        queryWithoutAnswer = {'flags' : '0', 'id' : '3333'}
+
+        data.addPacket(answerWithoutQuery) #Answer without query
+        data.addPacket({'flags' : '0', 'id' : '12cb'})
+        data.addPacket({'flags' : '8000', 'id' : '12cb'})
+        data.addPacket(queryWithoutAnswer) #Query without answer
+
+        data.setExpected('AloneAnswers', [answerWithoutQuery])
+        data.setExpected('AloneQueries', [queryWithoutAnswer])
+
+        return data
+
+    def dataWithoutQueries(self):
+        answers = [{'flags' : '8000', 'id' : 'a6c7'}, {'flags' : '8000', 'id' : '5433'}, {'flags' : '8000', 'id' : 'a276'}]
+        data = PacketsExample({'queries' : 0, 'answers' : len(answers)})
+
+        for answer in answers :
+            data.addPacket(answer)
+
+        data.setExpected('AloneAnswers', answers)
+        data.setExpected('AloneQueries', [])
+
+        return data
+
+    def dataWithoutAnswers(self):
+        queries = [{'flags' : '0', 'id' : 'a6c7'}, {'flags' : '0', 'id' : '5433'}, {'flags' : '0', 'id' : 'a276'}, {'flags' : '0', 'id' : '4321'}]
+        data = PacketsExample({'queries' : len(queries), 'answers' : 0})
+
+        for query in queries :
+            data.addPacket(query)
+
+        data.setExpected('AloneAnswers', [])
+        data.setExpected('AloneQueries', queries)
+
         return data
 
     def setUp(self):
@@ -49,7 +81,9 @@ class TestAlonePackets(unittest.TestCase):
 
     def test_sameBehavior(self):
         self.reInit()
-        for packet in self.dataExample():
+
+        example = self.dataExample()
+        for packet in example:
             self.__p1(packet)
             self.__p2(packet)
 
@@ -63,16 +97,46 @@ class TestAlonePackets(unittest.TestCase):
 
     def test_dataExample(self):
         self.reInit()
-        for packet in self.dataExample():
+
+        example = self.dataExample()
+        for packet in example:
             self.__p1(packet)
 
         result = self.__p1.get_data()
 
-        #Defininir tipo de dato para que esto este harcodeado en solo una parte
-        self.assertEquals(2 ,result['queries'])
-        self.assertEquals(2, result['answers'])
-        self.assertEquals(sorted([{'flags' : '8000', 'id' : '1111'}]), sorted(result['AloneAnswers']))
-        self.assertEquals(sorted([{'flags' : '0', 'id' : '3333'}]), sorted(result['AloneQueries']))
+        self.assertEquals(example.expectedValue('queries'),result['queries'])
+        self.assertEquals(example.expectedValue('answers'), result['answers'])
+        self.assertEquals(sorted(example.expectedValue('AloneAnswers')), sorted(result['AloneAnswers']))
+        self.assertEquals(sorted(example.expectedValue('AloneQueries')), sorted(result['AloneQueries']))
+
+    def test_dataWithoutQueries(self):
+        self.reInit()
+
+        example = self.dataWithoutQueries()
+        for packet in example:
+            self.__p1(packet)
+
+        result = self.__p1.get_data()
+
+        self.assertEquals(example.expectedValue('queries'),result['queries'])
+        self.assertEquals(example.expectedValue('answers'), result['answers'])
+        self.assertEquals(sorted(example.expectedValue('AloneAnswers')), sorted(result['AloneAnswers']))
+        self.assertEquals(sorted(example.expectedValue('AloneQueries')), sorted(result['AloneQueries']))
+
+
+    def test_dataWithoutAnswers(self):
+        self.reInit()
+
+        example = self.dataWithoutAnswers()
+        for packet in example:
+            self.__p1(packet)
+
+        result = self.__p1.get_data()
+
+        self.assertEquals(example.expectedValue('queries'),result['queries'])
+        self.assertEquals(example.expectedValue('answers'), result['answers'])
+        self.assertEquals(sorted(example.expectedValue('AloneAnswers')), sorted(result['AloneAnswers']))
+        self.assertEquals(sorted(example.expectedValue('AloneQueries')), sorted(result['AloneQueries']))
 
     def test_file(self):
         self.reInit()
@@ -81,7 +145,6 @@ class TestAlonePackets(unittest.TestCase):
 
     def tearDown(self):
         pass
-
 
 
 if __name__ == '__main__':
