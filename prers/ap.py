@@ -1,13 +1,14 @@
 __author__ = 'sking32'
+from prer import PreR
 
 #The result is a dict which has the queries, answers
 # and a list of the alone packets(queries without answers and
 # answers without queries)
-class AlonePackets(object) :
+class AlonePackets(PreR) :
     def __init__(self, f):
+        PreR.__init__(self, f)
         self.qcounter = 0
         self.acounter = 0
-        self.f = f
         self.aloneQueriesIds = {} #Dicts {id : InputDict}
         self.aloneAnswersIds = {}
 
@@ -32,9 +33,6 @@ class AlonePackets(object) :
     def get_data(self):
         data = {'queries' : self.qcounter, 'answers' : self.acounter, 'AloneAnswers' : self.aloneAnswersIds.values(), 'AloneQueries' : self.aloneQueriesIds.values()}
         return data
-
-    def get_file(self):
-        return self.f
 
     def reset(self):
         self.pcounter = self.qcounter = self.acounter = self.alpcounter = self.alqcounter = self.alacounter = 0

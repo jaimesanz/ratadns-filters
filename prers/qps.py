@@ -1,12 +1,12 @@
 __author__ = 'raticate'
-
+from prer import PreR
 import time
 
-class QueriesPerSecond(object):
+class QueriesPerSecond(PreR):
     def __init__(self, f):
+        PreR.__init__(self, f)
         self.counter = 0
         self.start = time.time()
-        self.f = f
 
     def __call__(self, d):
         flags =  int(d['flags'], 16)
@@ -17,9 +17,6 @@ class QueriesPerSecond(object):
     def get_data(self):
         data = { 'qps' : self.counter / (time.time() - self.start) }
         return data
-
-    def get_file(self):
-        return self.f
 
     def reset(self):
         self.counter = 0

@@ -1,9 +1,10 @@
 __author__ = 'franchoco'
 from core import utils
+from prer import PreR
 
-class TopN(object):
+class TopN(PreR):
     def __init__(self, f, n):
-        self.f = f
+        PreR.__init__(self, f)
         self.names = {}
         self.n = n
 
@@ -18,9 +19,6 @@ class TopN(object):
     def get_data(self):
         last_n = dict(utils.keyswithmaxvals(self.names, self.n))
         return last_n
-
-    def get_file(self):
-        return self.f
 
     def reset(self):
         self.names.clear()
