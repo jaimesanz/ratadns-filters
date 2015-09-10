@@ -1,4 +1,5 @@
 __author__ = 'sking32'
+from random import shuffle
 
 # Class for testing
 #encapsulates packets given to prs
@@ -9,6 +10,7 @@ class PacketsExample:
         self.__expected = expected
 
     def __iter__(self):
+        shuffle(self.__data)
         return self.__data.__iter__()
 
     def addPacket(self, d):
