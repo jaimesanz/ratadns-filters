@@ -127,7 +127,7 @@ class TestAlonePackets(unittest.TestCase):
         self.assertEquals(sorted(example.expectedValue('AloneAnswers')), sorted(result['AloneAnswers']))
         self.assertEquals(sorted(example.expectedValue('AloneQueries')), sorted(result['AloneQueries']))
 
-    def test_dataExample(self):
+    def test_reset(self):
         self.reInit()
 
         example = self.dataExample()
