@@ -127,6 +127,24 @@ class TestAlonePackets(unittest.TestCase):
         self.assertEquals(sorted(example.expectedValue('AloneAnswers')), sorted(result['AloneAnswers']))
         self.assertEquals(sorted(example.expectedValue('AloneQueries')), sorted(result['AloneQueries']))
 
+    def test_reset(self):
+        self.reInit()
+
+        example = self.dataExample()
+
+        for i in range(2):
+            for packet in example:
+                self.__p1(packet)
+
+            result = self.__p1.get_data()
+
+            self.assertEquals(example.expectedValue('queries'),result['queries'])
+            self.assertEquals(example.expectedValue('answers'), result['answers'])
+            self.assertEquals(sorted(example.expectedValue('AloneAnswers')), sorted(result['AloneAnswers']))
+            self.assertEquals(sorted(example.expectedValue('AloneQueries')), sorted(result['AloneQueries']))
+
+            self.__p1.reset()
+
     def test_dataWithoutQueries(self):
         self.reInit()
 

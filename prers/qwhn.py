@@ -1,12 +1,13 @@
 __author__ = 'sking32'
+from prer import PreR
 
 #The result is a dict which keys are qnames
 # with an underscore and the value is the list
 # of dicts showing the sender, server and query
 # for the queries with this qname
-class QueriesWithUnderscoredName(object):
+class QueriesWithUnderscoredName(PreR):
     def __init__(self, f):
-        self.f = f
+        PreR.__init__(self, f)
         self.names = {}
 
     def __call__(self, d):
@@ -26,9 +27,6 @@ class QueriesWithUnderscoredName(object):
 
     def get_data(self):
         return self.names
-
-    def get_file(self):
-        return self.f
 
     def reset(self):
         self.names.clear()

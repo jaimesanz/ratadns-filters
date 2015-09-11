@@ -1,8 +1,9 @@
 __author__ = 'franchoco'
+from prer import PreR
 
-class PacketHasUnderscore(object):
+class PacketHasUnderscore(PreR):
     def __init__(self, f):
-        self.f = f
+        PreR.__init__(self, f)
         self.names = {}
 
     def __call__(self, d):
@@ -22,9 +23,6 @@ class PacketHasUnderscore(object):
 
     def get_data(self):
         return self.names
-
-    def get_file(self):
-        return self.f
 
     def reset(self):
         self.names.clear()

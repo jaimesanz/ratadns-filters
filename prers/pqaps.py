@@ -1,14 +1,14 @@
 __author__ = 'franchoco'
-
+from prer import PreR
 import time
 
-class PacketsQueriesAndAnswersPerSecond(object):
+class PacketsQueriesAndAnswersPerSecond(PreR):
     def __init__(self, f):
+        PreR.__init__(self, f)
         self.pcounter = 0
         self.qcounter = 0
         self.acounter = 0
         self.start = time.time()
-        self.f = f
 
     def __call__(self, d):
         flags =  int(d['flags'], 16)
@@ -26,9 +26,6 @@ class PacketsQueriesAndAnswersPerSecond(object):
         data['qps'] = self.qcounter / (t - self.start)
         data['aps'] = self.acounter / (t - self.start)
         return data
-
-    def get_file(self):
-        return self.f
 
     def reset(self):
         self.pcounter = self.qcounter = self.acounter = 0
