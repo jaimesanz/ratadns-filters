@@ -5,7 +5,7 @@ import StringIO
 import operator
 
 from packetsexample import PacketsExample
-from prers.topnq import TopNQ
+from prers.topn import TopN
 
 
 class TestTopNQ(unittest.TestCase):
@@ -13,8 +13,8 @@ class TestTopNQ(unittest.TestCase):
     def reInit(self, n1=3, n2=3):
         self.__stringBuffer1 = StringIO.StringIO()
         self.__stringBuffer2 = StringIO.StringIO()
-        self.__p1 = TopNQ(self.__stringBuffer1, n1)
-        self.__p2 = TopNQ(self.__stringBuffer2, n2)
+        self.__p1 = TopN(self.__stringBuffer1, n1)
+        self.__p2 = TopN(self.__stringBuffer2, n2)
 
     def dataExample(self):
 
@@ -23,7 +23,7 @@ class TestTopNQ(unittest.TestCase):
         data.putInformation('sortedQnames', sorted(queries.items(), key=operator.itemgetter(1), reverse=True)) #Returns a list with the elements of the dict in descending order of its keys
 
         for i in range(5) :
-            data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.nic.cl'}]})
+            data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.nic.cl'}]})
 
         for i in range(4) :
             data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.niclabs.cl'}]})
@@ -32,23 +32,10 @@ class TestTopNQ(unittest.TestCase):
             data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.uchile.cl'}]})
 
         for i in range(3) :
-            data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.jerry.cl'}]})
+            data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.jerry.cl'}]})
 
         for i in range(2) :
             data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.pinky.cl'}]})
-
-        data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.nic.cl'}]})#Answers
-        data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.brain.cl'}]})
-        data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.pinky.cl'}]})
-
-        return data
-
-    def dataJustAnswers(self):
-
-        data = PacketsExample()
-        data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.nic.cl'}]})#Answers
-        data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.brain.cl'}]})
-        data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.pinky.cl'}]})
 
         return data
 
@@ -76,7 +63,6 @@ class TestTopNQ(unittest.TestCase):
 
     def setUp(self):
         self.reInit()
-
 
     def test_rightFormat(self):
         self.reInit()
@@ -183,18 +169,6 @@ class TestTopNQ(unittest.TestCase):
             self.assertTrue(result.has_key(qname))
             self.assertEquals(example.expectedValue(qname) ,result[qname])
 
-
-
-    def test_dataJustAnswers(self):
-        self.reInit()
-
-        example = self.dataJustAnswers()
-        for packet in example:
-            self.__p1(packet)
-
-        result = self.__p1.get_data()
-
-        self.assertEquals(result, {})
 
     def test_reset(self):
         n = 3
