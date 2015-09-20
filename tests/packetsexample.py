@@ -9,10 +9,15 @@ class PacketsExample:
         self.__data = []
         self.__expected = expected
         self.__information = information
+        self.__sameOrder = False
 
     def __iter__(self):
-        shuffle(self.__data)
+        if not(self.__sameOrder) :
+            shuffle(self.__data)
         return self.__data.__iter__()
+
+    def doNotChangeOrder(self):
+        self.__sameOrder = True
 
     def addPacket(self, d):
         self.__data.append(d)
