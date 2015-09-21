@@ -52,13 +52,13 @@ class TestPacketHasUnderscore(unittest.TestCase):
         data.addPacket({'source' : 'encrypted(ip1)','flags': '0', 'queries' : [{'qname' : 'www.ni_c.cl', 'qtype' : '3'}]})
         data.addPacket({'source' : 'encrypted(ip2)','flags': '0', 'queries' : [{'qname' : 'www.nic_labs.cl', 'qtype' : '4'}]})
         data.addPacket({'source' : 'encrypted(ip3)','flags': '0', 'queries' : [{'qname' : 'www._jerry_.cl', 'qtype' : '5'}]})
-        data.addPacket({'source' : 'encrypted(_www.pinky.cl)','flags': '0', 'queries' : [{'qname' : 'www._pinky.cl', 'qtype' : '7'}]})
+        data.addPacket({'source' : 'encrypted(ip4)','flags': '0', 'queries' : [{'qname' : 'www._pinky.cl', 'qtype' : '7'}]})
 
         #Answers
-        data.addPacket({'source' : 'encrypted(ip1)','flags': '8000', 'queries' : [{'qname' : 'www.ni_c.cl', 'qtype' : '1'}]})
-        data.addPacket({'source' : 'encrypted(ip2)','flags': '8000', 'queries' : [{'qname' : 'www.niclabs.cl', 'qtype' : '2'}]})
-        data.addPacket({'source' : 'encrypted(ip3)','flags': '8000', 'queries' : [{'qname' : 'www.jerry.cl', 'qtype' : '5'}]})
-        data.addPacket({'source' : 'encrypted(_www.pinky.cl)','flags': '8000', 'queries' : [{'qname' : 'www._pinky.cl', 'qtype' : '7'}]})
+        data.addPacket({'source' : 'encrypted(dnsip1)','flags': '8000', 'queries' : [{'qname' : 'www.ni_c.cl', 'qtype' : '1'}]})
+        data.addPacket({'source' : 'encrypted(dnsip2)','flags': '8000', 'queries' : [{'qname' : 'www.niclabs.cl', 'qtype' : '2'}]})
+        data.addPacket({'source' : 'encrypted(dnsip3)','flags': '8000', 'queries' : [{'qname' : 'www.jerry.cl', 'qtype' : '5'}]})
+        data.addPacket({'source' : 'encrypted(dnsip4)','flags': '8000', 'queries' : [{'qname' : 'www._pinky.cl', 'qtype' : '7'}]})
 
 
         return data
