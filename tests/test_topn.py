@@ -8,7 +8,7 @@ from packetsexample import PacketsExample
 from prers.topn import TopN
 
 
-class TestTopNQ(unittest.TestCase):
+class TestTopN(unittest.TestCase):
 
     def reInit(self, n1=3, n2=3):
         self.__stringBuffer1 = StringIO.StringIO()
