@@ -56,6 +56,7 @@ class TestOnlyQueries(unittest.TestCase):
         for i in range(2) :
             data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.pinky.cl'}]})
 
+        return data
 
     def setUp(self):
         self.reInit()
