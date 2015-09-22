@@ -77,14 +77,14 @@ class TestAlonePackets(unittest.TestCase):
 
         result = self.__p1.get_data()
 
-        self.assertTrue(type(result) == dict)
+        self.assertEquals(type(result), dict)
         self.assertTrue(result.has_key('queries'))
         self.assertTrue(result.has_key('answers'))
         self.assertTrue(result.has_key('AloneAnswers'))
         self.assertTrue(result.has_key('AloneQueries'))
         
-        self.assertTrue(type(result['AloneAnswers']) == list)
-        self.assertTrue(type(result['AloneQueries']) == list)
+        self.assertEquals(type(result['AloneAnswers']), list)
+        self.assertEquals(type(result['AloneQueries']), list)
 
 
     def test_noData(self):
@@ -110,8 +110,8 @@ class TestAlonePackets(unittest.TestCase):
 
         self.assertEquals(result1['queries'], result2['queries'])
         self.assertEquals(result1['answers'], result2['answers'])
-        self.assertEquals(sorted(result1['AloneAnswers']), sorted(result2['AloneAnswers']))
-        self.assertEquals(sorted(result1['AloneQueries']), sorted(result2['AloneQueries']))
+        self.assertItemsEqual(result1['AloneAnswers'], result2['AloneAnswers'])
+        self.assertItemsEqual(result1['AloneQueries'], result2['AloneQueries'])
 
     def test_dataExample(self):
         self.reInit()
@@ -124,8 +124,8 @@ class TestAlonePackets(unittest.TestCase):
 
         self.assertEquals(example.expectedValue('queries'),result['queries'])
         self.assertEquals(example.expectedValue('answers'), result['answers'])
-        self.assertEquals(sorted(example.expectedValue('AloneAnswers')), sorted(result['AloneAnswers']))
-        self.assertEquals(sorted(example.expectedValue('AloneQueries')), sorted(result['AloneQueries']))
+        self.assertItemsEqual(example.expectedValue('AloneAnswers'), result['AloneAnswers'])
+        self.assertItemsEqual(example.expectedValue('AloneQueries'), result['AloneQueries'])
 
     def test_reset(self):
         self.reInit()
@@ -140,8 +140,8 @@ class TestAlonePackets(unittest.TestCase):
 
             self.assertEquals(example.expectedValue('queries'),result['queries'])
             self.assertEquals(example.expectedValue('answers'), result['answers'])
-            self.assertEquals(sorted(example.expectedValue('AloneAnswers')), sorted(result['AloneAnswers']))
-            self.assertEquals(sorted(example.expectedValue('AloneQueries')), sorted(result['AloneQueries']))
+            self.assertItemsEqual(example.expectedValue('AloneAnswers'), result['AloneAnswers'])
+            self.assertItemsEqual(example.expectedValue('AloneQueries'), result['AloneQueries'])
 
             self.__p1.reset()
 
@@ -156,8 +156,8 @@ class TestAlonePackets(unittest.TestCase):
 
         self.assertEquals(example.expectedValue('queries'),result['queries'])
         self.assertEquals(example.expectedValue('answers'), result['answers'])
-        self.assertEquals(sorted(example.expectedValue('AloneAnswers')), sorted(result['AloneAnswers']))
-        self.assertEquals(sorted(example.expectedValue('AloneQueries')), sorted(result['AloneQueries']))
+        self.assertItemsEqual(example.expectedValue('AloneAnswers'), result['AloneAnswers'])
+        self.assertItemsEqual(example.expectedValue('AloneQueries'), result['AloneQueries'])
 
 
     def test_dataWithoutAnswers(self):
@@ -171,8 +171,8 @@ class TestAlonePackets(unittest.TestCase):
 
         self.assertEquals(example.expectedValue('queries'),result['queries'])
         self.assertEquals(example.expectedValue('answers'), result['answers'])
-        self.assertEquals(sorted(example.expectedValue('AloneAnswers')), sorted(result['AloneAnswers']))
-        self.assertEquals(sorted(example.expectedValue('AloneQueries')), sorted(result['AloneQueries']))
+        self.assertItemsEqual(example.expectedValue('AloneAnswers'), result['AloneAnswers'])
+        self.assertItemsEqual(example.expectedValue('AloneQueries'), result['AloneQueries'])
 
     def test_dataWithoutAlonePackets(self):
         self.reInit()
@@ -185,8 +185,8 @@ class TestAlonePackets(unittest.TestCase):
 
         self.assertEquals(example.expectedValue('queries'),result['queries'])
         self.assertEquals(example.expectedValue('answers'), result['answers'])
-        self.assertEquals(sorted(example.expectedValue('AloneAnswers')), sorted(result['AloneAnswers']))
-        self.assertEquals(sorted(example.expectedValue('AloneQueries')), sorted(result['AloneQueries']))
+        self.assertItemsEqual(example.expectedValue('AloneAnswers'), result['AloneAnswers'])
+        self.assertItemsEqual(example.expectedValue('AloneQueries'), result['AloneQueries'])
 
     def test_file(self):
         self.reInit()
