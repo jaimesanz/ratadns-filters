@@ -125,7 +125,7 @@ class TestPacketsQueriesAndAnswersPerSecond(unittest.TestCase):
 
         self.reInit()
 
-        example = self.dataOnlyQueries()
+        example = self.dataOnlyAnswers()
 
         for packet in example:
             self.__p1(packet)
