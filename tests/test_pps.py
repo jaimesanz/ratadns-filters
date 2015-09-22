@@ -8,7 +8,7 @@ from packetsexample import PacketsExample
 from prers.pps import PacketsPerSecond
 
 
-class TestAnswersPerSecond(unittest.TestCase):
+class TestPacketsPerSecond(unittest.TestCase):
 
     def reInit(self):
         self.__stringBuffer1 = StringIO.StringIO()
