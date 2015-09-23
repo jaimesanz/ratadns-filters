@@ -17,22 +17,18 @@ class PacketPocket1(object):
           self.reverse_dict[qname] = 1
           self.bucket_list[1][qname] = True
 
-    def top-k(self):
+    def top_k(self):
       left = k
       ans = []
       next_bucket = self.max_bucket
-      while(left > 0):
-        keys = self.bucket_list[max_bucket].keys()
+      while(left > 0 && next_bucket > 0):
+        keys = self.bucket_list[next_bucket].keys()
         l = len(keys)
         if(l > 0):
           left -= l
           ans += keys
         next_bucket -= 1
       return ans
-
-    def reset():
-      reverse_dict = {}
-      bucket_list = [{} for i in range(n)]
 
 #Maite-top-k
 class PacketPocket2(object):
