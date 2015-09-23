@@ -1,6 +1,6 @@
 #Counting-Sort
-class PacketPocket1(object): 
-    def __init__(self, n,k): #n es el tamaño de la ventana en paquetes
+class PacketPocket(object): 
+    def __init__(self, k): #n es el tamaño de la ventana en paquetes
         self.reverse_dict = {}       #k define el top
         self.bucket_list = [{} for i in range(n)]
         self.max_bucket = 1
@@ -31,12 +31,13 @@ class PacketPocket1(object):
       return ans
 
 #Maite-top-k
+"""
 class PacketPocket2(object):
     def __init__(self, n,k): #n es el tamaño de la ventana en paquetes  #k define el top
        self.freq_dict = {}
        self.top_k_dict = {}
        self.min_val = 0
-       self.mins = []
+       self.mins = {}
        self.tk_dict_size = 0
 
         
@@ -50,17 +51,12 @@ class PacketPocket2(object):
           self.top_k_dict[qname] = True
           k -= 1
       else:
-        if (self.freq_dict[qname] > min_val):
+        if (self.freq_dict[qname] > self.min_val):
           a_min = self.mins.pop()
           del(self.top_k_dict[a_min])
           self.top_k_dict[qname] = True
           if (len(self.mins) == 0):
             self.extract_new_min(self.top_k_dict[qname])
 
-
-
-
-
     def top-k():
-      
-    def reset():
+""" 
