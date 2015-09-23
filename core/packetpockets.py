@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
 #Counting-Sort
 class PacketPocket(object): 
-    def __init__(self, k): #n es el tamaño de la ventana en paquetes
+    def __init__(self, k): #n es el tamano de la ventana en paquetes
         self.reverse_dict = {}       #k define el top
         self.bucket_list = [{} for i in range(n)]
         self.max_bucket = 1
@@ -9,9 +10,9 @@ class PacketPocket(object):
       if self.reverse_dict.has_key(qname):
           bucket = self.reverse_dict[qname]
           self.bucket_list[bucket + 1][qname] = True
-          del(self.bucket_list[bucket][qname]])
+          del(self.bucket_list[bucket][qname])
           self.reverse_dict[qname] += 1
-          if(bucket + 1 > self.max_bucket) 
+          if(bucket + 1 > self.max_bucket): 
             self.max_bucket = bucket + 1
       else:
           self.reverse_dict[qname] = 1
@@ -21,7 +22,7 @@ class PacketPocket(object):
       left = k
       ans = []
       next_bucket = self.max_bucket
-      while(left > 0 && next_bucket > 0):
+      while(left > 0 and next_bucket > 0):
         keys = self.bucket_list[next_bucket].keys()
         l = len(keys)
         if(l > 0):
