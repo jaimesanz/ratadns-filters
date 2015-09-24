@@ -62,6 +62,26 @@ class TestQueriesWithUnderscoredName(unittest.TestCase):
         return data
 
 
+    def dataDifferenCase(self):
+        data = PacketsExample()
+        data.putInformation('problematicQName','www.ni_c.cl')
+
+        expectedList = []
+
+        data.addPacket({'dest' : 'encrypted(dnsip1)', 'source' : 'encrypted(ip1)','flags': '0', 'queries' : [{'qname' : 'www.ni_c.cl', 'qtype' : '1'}]})
+        expectedList.append({'server' : 'encrypted(dnsip1)', 'sender' : 'encrypted(ip1)','query': {'qname' : 'www.ni_c.cl', 'qtype' : '1'}})
+
+        data.addPacket({'dest' : 'encrypted(dnsip1)', 'source' : 'encrypted(ip1)','flags': '0', 'queries' : [{'qname' : 'WWW.NI_C.CL', 'qtype' : '1'}]})
+        expectedList.append({'server' : 'encrypted(dnsip1)', 'sender' : 'encrypted(ip1)','query': {'qname' : 'WWW.NI_C.CL', 'qtype' : '1'}})
+
+        data.setExpected('www.ni_c.cl', expectedList)
+
+
+        data.addPacket({'dest' : 'encrypted(dnsip1)', 'source' : 'encrypted(ip1)','flags': '0', 'queries' : [{'qname' : 'wwww.ni_c.cl', 'qtype' : '1'}]})
+        data.addPacket({'dest' : 'encrypted(dnsip1)', 'source' : 'encrypted(ip1)','flags': '0', 'queries' : [{'qname' : 'WWW:NI_C.CL', 'qtype' : '1'}]})
+
+        return data
+
     def dataRepeatError(self):
         data = PacketsExample()
         data.putInformation('problematicQNames', {'www.ni_c.cl', 'www.nic_labs.cl'})
@@ -146,6 +166,19 @@ class TestQueriesWithUnderscoredName(unittest.TestCase):
             self.assertTrue(result.has_key(source))
             self.assertEquals(example.expectedValue(source), result[source])
 
+    def test_dataDifferenCase(self):
+        self.reInit()
+
+        example = self.dataDifferenCase()
+        for packet in example:
+            self.__p1(packet)
+
+        result = self.__p1.get_data()
+        expectedProblematic = example.getInformation('problematicQName')
+
+
+        self.assertTrue(result.has_key(expectedProblematic))
+        self.assertEquals(example.expectedValue(expectedProblematic), result[expectedProblematic])
 
     def test_dataRepeatError(self):
         self.reInit()
