@@ -40,6 +40,24 @@ class TestNameCounter(unittest.TestCase):
 
         return data
 
+    def dataDifferenCase(self):
+        data = PacketsExample()
+
+        for i in range(5) :
+            data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.nic.cl'}]})
+        for i in range(5) :
+            data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'WWW.NIC.CL'}]})
+        data.setExpected('www.nic.cl', 10)
+
+
+        for i in range(5) :
+            data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'WWW:NIC.CL'}]})
+        for i in range(5) :
+            data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'wwww.nic.cl'}]})
+        data.putInformation('criticalQName','www.nic.cl')
+        return data
+
+
     def setUp(self):
         self.reInit()
 
@@ -99,6 +117,17 @@ class TestNameCounter(unittest.TestCase):
         for qname in result.keys():
             self.assertEquals(example.expectedValue(qname) ,result[qname])
 
+    def test_dataDifferentCase(self):
+        self.reInit()
+
+        example = self.dataDifferenCase()
+        for packet in example:
+            self.__p1(packet)
+
+        result = self.__p1.get_data()
+
+        critical = example.getInformation('criticalQName')
+        self.assertEquals(example.expectedValue(critical), result[critical])
 
     def test_reset(self):
         self.reInit()
