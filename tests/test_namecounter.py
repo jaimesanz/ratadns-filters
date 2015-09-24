@@ -40,8 +40,6 @@ class TestNameCounter(unittest.TestCase):
 
         return data
 
-        return data
-
     def setUp(self):
         self.reInit()
 
