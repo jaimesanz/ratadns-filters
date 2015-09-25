@@ -39,6 +39,23 @@ class TestTopN(unittest.TestCase):
 
         return data
 
+    def dataDifferentCase(self):
+        queries = {'www.nic.cl' : 5, 'www.niclabs.cl' : 10}
+        data = PacketsExample(queries)
+        data.putInformation('sortedQnames', sorted(queries.items(), key=operator.itemgetter(1), reverse=True)) #Returns a list with the elements of the dict in descending order of its keys
+
+        for i in range(5) :
+            data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.nic.cl'}]})
+        for i in range(5) :
+            data.addPacket({'flags': '0', 'queries' : [{'qname' : 'WWW.NIC.CL'}]})
+
+        for i in range(5) :
+            data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.niclabs.cl'}]})
+        for i in range(6) :
+            data.addPacket({'flags': '0', 'queries' : [{'qname' : 'WwWW.NicLaBs.cl'}]})
+
+        return data
+
     def dataEqualRating(self):
         n = 10
         queries = {'www.nic.cl' : n, 'www.niclabs.cl' : n, 'www.uchile.cl' : n, 'www.jerry.cl' : n, 'www.pinky.cl' : n}
@@ -169,6 +186,22 @@ class TestTopN(unittest.TestCase):
             self.assertTrue(result.has_key(qname))
             self.assertEquals(example.expectedValue(qname) ,result[qname])
 
+    def test_dataDifferentCase(self):
+        n = 3
+        self.reInit(n)
+
+        example = self.dataDifferentCase()
+        for packet in example:
+            self.__p1(packet)
+
+        result = self.__p1.get_data()
+
+        self.assertEquals(n, len(result))
+        tops = example.getInformation('sortedQnames')
+        for i in range(n):
+            qname = tops[i][0]
+            self.assertTrue(result.has_key(qname))
+            self.assertEquals(example.expectedValue(qname) ,result[qname])
 
     def test_reset(self):
         n = 3
