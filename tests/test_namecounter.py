@@ -38,6 +38,7 @@ class TestNameCounter(unittest.TestCase):
             data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.pinky.cl'}]})
         data.setExpected('www.pinky.cl', 2)
 
+        data.putInformation('QNames', {'www.nic.cl', 'www.niclabs.cl', 'www.uchile.cl', 'www.jerry.cl', 'www.pinky.cl'})
         return data
 
     def dataDifferenCase(self):
@@ -114,7 +115,8 @@ class TestNameCounter(unittest.TestCase):
 
         result = self.__p1.get_data()
 
-        for qname in result.keys():
+        for qname in example.getInformation('QNames'):
+            self.assertTrue(result.has_key(qname))
             self.assertEquals(example.expectedValue(qname) ,result[qname])
 
     def test_dataDifferentCase(self):
