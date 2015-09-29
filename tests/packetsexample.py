@@ -1,10 +1,12 @@
 __author__ = 'sking32'
 from random import shuffle
 
-# Class for testing
-#encapsulates packets given to prs
-#with their expected results
 class PacketsExample:
+    """Help on testing.
+
+    Encapsulates packets given to PreRs
+    with their expected results
+    """
     def __init__(self, expected = {}, information = {}):
         self.__data = []
         self.__expected = expected
