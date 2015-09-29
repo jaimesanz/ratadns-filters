@@ -4,16 +4,16 @@ import unittest
 import StringIO
 
 from packetsexample import PacketsExample
-from prers.namecounter import NameCounter
+from prers.anamecounter import AnswersNameCounter
 
 
-class TestNameCounter(unittest.TestCase):
+class TestAnswersNameCounter(unittest.TestCase):
 
     def reInit(self):
         self.__stringBuffer1 = StringIO.StringIO()
         self.__stringBuffer2 = StringIO.StringIO()
-        self.__p1 = NameCounter(self.__stringBuffer1)
-        self.__p2 = NameCounter(self.__stringBuffer2)
+        self.__p1 = AnswersNameCounter(self.__stringBuffer1)
+        self.__p2 = AnswersNameCounter(self.__stringBuffer2)
 
     def dataExample(self):
         data = PacketsExample()
@@ -22,6 +22,16 @@ class TestNameCounter(unittest.TestCase):
             data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.nic.cl'}]})
         data.setExpected('www.nic.cl', 5)
 
+        for i in range(3) :
+            data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.jerry.cl'}]})
+        data.setExpected('www.jerry.cl', 3)
+
+        data.putInformation('QNames', {'www.nic.cl', 'www.jerry.cl'})
+        return data
+
+    def dataOnlyQueries(self):
+
+        data = PacketsExample()
         for i in range(4) :
             data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.niclabs.cl'}]})
         data.setExpected('www.niclabs.cl', 4)
@@ -30,15 +40,10 @@ class TestNameCounter(unittest.TestCase):
             data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.uchile.cl'}]})
         data.setExpected('www.uchile.cl', 3)
 
-        for i in range(3) :
-            data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.jerry.cl'}]})
-        data.setExpected('www.jerry.cl', 3)
-
         for i in range(2) :
             data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.pinky.cl'}]})
         data.setExpected('www.pinky.cl', 2)
 
-        data.putInformation('QNames', {'www.nic.cl', 'www.niclabs.cl', 'www.uchile.cl', 'www.jerry.cl', 'www.pinky.cl'})
         return data
 
     def dataDifferenCase(self):
@@ -118,6 +123,16 @@ class TestNameCounter(unittest.TestCase):
         for qname in example.getInformation('QNames'):
             self.assertTrue(result.has_key(qname))
             self.assertEquals(example.expectedValue(qname) ,result[qname])
+
+    def test_dataOnlyQueries(self):
+        self.reInit()
+
+        example = self.dataOnlyQueries()
+        for packet in example:
+            self.__p1(packet)
+
+        result = self.__p1.get_data()
+        self.assertEquals(result, {})
 
     def test_dataDifferentCase(self):
         self.reInit()
