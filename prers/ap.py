@@ -1,10 +1,28 @@
 __author__ = 'sking32'
 from prer import PreR
 
-#The result is a dict which has the queries, answers
-# and a list of the alone packets(queries without answers and
-# answers without queries)
 class AlonePackets(PreR) :
+    """Show information about alone packets in a window
+
+    - Result
+
+    Dict which has the number of queries, number of answers
+    and two lists, one for the queries without answers and
+    another for answers without queries, in current the window
+
+    - Example
+
+    {'queries' : 12, 'answers' : 10, 'AloneAnswers' : [],
+    'AloneQueries' : []}
+
+    - Complexity Note
+
+    <FILL>
+
+    - ReductionRatio Note
+
+    <FILL>
+    """
     def __init__(self, f):
         PreR.__init__(self, f)
         self.qcounter = 0
