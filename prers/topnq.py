@@ -3,6 +3,29 @@ from core import utils
 from prer import PreR
 
 class TopNQ(PreR):
+    """Show the ranking of qnames coming from the queries in a window.
+
+    - Result
+
+    Dict with 'n' keys.
+    The keys are the 'qnames' with the highest number of appearances
+    in the queries in the current window.
+    The values are the number of number of appearances of the
+    corresponding 'qname'.
+
+    - Example(N=2)
+
+    {"www.pinky.cl": 8, "www.fievel.cl.": 13}
+
+
+    - Complexity Note
+
+    <FILL>
+
+    - ReductionRatio Note
+
+    <FILL>
+    """
     def __init__(self, f, n):
         PreR.__init__(self, f)
         self.names = {}

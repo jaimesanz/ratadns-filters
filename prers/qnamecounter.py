@@ -1,11 +1,11 @@
-__author__ = 'franchoco'
+__author__ = 'sking32'
 from prer import PreR
-class NameCounter(PreR):
-    """Show the number of packets for every qname in a window.
+class QueriesNameCounter(PreR):
+    """Show the number of queries for every qname in a window.
 
     - Result
 
-    Dict which keys are the qnames seen in the packets
+    Dict which keys are the qnames seen in the queries
     of the current window and their values are the
     number of packets of the corresponding qname
 
@@ -27,11 +27,14 @@ class NameCounter(PreR):
         self.names = {}
 
     def __call__(self, d):
-        qname = d['queries'][0]['qname'].lower()
-        if self.names.has_key(qname):
-            self.names[qname] += 1
-        else:
-            self.names[qname] = 1
+        flags =  int(d['flags'], 16)
+    	is_answer = (flags & ( 1 << 15 )) == (1 << 15)
+        if not is_answer:
+            qname = d['queries'][0]['qname'].lower()
+            if self.names.has_key(qname):
+                self.names[qname] += 1
+            else:
+                self.names[qname] = 1
 
     def get_data(self):
         return self.names
