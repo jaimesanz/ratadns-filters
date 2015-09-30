@@ -22,7 +22,7 @@ def keyswithmaxvals(d, n):
     sorted_d = sorted(d.items(), key=operator.itemgetter(1), reverse=True)
     last_n = sorted_d[:n]
     return last_n
-    max_bucket=1
+
 
 class PacketsPocket(object):
     def __init__(self, n,k): #n es el tamaño de la ventana en paquetes
