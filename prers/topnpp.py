@@ -15,7 +15,13 @@ class TopNPP(PreR):
         self.packetpocket.incr_count(qname)
 
     def get_data(self):
-        return self.packetpocket.top_k()
+	ans = []
+        top_k = self.packetpocket.top_k()
+	for name in top_k:
+		freq = self.packetpocket.reverse_dict[name]
+		ans.append([name, freq])
+	return ans
+		
 
     def reset(self):
         self.packetpocket = PacketPocket(self.k, self.n)
