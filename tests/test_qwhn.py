@@ -178,7 +178,7 @@ class TestQueriesWithUnderscoredName(unittest.TestCase):
 
 
         self.assertTrue(result.has_key(expectedProblematic))
-        self.assertEquals(example.expectedValue(expectedProblematic), result[expectedProblematic])
+        self.assertItemsEqual(example.expectedValue(expectedProblematic), result[expectedProblematic])
 
     def test_dataRepeatError(self):
         self.reInit()
