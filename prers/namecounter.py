@@ -26,8 +26,8 @@ class NameCounter(PreR):
         PreR.__init__(self, f)
         self.names = {}
 
-    def __call__(self, d):
-        qname = d['queries'][0]['qname'].lower()
+    def __call__(self, p):
+        qname = p.qname()
         if self.names.has_key(qname):
             self.names[qname] += 1
         else:

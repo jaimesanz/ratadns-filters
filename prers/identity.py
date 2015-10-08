@@ -25,8 +25,8 @@ class Identity(PreR):
     def __init__(self, f):
         PreR.__init__(self,f)
         self.l = []
-    def __call__(self, d):
-        self.l.append(d)
+    def __call__(self, p):
+        self.l.append(p.inputDict)
     def get_data(self):
         return self.l
     def reset(self):

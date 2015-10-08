@@ -1,7 +1,7 @@
 __author__ = 'franchoco'
 from prer import PreR
 import time
-
+from core.packet import Packet
 class PacketsPerSecond(PreR):
     """Show the average number of packets per second in a window.
 
@@ -27,7 +27,7 @@ class PacketsPerSecond(PreR):
         self.counter = 0
         self.start = time.time()
 
-    def __call__(self, d):
+    def __call__(self, p):
         self.counter += 1
 
     def get_data(self):

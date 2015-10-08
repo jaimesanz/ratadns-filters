@@ -1,6 +1,6 @@
 __author__ = 'sking32'
 from prer import PreR
-
+from core.packet import Packet
 class QueriesWithUnderscoredName(PreR):
     """Group the queries in a window which qtype are in {1, 2, 6, 15} and its qnames have an underscore by the qname
 
@@ -31,16 +31,13 @@ class QueriesWithUnderscoredName(PreR):
         PreR.__init__(self, f)
         self.names = {}
 
-    def __call__(self, d):
-        flags =  int(d['flags'], 16)
-        is_answer = (flags & ( 1 << 15 )) == (1 << 15)
-        if not is_answer:
-            query = d['queries'][0]
-            qname = query['qname'].lower()
-            qtype = int(query['qtype'], 16)
-            sender = d['source']
-            server = d['dest']
-            if "_" in qname and qtype in [1, 2, 6, 15]:
+    def __call__(self, p):
+        if not p.is_answer():
+            query = p.queries[0]
+            sender = p.source
+            server = p.dest
+            qname = p.qname()
+            if "_" in qname and p.isCriticalType():
                 if not self.names.has_key(qname):
                     self.names[qname] = []
                 newQuery = {'sender': sender, 'server': server, 'query' : query}

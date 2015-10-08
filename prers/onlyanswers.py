@@ -1,5 +1,6 @@
 __author__ = 'sking32'
 from prer import PreR
+from core.packet import Packet
 class OnlyAnswers(PreR):
     """Show the answers in a window.
 
@@ -24,11 +25,9 @@ class OnlyAnswers(PreR):
     def __init__(self, f):
         PreR.__init__(self, f)
         self.l = []
-    def __call__(self, d):
-        flags =  int(d['flags'], 16)
-    	is_answer = (flags & ( 1 << 15 )) == (1 << 15)
-        if is_answer:
-            self.l.append(d)
+    def __call__(self, p):
+        if p.is_answer():
+            self.l.append(p.inputDict)
     def get_data(self):
         return self.l
     def reset(self):

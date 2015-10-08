@@ -1,7 +1,7 @@
 __author__ = 'franchoco'
 from core import utils
 from prer import PreR
-
+from core.packet import Packet
 class TopNQ(PreR):
     """Show the ranking of qnames coming from the queries in a window.
 
@@ -31,12 +31,10 @@ class TopNQ(PreR):
         self.names = {}
         self.n = n
 
-    def __call__(self, d):
-        qname = d['queries'][0]['qname'].lower()
-        flags =  int(d['flags'], 16)
-        is_answer = (flags & ( 1 << 15 )) == (1 << 15)
+    def __call__(self, p):
+        qname = p.qname()
         #print str(flags)
-        if not is_answer:
+        if not p.is_answer():
             if self.names.has_key(qname):
                 self.names[qname] += 1
             else:
