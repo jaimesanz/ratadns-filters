@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #Counting-Sort
 class PacketPocket(object): 
-    def __init__(self, k, n): #n es el tamano de la ventana en paquetes
+    def __init__(self, k, n=1000): #n es el tamano de la ventana en paquetes
         self.k = k
         self.reverse_dict = {}       #k define el top
         self.bucket_list = [set() for i in range(n+1)]
