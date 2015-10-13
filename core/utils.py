@@ -44,7 +44,3 @@ class PacketsPocket(object):
     def reset():
       reverse_dict={}
       bucket_list=[{} for i in range(n)]
-
-        
-
-    
