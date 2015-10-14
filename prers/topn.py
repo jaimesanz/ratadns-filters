@@ -2,6 +2,7 @@ __author__ = 'franchoco'
 from core.utils import keyswithmaxvals
 from prer import PreR
 
+
 class TopN(PreR):
     """Show the ranking of qnames coming from the packets in a window.
 
@@ -40,7 +41,7 @@ class TopN(PreR):
             self.names[qname] = 1
 
     def get_data(self):
-        last_n = dict(keyswithmaxvals(self.names, self.n))
+        last_n = list(keyswithmaxvals(self.names, self.n))
         return last_n
 
     def reset(self):

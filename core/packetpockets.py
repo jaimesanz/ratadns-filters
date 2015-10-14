@@ -1,36 +1,36 @@
 # -*- coding: utf-8 -*-
 #Counting-Sort
-class PacketPocket(object): 
+class PacketPocket(object):
     def __init__(self, k, n): #n es el tamano de la ventana en paquetes
         self.k = k
-	self.reverse_dict = {}       #k define el top
+        self.reverse_dict = {}       #k define el top
         self.bucket_list = [{} for i in range(n)]
         self.max_bucket = 1
-        
+
     def incr_count(self, qname):
-      if self.reverse_dict.has_key(qname):
-          bucket = self.reverse_dict[qname]
-          self.bucket_list[bucket + 1][qname] = True
-          del(self.bucket_list[bucket][qname])
-          self.reverse_dict[qname] += 1
-          if(bucket + 1 > self.max_bucket): 
-            self.max_bucket = bucket + 1
-      else:
-          self.reverse_dict[qname] = 1
-          self.bucket_list[1][qname] = True
+        if self.reverse_dict.has_key(qname):
+            bucket = self.reverse_dict[qname]
+            self.bucket_list[bucket + 1][qname] = True
+            del(self.bucket_list[bucket][qname])
+            self.reverse_dict[qname] += 1
+            if(bucket + 1 > self.max_bucket):
+                self.max_bucket = bucket + 1
+        else:
+            self.reverse_dict[qname] = 1
+            self.bucket_list[1][qname] = True
 
     def top_k(self):
-      left = self.k
-      ans = []
-      next_bucket = self.max_bucket
-      while(left > 0 and next_bucket > 0):
-        keys = self.bucket_list[next_bucket].keys()
-        l = len(keys)
-        if(l > 0):
-          left -= l
-          ans += keys
-        next_bucket -= 1
-      return ans
+        left = self.k
+        ans = []
+        next_bucket = self.max_bucket
+        while(left > 0 and next_bucket > 0):
+            keys = self.bucket_list[next_bucket].keys()
+            l = len(keys)
+            if(l > 0):
+                left -= l
+                ans += keys
+            next_bucket -= 1
+        return ans
 
 #Maite-top-k
 """

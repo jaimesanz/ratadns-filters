@@ -17,7 +17,7 @@ def hextoip(h):
    o4 = int(h[6:7], 16)
    return str(o1) + "." + str(o2) + "." + str(o3) + "." + str(o4)
 
-#deprecated
+@DeprecationWarning
 def keyswithmaxvals(d, n):
     sorted_d = sorted(d.items(), key=operator.itemgetter(1), reverse=True)
     last_n = sorted_d[:n]
