@@ -1,115 +1,170 @@
-#! /usr/bin/python2
+#! /usr/bin/env python2
 from __future__ import print_function
-import curses, json, select, signal, sys, os
+import curses
+import json
+import select
+import signal
+import sys
+
+# sys.path.extend(['/opt/pycharm-professional/debug-eggs/pycharm-debug.egg'])
 # import pydevd
-
-# pydevd.settrace('localhost', port=46018)
-# CONSTANTS
-MAX_COLS = 100
-MAX_ROWS = 200
-
-# GLOBALS
-# Input file/pipe
-f = open("input", "r", 1)
-
-# First screen showing line, for tabbing
-heading_line = 0
-
-term_size = (0, 0)  # Current terminal size (y,x)
-need_refresh = False
-last_data = []
+# pydevd.settrace('localhost', port=46018, suspend=False)
 
 
-def refresh_view(screen):
-    global need_refresh
+class TopNViz(object):
+    # CONSTANTS
+    MAX_COLS = 100
+    MAX_LINES = 200
 
-    need_refresh = False
-    if not last_data:
-        return
+    QUIT_KEYS = (ord('q'), ord('Q'))
+    DOWN_KEYS = (curses.KEY_DOWN, curses.KEY_SF)
+    UP_KEYS = (curses.KEY_UP, curses.KEY_SR)
 
-    # Clear screen
-    screen.clear()
+    UP = -1
+    DOWN = 1
 
-    pos_width = len(str(len(last_data)))
-    cnt_width = len(str(last_data[0][1]))
-    str_width = term_size[1] - pos_width - cnt_width - 2  # TODO Check!
-    str_width = str_width if str_width >= 3 else 3
+    def __init__(self, f):
+        self.f = f  # Input file/pipe
+        self.stdscr = None  # Real screen
+        self.pad = None  # Virtual scroll-able screen
 
-    truncar = lambda str: len(str) > str_width and str[:str_width - 3] + "..." or str
+        # self.n = n  # Max number of QNAMEs positions
+        # self.n_width = len(str(self.n))  # Width of max n value string
+        self.n_width = 3  # Width of max n value string
+        self.headline = 0  # First line on the page (0 to len(last_data)-1)
+        self.high_line = 0  # Highlighted line (0 to len(last_data)-1)
+        self.term_size = (0, 0)  # Current terminal size (y,x)
+        self.need_refresh = False  # Refresh flag
+        self.last_data = []  # Last input data
 
-    for pos, (qname, cnt) in enumerate(last_data, start=1):
-        line = "{0!s: >{poslen}} {1: <{strlen}} {2!s: >{cntlen}}".format(pos, truncar(qname), cnt,
-                                                                         poslen=pos_width, strlen=str_width,
-                                                                         cntlen=cnt_width)
-        screen.addstr(pos, 0, line)
+    def main(self, screen):
+        self.stdscr = screen
+        self.pad = curses.newpad(self.MAX_LINES, self.MAX_COLS)
 
-    screen.refresh(0, 0, 0, heading_line, term_size[0] - 1, heading_line + term_size[1] - 1)
+        # Terminal setup
+        # self.stdscr.scrollok(True)
+        self.stdscr.nodelay(True)
+        curses.curs_set(0)
+        self.get_term_size()
 
+        # Main loop
+        running = True
+        while running:
+            # Input reading
+            if self.f in select.select([self.f, sys.stdin], [], [], 0)[0]:
+                self.last_data = self.read_data()
+                self.need_refresh = True
 
-def main(screen):
-    global stdscr, heading_line, need_refresh, last_data
-
-    stdscr = screen
-    # Terminal setup
-    # screen.scrollok(True)
-    screen.nodelay(True)
-    # screen.border()
-    curses.curs_set(2)
-    get_size()
-    pad = curses.newpad(MAX_ROWS, MAX_COLS)
-
-    # Main loop
-    running = True
-    while running:
-        # Non-blocking input reading
-        while f in select.select([f], [], [], 0)[0]:
-            last_data = read_data()
-            need_refresh = True
-            break
-
-        if need_refresh:
-            refresh_view(pad)
-
-        # Catch pressed keys
-        ch = screen.getch()
-        while ch != curses.ERR:
-            # print("Debug: key pressed", ch, file=sys.stderr)
-            if ch == curses.KEY_UP or ch == curses.KEY_SR:
-                heading_line+= 1 if heading_line < len(last_data) else 0
-                # screen.scroll(1)
-                # screen.refresh()
-            elif ch == curses.KEY_DOWN or ch == curses.KEY_SF:
-                heading_line+= -1 if heading_line < len(last_data) else 0
-                # screen.scroll(-1)
-                # screen.refresh()
-            elif ch == ord("q") or ch == ord("Q"):
-                running = False
+            # Catch pressed keys
             ch = screen.getch()
-        curses.napms(200)
+            while ch != curses.ERR:
+                # print("Debug: key pressed", ch, file=sys.stderr)
+                if ch in self.UP_KEYS:
+                    self.move_high_line(self.UP)
+                elif ch in self.DOWN_KEYS:
+                    self.move_high_line(self.DOWN)
+                elif ch in self.QUIT_KEYS:
+                    running = False
+                ch = screen.getch()
 
+            if self.need_refresh:
+                self.refresh_view()
+            curses.napms(50)
 
-def read_data():
-    line = f.readline()
-    print(line, file=sys.stderr)
-    if not line:
-        print("Broken pipe, EOF found", file=sys.stderr)
-        exit(-1)
-    json_list = json.loads(line)
+    def read_data(self):
+        line = self.f.readline()
+        # print(line, file=sys.stderr)
+        if not line:
+            print("Fatal Error: Broken pipe, EOF found", file=sys.stderr)
+            exit(-1)
 
-    return list(json_list)
+        try:
+            json_list = json.loads(line)
+        except ValueError:
+            print("Error: Input line is not JSON-serialized: '", repr(line), file=sys.stderr)
+            return self.last_data
 
+        return list(json_list[:self.MAX_LINES])
 
-def get_size(*args, **kwargs):
-    global term_size, need_refresh
+    def refresh_view(self):
+        self.need_refresh = False
+        if len(self.last_data) == 0:
+            return
 
-    term_size = stdscr.getmaxyx()
-    print(term_size, file=sys.stderr)
-    need_refresh = True
+        # print(len(self.last_data), file=sys.stderr)
+        # Clear screen
+        self.pad.clear()
+
+        # Adjust highlighted and head line if needed
+        if self.high_line > len(self.last_data) - 1:
+            self.high_line = len(self.last_data) - 1
+            self.headline = max(0, len(self.last_data) - self.term_size[0])
+
+        cnt_width = len(str(self.last_data[0][1]))
+        str_width = self.term_size[1] - self.n_width - cnt_width - 2
+        str_width = str_width if str_width >= 3 else 3
+
+        truncate = lambda s: len(s) > str_width and s[:str_width - 3] + "..." or s
+
+        pos = 1
+        last_cnt = self.last_data[0][1]
+        for i, (qname, cnt) in enumerate(self.last_data, start=0):
+            if last_cnt != cnt:
+                pos += 1
+                last_cnt = cnt
+
+            line = "{0!s: >{poslen}} {1: <{strlen}} {2!s: >{cntlen}}".format(pos, truncate(qname), cnt,
+                                                                             poslen=self.n_width, strlen=str_width,
+                                                                             cntlen=cnt_width)
+            # print(len(line), file=sys.stderr)
+            if self.high_line == i:
+                self.pad.addstr(i, 0, line, curses.A_REVERSE)
+            else:
+                self.pad.addstr(i, 0, line)
+
+        for i in range(len(self.last_data), self.MAX_LINES):
+            if self.high_line == i:
+                self.pad.addstr(i, 0, "~", curses.A_REVERSE)
+            else:
+                self.pad.addstr(i, 0, "~")
+
+        self.pad.refresh(self.headline, 0, 0, 0, self.term_size[0] - 1, self.term_size[1] - 1)
+
+    def get_term_size(self, signum=None, frame=None):
+        self.term_size = self.stdscr.getmaxyx()
+        # print(self.term_size, file=sys.stderr)
+        self.headline = 0
+        self.high_line = 0
+        self.need_refresh = True
+
+        # Touch all the window, to redraw
+        self.stdscr.redrawwin()
+        self.pad.redrawwin()
+
+    def move_high_line(self, direction):
+        if direction == self.UP and self.headline == self.high_line:  # Top highlight
+            if self.headline > 0:  # Not first line
+                self.headline += self.UP
+            else:
+                # print("headline ", str(self.headline), "\nhighline ", str(self.high_line), file=sys.stderr)
+                return
+        elif direction == self.DOWN and self.headline + self.term_size[0] - 1 == self.high_line:  # Bottom highlight
+            if self.headline + self.term_size[0] < len(self.last_data) - 1:  # Not last line
+                self.headline += self.DOWN
+            else:
+                # print("headline ", str(self.headline), "\nhighline ", str(self.high_line), file=sys.stderr)
+                return
+
+        self.high_line += direction
+        self.need_refresh = True
+        # print("headline ", str(self.headline), "\nhighline ", str(self.high_line), file=sys.stderr)
 
 
 if __name__ == '__main__':
-    # Catch Terminal resize signal
-    signal.signal(signal.SIGWINCH, get_size)
+    input_file = open("input", "r", 1)
+    viz = TopNViz(input_file)
 
+    # Catch Terminal resize signal
+    signal.signal(signal.SIGWINCH, viz.get_term_size)
     # Debug-friendly curses wrapper
-    curses.wrapper(main)
+    curses.wrapper(viz.main)
