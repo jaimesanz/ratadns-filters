@@ -1,28 +1,66 @@
 #!/usr/bin/python2
 
-from core.mainloop import mainloop
+from core import RedisFile, mainloop
 
+from optparse import OptionParser
 import ConfigParser
+import sys, importlib
 
-import sys,importlib
+class Options:
+    def __init__(self):
+        self.__default_config_file = "rata.cfg"
+
+        # Get the configuration file name from command line arguments.
+        parser = OptionParser()
+        parser.add_option("-c", "--configuration", dest="config_file",
+                          help="Set the configuration file to FILE", metavar="FILE")
+        opts, args = parser.parse_args()
+
+        # Parse the configuration file
+        config_file = opts.config_file if opts.config_file != None else self.__default_config_file
+
+        config = ConfigParser.ConfigParser()
+        config.read(config_file)
+
+        # Get the window size (self.window_size)
+        self.window_size = config.getint("core", "WindowSize")
+
+        # Create the input method (self.input)
+        input_method = config.get("core", "InputMethod")
+        if input_method == 'stdin':
+            self.input = sys.stdin
+        elif input_method == 'file':
+            input_file = config.get("core", "FileName")
+            self.input = open(input_file, "r")
+        else: # Default input method
+            self.input = sys.stdin
+
+        # Create the PreR's with each's input methods (self.prers)
+        prers_path = config.get("core", "PreliminarReducersPackage")
+        prers_names = config.get("core", "PreliminarReducers").split(",")
+        self.prers = []
+        for prer in prers_names:
+            module_name, class_name = prer.rsplit(".", 1)
+            PreR = getattr(importlib.import_module(prers_path + "." + module_name), class_name)
+            prer_args = dict(config.items(class_name))
+
+            output_method = prer_args['outputmethod']
+            if output_method == 'stdout':
+                prer = PreR(sys.stdout)
+            elif output_method == 'file':
+                f = open(prer_args['filename'], 'a')
+                prer = PreR(f)
+            elif output_method == 'redis':
+                host = prer_args['redishost']
+                channel = prer_args['redischannel']
+                prer = PreR(RedisFile(host, channel))
+            else: # Default Output Method
+                prer = PreR(sys.stdout)
+
+            self.prers.append(prer)
+
+
 
 if __name__ == '__main__':
-
-    config = ConfigParser.ConfigParser()
-    config.read("rata.cfg")
-    windowSize = config.getint("core", "WindowSize")
-
-    prersPath = config.get("core", "PreliminarReducersPath")
-    prersNames = config.get("core", "PreliminarReducers").split(",")
-
-    prers = []
-    for prer in prersNames:
-        moduleName, className = prer.rsplit(".", 1)
-        PreRClass = getattr(importlib.import_module(prersPath + "." + moduleName), className)
-        prerArgs = dict(config.items(className))
-        #prers.append(PreRClass(**prerArgs))
-        prers.append(PreRClass(sys.stdout))
-
-    #with open("example.txt") as f:
-    #   mainloop(prers, windowSize, f)
-    mainloop(prers, windowSize, sys.stdin)
+    options = Options()
+    mainloop(options)

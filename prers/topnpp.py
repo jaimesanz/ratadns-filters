@@ -1,6 +1,6 @@
 # from core import utils
 from prer import PreR
-from core.packetpockets import PacketPocket
+from core import PacketPocket
 
 
 class TopNPP(PreR):
