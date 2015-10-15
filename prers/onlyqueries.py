@@ -1,6 +1,8 @@
 __author__ = 'franchoco'
 from prer import PreR
 from core.packet import Packet
+
+
 class OnlyQueries(PreR):
     """Show the queries in a window.
 
@@ -22,14 +24,18 @@ class OnlyQueries(PreR):
 
     <FILL>
     """
+
     def __init__(self, f):
         PreR.__init__(self, f)
         self.l = []
+
     def __call__(self, p):
-        #flags = d['flags']
+        # flags = d['flags']
         if not p.is_answer():
-            self.l.append(p.inputDict)
+            self.l.append(p.input)
+
     def get_data(self):
         return self.l
+
     def reset(self):
         self.l = []

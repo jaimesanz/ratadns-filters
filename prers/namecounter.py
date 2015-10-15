@@ -1,5 +1,7 @@
 __author__ = 'franchoco'
 from prer import PreR
+
+
 class NameCounter(PreR):
     """Show the number of packets for every qname in a window.
 
@@ -22,12 +24,13 @@ class NameCounter(PreR):
 
     <FILL>
     """
+
     def __init__(self, f):
         PreR.__init__(self, f)
         self.names = {}
 
     def __call__(self, p):
-        qname = p.qname()
+        qname = p.qname
         if self.names.has_key(qname):
             self.names[qname] += 1
         else:
@@ -38,4 +41,3 @@ class NameCounter(PreR):
 
     def reset(self):
         self.names = {}
-
