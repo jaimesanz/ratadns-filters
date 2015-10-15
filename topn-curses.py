@@ -13,7 +13,7 @@ import sys
 
 class TopNViz(object):
     # CONSTANTS
-    MAX_COLS = 100
+    MAX_COLS = 200
     MAX_LINES = 200
 
     QUIT_KEYS = (ord('q'), ord('Q'))
@@ -65,6 +65,9 @@ class TopNViz(object):
                     self.move_high_line(self.DOWN)
                 elif ch in self.QUIT_KEYS:
                     running = False
+                elif ch == curses.KEY_RESIZE:
+                    self.get_term_size()
+                    self.stdscr.resize(self.term_size[0], self.term_size[1])
                 ch = screen.getch()
 
             if self.need_refresh:
@@ -130,7 +133,7 @@ class TopNViz(object):
 
         self.pad.refresh(self.headline, 0, 0, 0, self.term_size[0] - 1, self.term_size[1] - 1)
 
-    def get_term_size(self, signum=None, frame=None):
+    def get_term_size(self):
         self.term_size = self.stdscr.getmaxyx()
         # print(self.term_size, file=sys.stderr)
         self.headline = 0
@@ -164,7 +167,5 @@ if __name__ == '__main__':
     input_file = open("input", "r", 1)
     viz = TopNViz(input_file)
 
-    # Catch Terminal resize signal
-    signal.signal(signal.SIGWINCH, viz.get_term_size)
     # Debug-friendly curses wrapper
     curses.wrapper(viz.main)
