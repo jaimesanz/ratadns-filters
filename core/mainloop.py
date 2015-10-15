@@ -1,5 +1,6 @@
 __author__ = 'franchoco'
 import sys, json
+from packet import Packet
 
 def mainloop(flist, window):
     counter = 0
@@ -15,9 +16,11 @@ def mainloop(flist, window):
 
             json_str = '{' + sys.stdin.read(length-1)
             json_dict = json.loads(json_str)
+            packet = Packet(json_dict, window)
+
             counter += 1
             for fun in flist:
-                fun(json_dict)
+                fun(packet)
             if counter >= window:
                 counter = 0
                 for fun in flist:

@@ -32,11 +32,9 @@ class PacketsQueriesAndAnswersPerSecond(PreR):
         self.acounter = 0
         self.start = time.time()
 
-    def __call__(self, d):
-        flags =  int(d['flags'], 16)
-        is_answer = (flags & ( 1 << 15 )) == (1 << 15)
+    def __call__(self, p):
         self.pcounter += 1
-        if is_answer:
+        if p.is_answer():
             self.acounter += 1
         else:
             self.qcounter += 1

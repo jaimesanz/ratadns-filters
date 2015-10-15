@@ -1,5 +1,7 @@
 __author__ = 'franchoco'
 from prer import PreR
+from core.packet import Packet
+
 
 class PacketHasUnderscore(PreR):
     """Group the queries in a window which qtype are in {1, 2, 6, 15} and its qnames have an underscore by the ipsource
@@ -23,24 +25,22 @@ class PacketHasUnderscore(PreR):
 
     <FILL>
     """
+
     def __init__(self, f):
         PreR.__init__(self, f)
         self.names = {}
 
-    def __call__(self, d):
-        flags =  int(d['flags'], 16)
-        is_answer = (flags & ( 1 << 15 )) == (1 << 15)
-        if not is_answer:
-            query = d['queries'][0]
-            qname = query['qname']
-            qtype = int(query['qtype'], 16)
-            sender = d['source']
-            if "_" in qname and qtype in [1, 2, 6, 15]:
+    def __call__(self, p):
+        if not p.is_answer():
+            qname = p.qname
+            if "_" in qname and p.isCriticalType():
+                sender = p.source
+                query = p.query
                 if self.names.has_key(sender):
                     self.names[sender]['cnt'] += 1
                     self.names[sender]['queries'].append(query)
                 else:
-                    self.names[sender] = { 'cnt' : 1 , 'queries' : [query] }
+                    self.names[sender] = {'cnt': 1, 'queries': [query]}
 
     def get_data(self):
         return self.names

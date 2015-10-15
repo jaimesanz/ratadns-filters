@@ -5,7 +5,7 @@ import StringIO
 
 from packetsexample import PacketsExample
 from prers.phs import PacketHasUnderscore
-
+from core.packet import Packet
 
 class TestPacketHasUnderscore(unittest.TestCase):
 
@@ -90,7 +90,7 @@ class TestPacketHasUnderscore(unittest.TestCase):
     def test_rightFormat(self):
         self.reInit()
 
-        self.__p1({'source' : 'encrypted(ip1)','flags': '0', 'queries' : [{'qname' : 'www.ni_c.cl', 'qtype' : '1'}]})
+        self.__p1(Packet({'source' : 'encrypted(ip1)','flags': '0', 'queries' : [{'qname' : 'www.ni_c.cl', 'qtype' : '1'}]}))
         result = self.__p1.get_data()
 
         self.assertEquals(type(result), dict)

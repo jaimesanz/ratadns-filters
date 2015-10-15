@@ -13,8 +13,8 @@ class TestTopNPP(unittest.TestCase):
     def reInit(self, n1=3, n2=3):
         self.__stringBuffer1 = StringIO.StringIO()
         self.__stringBuffer2 = StringIO.StringIO()
-        self.__p1 = TopNPP(self.__stringBuffer1, n1, 1000)
-        self.__p2 = TopNPP(self.__stringBuffer2, n2, 1000)
+        self.__p1 = TopNPP(self.__stringBuffer1, n1)
+        self.__p2 = TopNPP(self.__stringBuffer2, n2)
 
     def dataExample(self):
 
