@@ -1,6 +1,8 @@
 __author__ = 'sking32'
 from random import shuffle
-from core.packet import Packet
+from core import Packet
+
+
 class PacketsExample:
     """Help on testing.
 

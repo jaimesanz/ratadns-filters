@@ -1,8 +1,6 @@
 __author__ = 'franchoco'
 from core import keyswithmaxvals
 from prer import PreR
-from core.packet import Packet
-
 
 class TopN(PreR):
     """Show the ranking of qnames coming from the packets in a window.

@@ -1,7 +1,8 @@
 __author__ = 'raticate'
 from prer import PreR
 import time
-from core.packet import Packet
+
+
 class QueriesPerSecond(PreR):
     """Show the average number of queries per second in a window.
 

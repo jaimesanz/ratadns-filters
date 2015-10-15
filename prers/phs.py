@@ -1,6 +1,5 @@
 __author__ = 'franchoco'
 from prer import PreR
-from core.packet import Packet
 
 
 class PacketHasUnderscore(PreR):

@@ -4,15 +4,16 @@ from core import PacketPocket
 
 
 class TopNPP(PreR):
-    def __init__(self, f):
+    def __init__(self, f, k=100):
         PreR.__init__(self, f)
-        self.k = 10
-        self.n = 1000
-        self.packetpocket = PacketPocket(self.k, self.n)
+        self.k = k
+        self.packetpocket = PacketPocket(self.k)
 
-    def __call__(self, d):
-        qname = d['queries'][0]['qname'].lower()
-        self.packetpocket.incr_count(qname)
+    def __call__(self, p):
+        if not hasattr(self, 'n'):
+            self.n = p.windowSize
+            self.packetpocket = PacketPocket(self.k, self.n)
+        self.packetpocket.incr_count(p.qname)
 
     def get_data(self):
         ans = []

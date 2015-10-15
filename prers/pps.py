@@ -1,7 +1,8 @@
 __author__ = 'franchoco'
 from prer import PreR
 import time
-from core.packet import Packet
+
+
 class PacketsPerSecond(PreR):
     """Show the average number of packets per second in a window.
 

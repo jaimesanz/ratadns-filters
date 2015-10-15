@@ -1,6 +1,6 @@
 __author__ = 'sking32'
 
-class PreR():
+class PreR(object):
     """Implement transformation of the packet-analyzer output.
 
     The PreR object knows how to

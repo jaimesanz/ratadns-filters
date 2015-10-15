@@ -5,7 +5,7 @@ import StringIO
 
 from packetsexample import PacketsExample
 from prers.phs import PacketHasUnderscore
-from core.packet import Packet
+from core import Packet
 
 class TestPacketHasUnderscore(unittest.TestCase):
 

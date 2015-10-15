@@ -1,7 +1,5 @@
 __author__ = 'sking32'
 from prer import PreR
-from core.packet import Packet
-
 
 class AnswersNameCounter(PreR):
     """Show the number of answers for every qname in a window.

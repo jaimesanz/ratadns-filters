@@ -1,7 +1,6 @@
 __author__ = 'franchoco'
 import core
 from prer import PreR
-from core.packet import Packet
 
 
 class TopNQ(PreR):

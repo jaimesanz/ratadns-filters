@@ -5,7 +5,7 @@ import StringIO
 
 from packetsexample import PacketsExample
 from prers.qwhn import QueriesWithUnderscoredName
-from core.packet import Packet
+from core import Packet
 
 class TestQueriesWithUnderscoredName(unittest.TestCase):
 
