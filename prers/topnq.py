@@ -1,5 +1,5 @@
 __author__ = 'franchoco'
-import core
+from core import keyswithmaxvals
 from prer import PreR
 
 
@@ -27,8 +27,7 @@ class TopNQ(PreR):
 
     <FILL>
     """
-
-    def __init__(self, f, n):
+    def __init__(self, f, n=100):
         PreR.__init__(self, f)
         self.names = {}
         self.n = n
@@ -43,7 +42,7 @@ class TopNQ(PreR):
                 self.names[qname] = 1
 
     def get_data(self):
-        last_n = dict(core.keyswithmaxvals(self.names, self.n))
+        last_n = keyswithmaxvals(self.names, self.n)
         return last_n
 
     def reset(self):

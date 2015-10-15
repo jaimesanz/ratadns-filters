@@ -1,6 +1,6 @@
 __author__ = 'franchoco'
 
-import operator, os, redis, json
+import operator, os, redis, json, heapq
 
 def openfifo(path, fifos):
     if not os.path.exists(path):
@@ -16,11 +16,22 @@ def hextoip(h):
    o4 = int(h[6:7], 16)
    return str(o1) + "." + str(o2) + "." + str(o3) + "." + str(o4)
 
-#deprecated
 def keyswithmaxvals(d, n):
-    sorted_d = sorted(d.items(), key=operator.itemgetter(1), reverse=True)
-    last_n = sorted_d[:n]
-    return last_n
+    inverse = [[-p[1], p[0]] for p in d.items()] #The - is for min-heap python :)
+    n = min(n, len(inverse))
+    heapq.heapify(inverse)
+
+    result = []
+    for i in range(n): #First n s
+        elem = heapq.heappop(inverse)
+        result.append([elem[1], -elem[0]])
+
+    while len(inverse) > 0 and n>0: #The rest
+        elem = heapq.heappop(inverse)
+        if -elem[0] != result[n-1][1]:
+            break
+        result.append([elem[1], -elem[0]])
+    return result
 
 class RedisFile(object):
     def __init__(self, server, channel):

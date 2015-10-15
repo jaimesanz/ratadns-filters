@@ -28,7 +28,7 @@ class TopN(PreR):
     <FILL>
     """
 
-    def __init__(self, f, n):
+    def __init__(self, f, n=100):
         PreR.__init__(self, f)
         self.names = {}
         self.n = n
@@ -42,7 +42,7 @@ class TopN(PreR):
             self.names[qname] = 1
 
     def get_data(self):
-        last_n = dict(keyswithmaxvals(self.names, self.n))
+        last_n = keyswithmaxvals(self.names, self.n)
         return last_n
 
     def reset(self):
