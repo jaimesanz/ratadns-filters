@@ -13,8 +13,8 @@ class TestTopNPP(unittest.TestCase):
     def reInit(self, n1=3, n2=3):
         self.__stringBuffer1 = StringIO.StringIO()
         self.__stringBuffer2 = StringIO.StringIO()
-        self.__p1 = TopNPP(self.__stringBuffer1, n1, 1000)
-        self.__p2 = TopNPP(self.__stringBuffer2, n2, 1000)
+        self.__p1 = TopNPP(self.__stringBuffer1, n1)
+        self.__p2 = TopNPP(self.__stringBuffer2, n2)
 
     def dataExample(self):
 
@@ -173,7 +173,7 @@ class TestTopNPP(unittest.TestCase):
         self.assertEquals(len(self.__p1.get_data()), example.getInformation('equalQnames'))
 
     def test_dataExample(self):
-        n = 3
+        n = 4
         self.reInit(n)
 
         example = self.dataExample()
@@ -184,7 +184,10 @@ class TestTopNPP(unittest.TestCase):
 
         self.assertGreaterEqual(len(result), n)
         tops = example.getInformation('sortedQnames')
-        self.assertEquals(tops[0:len(result)], result)
+
+        for i in range(len(result)-1):
+            self.assertGreaterEqual(result[i][1], result[i+1][1])
+        self.assertItemsEqual(tops[0:len(result)], result)
 
     def test_dataDifferentCase(self):
         n = 3
@@ -197,10 +200,10 @@ class TestTopNPP(unittest.TestCase):
         result = self.__p1.get_data()
         self.assertGreaterEqual(len(result), n)
         tops = example.getInformation('sortedQnames')
-        self.assertEquals(tops[0:len(result)], result)
+        self.assertItemsEqual(tops[0:len(result)], result)
 
     def test_reset(self):
-        n = 3
+        n = 4
         self.reInit(n)
 
         for i in range(2):
@@ -212,7 +215,7 @@ class TestTopNPP(unittest.TestCase):
 
             self.assertGreaterEqual(len(result), n)
             tops = example.getInformation('sortedQnames')
-            self.assertEquals(tops[0:len(result)], result)
+            self.assertItemsEqual(tops[0:len(result)], result)
             self.__p1.reset()
 
     def test_file(self):
