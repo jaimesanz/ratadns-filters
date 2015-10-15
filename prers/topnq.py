@@ -1,5 +1,5 @@
 __author__ = 'franchoco'
-from core import utils
+import core
 from prer import PreR
 from core.packet import Packet
 
@@ -44,7 +44,7 @@ class TopNQ(PreR):
                 self.names[qname] = 1
 
     def get_data(self):
-        last_n = dict(utils.keyswithmaxvals(self.names, self.n))
+        last_n = dict(core.keyswithmaxvals(self.names, self.n))
         return last_n
 
     def reset(self):

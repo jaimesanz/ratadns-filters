@@ -1,5 +1,5 @@
 __author__ = 'franchoco'
-from core.utils import keyswithmaxvals
+from core import keyswithmaxvals
 from prer import PreR
 from core.packet import Packet
 
