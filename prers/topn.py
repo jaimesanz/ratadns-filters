@@ -1,5 +1,5 @@
 __author__ = 'franchoco'
-from core.utils import keyswithmaxvals
+from core import keyswithmaxvals
 from prer import PreR
 
 
@@ -27,13 +27,14 @@ class TopN(PreR):
 
     <FILL>
     """
-    def __init__(self, f):
+
+    def __init__(self, f, n):
         PreR.__init__(self, f)
         self.names = {}
-        self.n = 10
+        self.n = n
 
-    def __call__(self, d):
-        qname = d['queries'][0]['qname'].lower()
+    def __call__(self, p):
+        qname = p.qname
 
         if self.names.has_key(qname):
             self.names[qname] += 1

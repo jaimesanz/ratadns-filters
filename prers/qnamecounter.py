@@ -1,5 +1,7 @@
 __author__ = 'sking32'
 from prer import PreR
+
+
 class QueriesNameCounter(PreR):
     """Show the number of queries for every qname in a window.
 
@@ -22,15 +24,14 @@ class QueriesNameCounter(PreR):
 
     <FILL>
     """
+
     def __init__(self, f):
         PreR.__init__(self, f)
         self.names = {}
 
-    def __call__(self, d):
-        flags =  int(d['flags'], 16)
-    	is_answer = (flags & ( 1 << 15 )) == (1 << 15)
-        if not is_answer:
-            qname = d['queries'][0]['qname'].lower()
+    def __call__(self, p):
+        if not p.is_answer():
+            qname = p.qname
             if self.names.has_key(qname):
                 self.names[qname] += 1
             else:
@@ -41,4 +42,3 @@ class QueriesNameCounter(PreR):
 
     def reset(self):
         self.names = {}
-

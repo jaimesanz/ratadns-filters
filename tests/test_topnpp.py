@@ -5,25 +5,25 @@ import StringIO
 import operator
 
 from packetsexample import PacketsExample
-from prers.topnq import TopNQ
+from prers.topnpp import TopNPP
 
 
-class TestTopNQ(unittest.TestCase):
+class TestTopNPP(unittest.TestCase):
 
     def reInit(self, n1=3, n2=3):
         self.__stringBuffer1 = StringIO.StringIO()
         self.__stringBuffer2 = StringIO.StringIO()
-        self.__p1 = TopNQ(self.__stringBuffer1, n1)
-        self.__p2 = TopNQ(self.__stringBuffer2, n2)
+        self.__p1 = TopNPP(self.__stringBuffer1, n1)
+        self.__p2 = TopNPP(self.__stringBuffer2, n2)
 
     def dataExample(self):
 
         queries = {'www.nic.cl' : 5, 'www.niclabs.cl' : 4, 'www.uchile.cl' : 3, 'www.jerry.cl' : 3, 'www.pinky.cl' : 2}
         data = PacketsExample(queries)
-        data.putInformation('sortedQnames', sorted(queries.items(), key=operator.itemgetter(1), reverse=True)) #Returns a list with the elements of the dict in descending order of its keys
+        data.putInformation('sortedQnames', map(list, sorted(queries.items(), key=operator.itemgetter(1), reverse=True))) #Returns a list with the elements of the dict in descending order of its keys
 
         for i in range(5) :
-            data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.nic.cl'}]})
+            data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.nic.cl'}]})
 
         for i in range(4) :
             data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.niclabs.cl'}]})
@@ -32,21 +32,17 @@ class TestTopNQ(unittest.TestCase):
             data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.uchile.cl'}]})
 
         for i in range(3) :
-            data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.jerry.cl'}]})
+            data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.jerry.cl'}]})
 
         for i in range(2) :
             data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.pinky.cl'}]})
 
-        data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.nic.cl'}]})#Answers
-        data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.brain.cl'}]})
-        data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.pinky.cl'}]})
-
         return data
 
     def dataDifferentCase(self):
-        queries = {'www.nic.cl' : 10, 'www.niclabs.cl' : 5}
+        queries = {'www.nic.cl' : 10, 'www.niclabs.cl' : 5, 'wwww.niclabs.cl' : 6}
         data = PacketsExample(queries)
-        data.putInformation('sortedQnames', sorted(queries.items(), key=operator.itemgetter(1), reverse=True)) #Returns a list with the elements of the dict in descending order of its keys
+        data.putInformation('sortedQnames', map(list, sorted(queries.items(), key=operator.itemgetter(1), reverse=True))) #Returns a list with the elements of the dict in descending order of its keys
 
         for i in range(5) :
             data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.nic.cl'}]})
@@ -57,15 +53,6 @@ class TestTopNQ(unittest.TestCase):
             data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.niclabs.cl'}]})
         for i in range(6) :
             data.addPacket({'flags': '0', 'queries' : [{'qname' : 'WwWW.NicLaBs.cl'}]})
-
-        return data
-
-    def dataJustAnswers(self):
-
-        data = PacketsExample()
-        data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.nic.cl'}]})#Answers
-        data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.brain.cl'}]})
-        data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.pinky.cl'}]})
 
         return data
 
@@ -94,9 +81,9 @@ class TestTopNQ(unittest.TestCase):
     def setUp(self):
         self.reInit()
 
-
     def test_rightFormat(self):
-        self.reInit()
+        n = 3
+        self.reInit(3)
 
         example = self.dataExample()
 
@@ -105,13 +92,14 @@ class TestTopNQ(unittest.TestCase):
 
         result = self.__p1.get_data()
 
-        self.assertTrue(type(result) == dict)
-        for key in result.keys():
-            self.assertTrue(type(key) == str)
-            self.assertTrue(type(result[key]) == int)
+        self.assertEquals(type(result), list)
+        self.assertGreaterEqual(len(result), n) #Not always(when there is not enough info)
 
-            frec = result[key]
-            self.assertGreater(frec, 0)
+        for p in result:
+            self.assertEquals(type(p), list)
+            self.assertEquals(len(p), 2)
+            self.assertEquals(type(p[0]), str)
+            self.assertEquals(type(p[1]), int)
 
 
     def test_noData(self):
@@ -119,9 +107,7 @@ class TestTopNQ(unittest.TestCase):
 
         result = self.__p1.get_data()
 
-        self.assertDictEqual({}, result)
-
-
+        self.assertEquals([], result)
 
     def test_sameBehavior(self):
         self.reInit()
@@ -134,12 +120,8 @@ class TestTopNQ(unittest.TestCase):
         result1 = self.__p1.get_data()
         result2 = self.__p2.get_data()
 
-        for qname in result1.keys() :
-            self.assertTrue(result2.has_key(qname))
-            self.assertEquals(result1[qname], result2[qname])
+        self.assertItemsEqual(result1, result2)
 
-        for qname in result2.keys() :
-            self.assertTrue(result1.has_key(qname))
 
     def test_numberOfQnames(self):
         example = self.dataExample()
@@ -151,6 +133,7 @@ class TestTopNQ(unittest.TestCase):
 
             for packet in example:
                 self.__p1(packet)
+
             result = self.__p1.get_data()
             self.assertGreaterEqual(len(result), n)
 
@@ -162,16 +145,22 @@ class TestTopNQ(unittest.TestCase):
         for packet in example:
             self.__p1(packet)
 
-        subdictResult = self.__p1.get_data()
+        subResult = self.__p1.get_data()
 
         self.reInit(n+2)
         for packet in example:
             self.__p1(packet)
 
         result = self.__p1.get_data()
-        self.assertTrue(set(subdictResult.items()).issubset(set(result.items())))
-        self.assertFalse(set(result.items()).issubset(set(subdictResult.items())))
 
+
+        for p in subResult:
+            self.assertTrue(p in result)
+
+        existeDiferente = False
+        for p in result:
+            existeDiferente = existeDiferente or not(p in subResult)
+        self.assertTrue(existeDiferente)
 
     def test_equalRating(self):
         n = 3
@@ -195,10 +184,7 @@ class TestTopNQ(unittest.TestCase):
 
         self.assertGreaterEqual(len(result), n)
         tops = example.getInformation('sortedQnames')
-        for i in range(n):
-            qname = tops[i][0]
-            self.assertTrue(result.has_key(qname))
-            self.assertEquals(example.expectedValue(qname) ,result[qname])
+        self.assertEquals(tops[0:len(result)], result)
 
     def test_dataDifferentCase(self):
         n = 3
@@ -209,24 +195,9 @@ class TestTopNQ(unittest.TestCase):
             self.__p1(packet)
 
         result = self.__p1.get_data()
-
         self.assertGreaterEqual(len(result), n)
         tops = example.getInformation('sortedQnames')
-        for i in range(len(tops)):
-            qname = tops[i][0]
-            self.assertTrue(result.has_key(qname))
-            self.assertEquals(example.expectedValue(qname) ,result[qname])
-
-    def test_dataJustAnswers(self):
-        self.reInit()
-
-        example = self.dataJustAnswers()
-        for packet in example:
-            self.__p1(packet)
-
-        result = self.__p1.get_data()
-
-        self.assertEquals(result, {})
+        self.assertEquals(tops[0:len(result)], result)
 
     def test_reset(self):
         n = 3
@@ -241,10 +212,7 @@ class TestTopNQ(unittest.TestCase):
 
             self.assertGreaterEqual(len(result), n)
             tops = example.getInformation('sortedQnames')
-            for i in range(n):
-                qname = tops[i][0]
-                self.assertTrue(result.has_key(qname))
-                self.assertEquals(example.expectedValue(qname) ,result[qname])
+            self.assertEquals(tops[0:len(result)], result)
             self.__p1.reset()
 
     def test_file(self):

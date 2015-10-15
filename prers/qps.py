@@ -2,6 +2,7 @@ __author__ = 'raticate'
 from prer import PreR
 import time
 
+
 class QueriesPerSecond(PreR):
     """Show the average number of queries per second in a window.
 
@@ -27,10 +28,8 @@ class QueriesPerSecond(PreR):
         self.counter = 0
         self.start = time.time()
 
-    def __call__(self, d):
-        flags =  int(d['flags'], 16)
-        is_answer = (flags & ( 1 << 15 )) == (1 << 15)
-        if not is_answer:
+    def __call__(self, p):
+        if not p.is_answer():
             self.counter += 1
 
     def get_data(self):
