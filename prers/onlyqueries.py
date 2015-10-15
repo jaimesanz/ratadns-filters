@@ -1,5 +1,7 @@
 __author__ = 'franchoco'
 from prer import PreR
+
+
 class OnlyQueries(PreR):
     """Show the queries in a window.
 
@@ -21,17 +23,18 @@ class OnlyQueries(PreR):
 
     <FILL>
     """
+
     def __init__(self, f):
         PreR.__init__(self, f)
         self.l = []
-    def __call__(self, d):
-        #flags = d['flags']
-	flags =  int(d['flags'], 16)
-    	is_answer = (flags & ( 1 << 15 )) == (1 << 15)
-        #print str(flags)
-	if not is_answer:
-            self.l.append(d)
+
+    def __call__(self, p):
+        # flags = d['flags']
+        if not p.is_answer():
+            self.l.append(p.input)
+
     def get_data(self):
         return self.l
+
     def reset(self):
         self.l = []

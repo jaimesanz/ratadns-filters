@@ -1,5 +1,7 @@
 __author__ = 'sking32'
 from random import shuffle
+from core import Packet
+
 
 class PacketsExample:
     """Help on testing.
@@ -22,7 +24,7 @@ class PacketsExample:
         self.__sameOrder = True
 
     def addPacket(self, d):
-        self.__data.append(d)
+        self.__data.append(Packet(d))
 
     def setExpected(self, key, value):
         self.__expected[key] = value

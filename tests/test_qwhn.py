@@ -5,7 +5,7 @@ import StringIO
 
 from packetsexample import PacketsExample
 from prers.qwhn import QueriesWithUnderscoredName
-
+from core import Packet
 
 class TestQueriesWithUnderscoredName(unittest.TestCase):
 
@@ -107,7 +107,7 @@ class TestQueriesWithUnderscoredName(unittest.TestCase):
     def test_rightFormat(self):
         self.reInit()
 
-        self.__p1({'dest' : 'encrypted(dnsip1)', 'source' : 'encrypted(ip1)','flags': '0', 'queries' : [{'qname' : 'www.ni_c.cl', 'qtype' : '1'}]})
+        self.__p1(Packet({'dest' : 'encrypted(dnsip1)', 'source' : 'encrypted(ip1)','flags': '0', 'queries' : [{'qname' : 'www.ni_c.cl', 'qtype' : '1'}]}))
         result = self.__p1.get_data()
 
         self.assertEquals(type(result), dict)

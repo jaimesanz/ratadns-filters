@@ -1,27 +1,27 @@
-
-#from core import utils
+# from core import utils
 from prer import PreR
-from core.packetpockets import PacketPocket 
+from core import PacketPocket
+
 
 class TopNPP(PreR):
-    def __init__(self, f):
+    def __init__(self, f, k=100):
         PreR.__init__(self, f)
-	self.k=10
-	self.n=1000
-        self.packetpocket = PacketPocket(self.k, self.n)
+        self.k = k
+        self.packetpocket = PacketPocket(self.k)
 
-    def __call__(self, d):
-        qname = d['queries'][0]['qname'].lower()
-        self.packetpocket.incr_count(qname)
+    def __call__(self, p):
+        if not hasattr(self, 'n'):
+            self.n = p.windowSize
+            self.packetpocket = PacketPocket(self.k, self.n)
+        self.packetpocket.incr_count(p.qname)
 
     def get_data(self):
-	ans = []
+        ans = []
         top_k = self.packetpocket.top_k()
-	for name in top_k:
-		freq = self.packetpocket.reverse_dict[name]
-		ans.append([name, freq])
-	return ans
-		
+        for name in top_k:
+            freq = self.packetpocket.reverse_dict[name]
+            ans.append([name, freq])
+        return ans
 
     def reset(self):
         self.packetpocket = PacketPocket(self.k, self.n)
