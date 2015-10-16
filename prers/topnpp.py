@@ -6,7 +6,7 @@ from core import PacketPocket
 class TopNPP(PreR):
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
-        self.k = kwargs['n']
+        self.k = int(kwargs['n'])
         self.packetpocket = PacketPocket(self.k)
 
     def __call__(self, p):

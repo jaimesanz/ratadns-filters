@@ -69,6 +69,7 @@ def mainloop(options):
                     f = fun.get_file()
                     s = json.dumps(fun.get_data())
                     f.write(s)
+                    f.write("\n")
                     fun.reset()
         except ValueError:
             running = False
