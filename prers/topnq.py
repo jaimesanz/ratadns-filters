@@ -30,7 +30,7 @@ class TopNQ(PreR):
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
         self.names = {}
-        self.n = kwargs['n']
+        self.n = int(kwargs['n'])
 
     def __call__(self, p):
         qname = p.qname
