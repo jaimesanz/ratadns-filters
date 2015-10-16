@@ -68,7 +68,7 @@ def mainloop(options):
                 for fun in flist:
                     f = fun.get_file()
                     s = json.dumps(fun.get_data())
-                    f.write(s + "\n")
+                    f.write(s)
                     fun.reset()
         except ValueError:
             running = False
