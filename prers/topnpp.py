@@ -4,9 +4,9 @@ from core import PacketPocket
 
 
 class TopNPP(PreR):
-    def __init__(self, f, k=100):
+    def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
-        self.k = k
+        self.k = kwargs['n']
         self.packetpocket = PacketPocket(self.k)
 
     def __call__(self, p):
