@@ -44,18 +44,24 @@ class Options:
             PreR = getattr(importlib.import_module(prers_path + "." + module_name), class_name)
             prer_args = dict(config.items(class_name))
 
-            output_method = prer_args['outputmethod']
+            output_method = prer_args.pop('outputmethod')
+
             if output_method == 'stdout':
-                prer = PreR(sys.stdout)
+                f = sys.stdout
             elif output_method == 'file':
-                f = open(prer_args['filename'], 'a')
-                prer = PreR(f)
+                f = open(prer_args.pop('filename'), 'a')
             elif output_method == 'redis':
-                host = prer_args['redishost']
-                channel = prer_args['redischannel']
-                prer = PreR(RedisFile(host, channel))
+                host = prer_args.pop('redishost')
+                channel = prer_args.pop('redischannel')
+                f = RedisFile(host, channel)
             else: # Default Output Method
-                prer = PreR(sys.stdout)
+                f = sys.stdout
+
+            prer = PreR(f, **prer_args)
+            # if not prer_args:
+            #     prer = PreR(f)
+            # else:
+            #     prer = PreR(f, **prer_args)
 
             self.prers.append(prer)
 

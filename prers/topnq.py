@@ -27,10 +27,10 @@ class TopNQ(PreR):
 
     <FILL>
     """
-    def __init__(self, f, n=100):
+    def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
         self.names = {}
-        self.n = n
+        self.n = kwargs['n']
 
     def __call__(self, p):
         qname = p.qname
