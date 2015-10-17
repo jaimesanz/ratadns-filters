@@ -31,7 +31,7 @@ class Options:
             self.input = sys.stdin
         elif input_method == 'file':
             input_file = config.get("core", "FileName")
-            self.input = open(input_file, "r")
+            self.input = open(input_file, "r", 1)
         else: # Default input method
             self.input = sys.stdin
 
@@ -49,7 +49,7 @@ class Options:
             if output_method == 'stdout':
                 f = sys.stdout
             elif output_method == 'file':
-                f = open(prer_args.pop('filename'), 'a')
+                f = open(prer_args.pop('filename'), 'a', 1)
             elif output_method == 'redis':
                 host = prer_args.pop('redishost')
                 channel = prer_args.pop('redischannel')
