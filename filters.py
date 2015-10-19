@@ -1,10 +1,12 @@
 #!/usr/bin/python2
 
-from core import RedisFile, mainloop
-
 from optparse import OptionParser
 import ConfigParser
-import sys, importlib
+import sys
+import importlib
+
+from core import RedisFile, mainloop
+
 
 class Options:
     def __init__(self):
@@ -17,7 +19,7 @@ class Options:
         opts, args = parser.parse_args()
 
         # Parse the configuration file
-        config_file = opts.config_file if opts.config_file != None else self.__default_config_file
+        config_file = opts.config_file if opts.config_file is not None else self.__default_config_file
 
         config = ConfigParser.ConfigParser()
         config.read(config_file)
@@ -31,17 +33,17 @@ class Options:
             self.input = sys.stdin
         elif input_method == 'file':
             input_file = config.get("core", "FileName")
-            self.input = open(input_file, "r")
-        else: # Default input method
+            self.input = open(input_file, "r", 1)
+        else:  # Default input method
             self.input = sys.stdin
 
         # Create the PreR's with each's input methods (self.prers)
         prers_path = config.get("core", "PreliminarReducersPackage")
         prers_names = config.get("core", "PreliminarReducers").split(",")
         self.prers = []
-        for prer in prers_names:
-            module_name, class_name = prer.rsplit(".", 1)
-            PreR = getattr(importlib.import_module(prers_path + "." + module_name), class_name)
+        for prer_name in prers_names:
+            module_name, class_name = prer_name.rsplit(".", 1)
+            prer_class = getattr(importlib.import_module(prers_path + "." + module_name), class_name)
             prer_args = dict(config.items(class_name))
 
             output_method = prer_args.pop('outputmethod')
@@ -49,22 +51,21 @@ class Options:
             if output_method == 'stdout':
                 f = sys.stdout
             elif output_method == 'file':
-                f = open(prer_args.pop('filename'), 'a')
+                f = open(prer_args.pop('filename'), 'a', 1)
             elif output_method == 'redis':
                 host = prer_args.pop('redishost')
                 channel = prer_args.pop('redischannel')
                 f = RedisFile(host, channel)
-            else: # Default Output Method
+            else:  # Default Output Method
                 f = sys.stdout
 
-            prer = PreR(f, **prer_args)
+            prer_instance = prer_class(f, **prer_args)
             # if not prer_args:
             #     prer = PreR(f)
             # else:
             #     prer = PreR(f, **prer_args)
 
-            self.prers.append(prer)
-
+            self.prers.append(prer_instance)
 
 
 if __name__ == '__main__':
