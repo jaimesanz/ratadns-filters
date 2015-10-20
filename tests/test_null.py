@@ -77,9 +77,6 @@ class TestNullPreR(unittest.TestCase):
 
         self.assertEquals(self.__stringBuffer1, self.__p1.get_file())
     
-    def test_failure(self):
-        self.assertTrue(False)
-
     def tearDown(self):
         pass
 
