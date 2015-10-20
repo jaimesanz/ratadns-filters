@@ -12,8 +12,8 @@ class TestTopNQ(unittest.TestCase):
     def reInit(self, n1=3, n2=3):
         self.__stringBuffer1 = StringIO.StringIO()
         self.__stringBuffer2 = StringIO.StringIO()
-        self.__p1 = TopNQ(self.__stringBuffer1, n1)
-        self.__p2 = TopNQ(self.__stringBuffer2, n2)
+        self.__p1 = TopNQ(self.__stringBuffer1, n=n1)
+        self.__p2 = TopNQ(self.__stringBuffer2, n=n2)
 
     def dataExample(self):
 
