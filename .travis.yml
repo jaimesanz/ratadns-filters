@@ -1,0 +1,2 @@
+languaje: python
+script: python -m unittest discover -s tests
