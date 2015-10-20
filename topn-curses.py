@@ -13,8 +13,8 @@ import sys
 
 class TopNViz(object):
     # CONSTANTS
-    MAX_COLS = 200
-    MAX_LINES = 200
+    INIT_COLS = 200
+    INIT_LINES = 200
 
     QUIT_KEYS = (ord('q'), ord('Q'))
     DOWN_KEYS = (curses.KEY_DOWN, curses.KEY_SF)
@@ -39,7 +39,7 @@ class TopNViz(object):
 
     def main(self, screen):
         self.stdscr = screen
-        self.pad = curses.newpad(self.MAX_LINES, self.MAX_COLS)
+        self.pad = curses.newpad(self.INIT_LINES, self.INIT_COLS)
 
         # Terminal setup
         # self.stdscr.scrollok(True)
@@ -87,7 +87,7 @@ class TopNViz(object):
             print("Error: Input line is not JSON-serialized: '", repr(line), file=sys.stderr)
             return self.last_data
 
-        return list(json_list[:self.MAX_LINES])
+        return list(json_list)
 
     def refresh_view(self):
         self.need_refresh = False
@@ -102,6 +102,11 @@ class TopNViz(object):
         if self.high_line > len(self.last_data) - 1:
             self.high_line = len(self.last_data) - 1
             self.headline = max(0, len(self.last_data) - self.term_size[0])
+
+        # Adjust pad length if needed
+        pad_size = self.pad.getmaxyx()
+        if len(self.last_data) > pad_size[0]:
+            self.pad.resize(len(self.last_data), pad_size[1])
 
         cnt_width = len(str(self.last_data[0][1]))
         str_width = self.term_size[1] - self.n_width - cnt_width - 2
@@ -125,7 +130,7 @@ class TopNViz(object):
             else:
                 self.pad.addstr(i, 0, line)
 
-        for i in range(len(self.last_data), self.MAX_LINES):
+        for i in range(len(self.last_data), self.INIT_LINES):
             if self.high_line == i:
                 self.pad.addstr(i, 0, "~", curses.A_REVERSE)
             else:
@@ -139,6 +144,11 @@ class TopNViz(object):
         self.headline = 0
         self.high_line = 0
         self.need_refresh = True
+
+        # Resize pad width if needed
+        pad_size = self.pad.getmaxyx()
+        if self.term_size[1] > pad_size[1]:
+            self.pad.resize(pad_size[0], self.term_size[1])
 
         # Touch all the window, to redraw
         self.stdscr.redrawwin()
