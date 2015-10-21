@@ -1,5 +1,3 @@
-__author__ = 'sking32'
-
 import unittest
 import StringIO
 
@@ -17,14 +15,13 @@ class TestNullPreR(unittest.TestCase):
 
     def dataExample(self):
         data = PacketsExample()
-        data.addPacket({'flags' : '0', 'id' : '12cb'})
-        data.addPacket({'flags' : '8000', 'id' : '12cb'})
+        data.addPacket({'flags': '0', 'id': '12cb'})
+        data.addPacket({'flags': '8000', 'id': '12cb'})
 
         return data
 
     def setUp(self):
         self.reInit()
-
 
     def test_rightFormatNoData(self):
         self.reInit()
@@ -76,7 +73,7 @@ class TestNullPreR(unittest.TestCase):
         self.reInit()
 
         self.assertEquals(self.__stringBuffer1, self.__p1.get_file())
-    
+
     def tearDown(self):
         pass
 

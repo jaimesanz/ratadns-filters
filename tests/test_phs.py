@@ -1,11 +1,10 @@
-__author__ = 'sking32'
-
 import unittest
 import StringIO
 
 from packetsexample import PacketsExample
 from prers.phs import PacketHasUnderscore
 from core import Packet
+
 
 class TestPacketHasUnderscore(unittest.TestCase):
 
@@ -18,87 +17,129 @@ class TestPacketHasUnderscore(unittest.TestCase):
     def dataExample(self):
 
         data = PacketsExample()
-        data.putInformation('problematicSources', {'encrypted(ip1)' : [{'qname' : 'www.ni_c.cl', 'qtype' : '1'}],
-                                                'encrypted(ip2)' : [{'qname' : 'www.nic_labs.cl', 'qtype' : '2'}],
-                                                'encrypted(ip3)' : [{'qname' : 'www._jerry_.cl', 'qtype' : '6'}],
-                                                'encrypted(ip4)' : [{'qname' : 'www._pinky.cl', 'qtype' : 'f'}]})
+        data.putInformation('problematicSources', {
+            'encrypted(ip1)':
+                [{'qname': 'www.ni_c.cl', 'qtype': '1'}],
+            'encrypted(ip2)':
+                [{'qname': 'www.nic_labs.cl', 'qtype': '2'}],
+            'encrypted(ip3)':
+                [{'qname': 'www._jerry_.cl', 'qtype': '6'}],
+            'encrypted(ip4)':
+                [{'qname': 'www._pinky.cl', 'qtype': 'f'}]})
 
-        #Problems with qnames
-        data.addPacket({'source' : 'encrypted(ip1)','flags': '0', 'queries' : [{'qname' : 'www.ni_c.cl', 'qtype' : '1'}]})
-        data.setExpected('encrypted(ip1)',  {"cnt": 1, 'queries' : [{'qname' : 'www.ni_c.cl', 'qtype' : '1'}]})
+        # Problems with qnames
+        data.addPacket({'source': 'encrypted(ip1)', 'flags': '0', 'queries': [
+                       {'qname': 'www.ni_c.cl', 'qtype': '1'}]})
+        data.setExpected('encrypted(ip1)',  {"cnt": 1, 'queries': [
+                         {'qname': 'www.ni_c.cl', 'qtype': '1'}]})
 
-        data.addPacket({'source' : 'encrypted(ip2)','flags': '0', 'queries' : [{'qname' : 'www.nic_labs.cl', 'qtype' : '2'}]})
-        data.setExpected('encrypted(ip2)',  {"cnt": 1, 'queries' : [{'qname' : 'www.nic_labs.cl', 'qtype' : '1'}]})
+        data.addPacket({'source': 'encrypted(ip2)', 'flags': '0', 'queries': [
+                       {'qname': 'www.nic_labs.cl', 'qtype': '2'}]})
+        data.setExpected('encrypted(ip2)',  {"cnt": 1, 'queries': [
+                         {'qname': 'www.nic_labs.cl', 'qtype': '1'}]})
 
-        data.addPacket({'source' : 'encrypted(ip3)','flags': '0', 'queries' : [{'qname' : 'www._jerry_.cl', 'qtype' : '6'}]})
-        data.setExpected('encrypted(ip3)',  {"cnt": 1, 'queries' : [{'qname' : 'www._jerry_.cl', 'qtype' : '1'}]})
+        data.addPacket({'source': 'encrypted(ip3)', 'flags': '0', 'queries': [
+                       {'qname': 'www._jerry_.cl', 'qtype': '6'}]})
+        data.setExpected('encrypted(ip3)',  {"cnt": 1, 'queries': [
+                         {'qname': 'www._jerry_.cl', 'qtype': '1'}]})
 
-        data.addPacket({'source' : 'encrypted(ip4)','flags': '0', 'queries' : [{'qname' : 'www._pinky.cl', 'qtype' : 'f'}]})
-        data.setExpected('encrypted(ip4)',  {"cnt": 1, 'queries' : [{'qname' : 'www._pinky.cl', 'qtype' : '1'}]})
+        data.addPacket({'source': 'encrypted(ip4)', 'flags': '0', 'queries': [
+                       {'qname': 'www._pinky.cl', 'qtype': 'f'}]})
+        data.setExpected('encrypted(ip4)',  {"cnt": 1, 'queries': [
+                         {'qname': 'www._pinky.cl', 'qtype': '1'}]})
 
-        #Normal data, critical qtypes
-        data.addPacket({'source' : 'encrypted(ip1)','flags': '0', 'queries' : [{'qname' : 'www.nic.cl', 'qtype' : '1'}]})
-        data.addPacket({'source' : 'encrypted(ip2)','flags': '0', 'queries' : [{'qname' : 'www.niclabs.cl', 'qtype' : '2'}]})
-        data.addPacket({'source' : 'encrypted(ip3)','flags': '0', 'queries' : [{'qname' : 'www.jerry.cl', 'qtype' : '6'}]})
-        data.addPacket({'source' : 'encrypted(ip4)','flags': '0', 'queries' : [{'qname' : 'www.pinky.cl', 'qtype' : 'f'}]})
+        # Normal data, critical qtypes
+        data.addPacket({'source': 'encrypted(ip1)', 'flags': '0', 'queries': [
+                       {'qname': 'www.nic.cl', 'qtype': '1'}]})
+        data.addPacket({'source': 'encrypted(ip2)', 'flags': '0', 'queries': [
+                       {'qname': 'www.niclabs.cl', 'qtype': '2'}]})
+        data.addPacket({'source': 'encrypted(ip3)', 'flags': '0', 'queries': [
+                       {'qname': 'www.jerry.cl', 'qtype': '6'}]})
+        data.addPacket({'source': 'encrypted(ip4)', 'flags': '0', 'queries': [
+                       {'qname': 'www.pinky.cl', 'qtype': 'f'}]})
 
-        #Normal data
-        data.addPacket({'source' : 'encrypted(ip1)','flags': '0', 'queries' : [{'qname' : 'www.nic.cl', 'qtype' : '3'}]})
-        data.addPacket({'source' : 'encrypted(ip2)','flags': '8000', 'queries' : [{'qname' : 'www.niclabs.cl', 'qtype' : '4'}]})
-        data.addPacket({'source' : 'encrypted(ip3)','flags': '0', 'queries' : [{'qname' : 'www.jerry.cl', 'qtype' : '5'}]})
-        data.addPacket({'source' : 'encrypted(ip4)','flags': '8000', 'queries' : [{'qname' : 'www.pinky.cl', 'qtype' : '7'}]})
+        # Normal data
+        data.addPacket({'source': 'encrypted(ip1)', 'flags': '0',
+                        'queries': [{'qname': 'www.nic.cl', 'qtype': '3'}]})
+        data.addPacket({'source': 'encrypted(ip2)', 'flags': '8000',
+                        'queries': [{'qname': 'www.niclabs.cl',
+                                     'qtype': '4'}]})
+        data.addPacket({'source': 'encrypted(ip3)', 'flags': '0',
+                        'queries': [{'qname': 'www.jerry.cl', 'qtype': '5'}]})
+        data.addPacket({'source': 'encrypted(ip4)', 'flags': '8000',
+                        'queries': [{'qname': 'www.pinky.cl',
+                                     'qtype': '7'}]})
 
-        #Underscore data, noncritical qtypes
-        data.addPacket({'source' : 'encrypted(ip1)','flags': '0', 'queries' : [{'qname' : 'www.ni_c.cl', 'qtype' : '3'}]})
-        data.addPacket({'source' : 'encrypted(ip2)','flags': '0', 'queries' : [{'qname' : 'www.nic_labs.cl', 'qtype' : '4'}]})
-        data.addPacket({'source' : 'encrypted(ip3)','flags': '0', 'queries' : [{'qname' : 'www._jerry_.cl', 'qtype' : '5'}]})
-        data.addPacket({'source' : 'encrypted(ip4)','flags': '0', 'queries' : [{'qname' : 'www._pinky.cl', 'qtype' : '7'}]})
+        # Underscore data, noncritical qtypes
+        data.addPacket({'source': 'encrypted(ip1)', 'flags': '0',
+                        'queries': [{'qname': 'www.ni_c.cl', 'qtype': '3'}]})
+        data.addPacket({'source': 'encrypted(ip2)', 'flags': '0',
+                        'queries': [{'qname': 'www.nic_labs.cl',
+                                     'qtype': '4'}]})
+        data.addPacket({'source': 'encrypted(ip3)', 'flags': '0',
+                        'queries': [{'qname': 'www._jerry_.cl',
+                                     'qtype': '5'}]})
+        data.addPacket({'source': 'encrypted(ip4)', 'flags': '0',
+                        'queries': [{'qname': 'www._pinky.cl',
+                                     'qtype': '7'}]})
 
-        #Answers
-        data.addPacket({'source' : 'encrypted(dnsip1)','flags': '8000', 'queries' : [{'qname' : 'www.ni_c.cl', 'qtype' : '1'}]})
-        data.addPacket({'source' : 'encrypted(dnsip2)','flags': '8000', 'queries' : [{'qname' : 'www.niclabs.cl', 'qtype' : '2'}]})
-        data.addPacket({'source' : 'encrypted(dnsip3)','flags': '8000', 'queries' : [{'qname' : 'www.jerry.cl', 'qtype' : '5'}]})
-        data.addPacket({'source' : 'encrypted(dnsip4)','flags': '8000', 'queries' : [{'qname' : 'www._pinky.cl', 'qtype' : '7'}]})
-
+        # Answers
+        data.addPacket({'source': 'encrypted(dnsip1)', 'flags': '8000',
+                        'queries': [{'qname': 'www.ni_c.cl',
+                                     'qtype': '1'}]})
+        data.addPacket({'source': 'encrypted(dnsip2)', 'flags': '8000',
+                        'queries': [{'qname': 'www.niclabs.cl',
+                                     'qtype': '2'}]})
+        data.addPacket({'source': 'encrypted(dnsip3)', 'flags': '8000',
+                        'queries': [{'qname': 'www.jerry.cl',
+                                     'qtype': '5'}]})
+        data.addPacket({'source': 'encrypted(dnsip4)', 'flags': '8000',
+                        'queries': [{'qname': 'www._pinky.cl',
+                                     'qtype': '7'}]})
 
         return data
-
 
     def dataRepeatError(self):
         data = PacketsExample()
 
-        data.putInformation('problematicSources', {'encrypted(ip1)' : [{'qname' : 'www.ni_c.cl', 'qtype' : '1'}],
-                                                'encrypted(ip2)' : [{'qname' : 'www.nic_labs.cl', 'qtype' : '2'}]})
+        data.putInformation('problematicSources', {
+            'encrypted(ip1)': [{'qname': 'www.ni_c.cl', 'qtype': '1'}],
+            'encrypted(ip2)': [{'qname': 'www.nic_labs.cl', 'qtype': '2'}]})
 
         countOfErrors = {}
 
-        for i in range (3) :
-            data.addPacket({'source' : 'encrypted(ip1)','flags': '0', 'queries' : [{'qname' : 'www.ni_c.cl', 'qtype' : '1'}]})
+        for i in range(3):
+            data.addPacket({'source': 'encrypted(ip1)', 'flags': '0',
+                            'queries': [{'qname': 'www.ni_c.cl',
+                                         'qtype': '1'}]})
         countOfErrors['encrypted(ip1)'] = 3
 
-        for i in range(2) :
-            data.addPacket({'source' : 'encrypted(ip2)','flags': '0', 'queries' : [{'qname' : 'www.nic_labs.cl', 'qtype' : '2'}]})
+        for i in range(2):
+            data.addPacket({'source': 'encrypted(ip2)', 'flags': '0',
+                            'queries': [{'qname': 'www.nic_labs.cl',
+                                         'qtype': '2'}]})
         countOfErrors['encrypted(ip2)'] = 2
 
         data.putInformation('countOfErrors', countOfErrors)
-        return  data
+        return data
 
     def setUp(self):
         self.reInit()
 
-
     def test_rightFormat(self):
         self.reInit()
 
-        self.__p1(Packet({'source' : 'encrypted(ip1)','flags': '0', 'queries' : [{'qname' : 'www.ni_c.cl', 'qtype' : '1'}]}))
+        self.__p1(Packet({'source': 'encrypted(ip1)', 'flags': '0',
+                          'queries': [{'qname': 'www.ni_c.cl',
+                                       'qtype': '1'}]}))
         result = self.__p1.get_data()
 
         self.assertEquals(type(result), dict)
 
         resultForSource = result['encrypted(ip1)']
         self.assertEquals(type(resultForSource), dict)
-        self.assertTrue(resultForSource.has_key('cnt'))
-        self.assertTrue(resultForSource.has_key('queries'))
+        self.assertTrue('cnt' in resultForSource)
+        self.assertTrue('queries' in resultForSource)
 
         self.assertGreater(resultForSource['cnt'], 0)
 
@@ -107,11 +148,8 @@ class TestPacketHasUnderscore(unittest.TestCase):
         self.assertGreater(len(queries), 0)
 
         queryExample = queries[0]
-        self.assertTrue(queryExample.has_key('qtype'))
-        self.assertTrue(queryExample.has_key('qname'))
-
-
-
+        self.assertTrue('qtype' in queryExample)
+        self.assertTrue('qname' in queryExample)
 
     def test_noData(self):
         self.reInit()
@@ -144,15 +182,15 @@ class TestPacketHasUnderscore(unittest.TestCase):
         expectedProblematic = example.getInformation('problematicSources')
 
         for source in result.keys():
-            self.assertTrue(expectedProblematic.has_key(source))
+            self.assertTrue(source in expectedProblematic)
 
-        for source in  expectedProblematic.keys():
-            self.assertTrue(result.has_key(source))
+        for source in expectedProblematic.keys():
+            self.assertTrue(source in result)
             expectedQueries = expectedProblematic[source]
             self.assertEquals(len(expectedQueries), result[source]['cnt'])
-            self.assertEquals(len(expectedQueries), len(result[source]['queries']))
+            self.assertEquals(len(expectedQueries),
+                              len(result[source]['queries']))
             self.assertListEqual(expectedQueries, result[source]['queries'])
-
 
     def test_dataRepeatError(self):
         self.reInit()
@@ -165,14 +203,14 @@ class TestPacketHasUnderscore(unittest.TestCase):
         expectedProblematic = example.getInformation('problematicSources')
         expectedCnt = example.getInformation('countOfErrors')
 
-        for source in  expectedProblematic.keys():
-            self.assertTrue(result.has_key(source))
+        for source in expectedProblematic.keys():
+            self.assertTrue(source in result)
             expectedQueries = expectedProblematic[source]
             self.assertEquals(expectedCnt[source], result[source]['cnt'])
-            self.assertEquals(result[source]['cnt'], len(result[source]['queries']))
-            for query in result[source]['queries'] :
+            self.assertEquals(result[source]['cnt'],
+                              len(result[source]['queries']))
+            for query in result[source]['queries']:
                 self.assertEqual(expectedQueries[0], query)
-
 
     def test_reset(self):
         self.reInit()
@@ -187,13 +225,14 @@ class TestPacketHasUnderscore(unittest.TestCase):
             expectedProblematic = example.getInformation('problematicSources')
 
             for source in result.keys():
-                self.assertTrue(expectedProblematic.has_key(source))
+                self.assertTrue(source in expectedProblematic)
 
-            for source in  expectedProblematic.keys():
-                self.assertTrue(result.has_key(source))
+            for source in expectedProblematic.keys():
+                self.assertTrue(source in result)
                 expectedQueries = expectedProblematic[source]
                 self.assertEquals(len(expectedQueries), result[source]['cnt'])
-                self.assertListEqual(expectedQueries, result[source]['queries'])
+                self.assertListEqual(expectedQueries, result[
+                                     source]['queries'])
 
             self.__p1.reset()
 

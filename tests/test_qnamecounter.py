@@ -1,5 +1,3 @@
-__author__ = 'sking32'
-
 import unittest
 import StringIO
 
@@ -18,30 +16,36 @@ class TestQueriesNameCounter(unittest.TestCase):
     def dataExample(self):
         data = PacketsExample()
 
-        for i in range(4) :
-            data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.niclabs.cl'}]})
+        for i in range(4):
+            data.addPacket({'flags': '0', 'queries': [
+                           {'qname': 'www.niclabs.cl'}]})
         data.setExpected('www.niclabs.cl', 4)
 
-        for i in range(3) :
-            data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.uchile.cl'}]})
+        for i in range(3):
+            data.addPacket({'flags': '0', 'queries': [
+                           {'qname': 'www.uchile.cl'}]})
         data.setExpected('www.uchile.cl', 3)
 
-        for i in range(2) :
-            data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.pinky.cl'}]})
+        for i in range(2):
+            data.addPacket({'flags': '0', 'queries': [
+                           {'qname': 'www.pinky.cl'}]})
         data.setExpected('www.pinky.cl', 2)
 
-        data.putInformation('QNames', {'www.niclabs.cl', 'www.uchile.cl', 'www.pinky.cl'})
+        data.putInformation(
+            'QNames', {'www.niclabs.cl', 'www.uchile.cl', 'www.pinky.cl'})
         return data
 
     def dataOnlyAnswers(self):
 
         data = PacketsExample()
-        for i in range(5) :
-            data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.nic.cl'}]})
+        for i in range(5):
+            data.addPacket({'flags': '8000', 'queries': [
+                           {'qname': 'www.nic.cl'}]})
         data.setExpected('www.nic.cl', 5)
 
-        for i in range(3) :
-            data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.jerry.cl'}]})
+        for i in range(3):
+            data.addPacket({'flags': '8000', 'queries': [
+                           {'qname': 'www.jerry.cl'}]})
         data.setExpected('www.jerry.cl', 3)
 
         return data
@@ -49,20 +53,22 @@ class TestQueriesNameCounter(unittest.TestCase):
     def dataDifferenCase(self):
         data = PacketsExample()
 
-        for i in range(5) :
-            data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.nic.cl'}]})
-        for i in range(5) :
-            data.addPacket({'flags': '0', 'queries' : [{'qname' : 'WWW.NIC.CL'}]})
+        for i in range(5):
+            data.addPacket({'flags': '0', 'queries': [
+                           {'qname': 'www.nic.cl'}]})
+        for i in range(5):
+            data.addPacket({'flags': '0', 'queries': [
+                           {'qname': 'WWW.NIC.CL'}]})
         data.setExpected('www.nic.cl', 10)
 
-
-        for i in range(5) :
-            data.addPacket({'flags': '0', 'queries' : [{'qname' : 'WWW:NIC.CL'}]})
-        for i in range(5) :
-            data.addPacket({'flags': '0', 'queries' : [{'qname' : 'wwww.nic.cl'}]})
-        data.putInformation('criticalQName','www.nic.cl')
+        for i in range(5):
+            data.addPacket({'flags': '0', 'queries': [
+                           {'qname': 'WWW:NIC.CL'}]})
+        for i in range(5):
+            data.addPacket({'flags': '0', 'queries': [
+                           {'qname': 'wwww.nic.cl'}]})
+        data.putInformation('criticalQName', 'www.nic.cl')
         return data
-
 
     def setUp(self):
         self.reInit()
@@ -72,7 +78,7 @@ class TestQueriesNameCounter(unittest.TestCase):
 
         example = self.dataExample()
 
-        for packet in example :
+        for packet in example:
             self.__p1(packet)
 
         result = self.__p1.get_data()
@@ -103,13 +109,12 @@ class TestQueriesNameCounter(unittest.TestCase):
         result1 = self.__p1.get_data()
         result2 = self.__p2.get_data()
 
-        for qname in result1.keys() :
-            self.assertTrue(result2.has_key(qname))
+        for qname in result1.keys():
+            self.assertTrue(qname in result2)
             self.assertEquals(result1[qname], result2[qname])
 
-        for qname in result2.keys() :
-            self.assertTrue(result1.has_key(qname))
-
+        for qname in result2.keys():
+            self.assertTrue(qname in result1)
 
     def test_dataExample(self):
         self.reInit()
@@ -121,8 +126,8 @@ class TestQueriesNameCounter(unittest.TestCase):
         result = self.__p1.get_data()
 
         for qname in example.getInformation('QNames'):
-            self.assertTrue(result.has_key(qname))
-            self.assertEquals(example.expectedValue(qname) ,result[qname])
+            self.assertTrue(qname in result)
+            self.assertEquals(example.expectedValue(qname), result[qname])
 
     def test_dataOnlyAnswers(self):
         self.reInit()
@@ -158,7 +163,7 @@ class TestQueriesNameCounter(unittest.TestCase):
             result = self.__p1.get_data()
 
             for qname in result.keys():
-                self.assertEquals(example.expectedValue(qname) ,result[qname])
+                self.assertEquals(example.expectedValue(qname), result[qname])
 
             self.__p1.reset()
 

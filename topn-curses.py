@@ -11,6 +11,10 @@ import sys
 # pydevd.settrace('localhost', port=46018, suspend=False)
 
 
+def truncate(s, str_width):
+        return len(s) > str_width and s[:str_width - 3] + "..." or s
+
+
 class TopNViz(object):
     # CONSTANTS
     INIT_COLS = 200
@@ -84,7 +88,8 @@ class TopNViz(object):
         try:
             json_list = json.loads(line)
         except ValueError:
-            print("Error: Input line is not JSON-serialized: '", repr(line), file=sys.stderr)
+            print("Error: Input line is not JSON-serialized: '",
+                  repr(line), file=sys.stderr)
             return self.last_data
 
         return list(json_list)
@@ -112,8 +117,6 @@ class TopNViz(object):
         str_width = self.term_size[1] - self.n_width - cnt_width - 2
         str_width = str_width if str_width >= 3 else 3
 
-        truncate = lambda s: len(s) > str_width and s[:str_width - 3] + "..." or s
-
         pos = 1
         last_cnt = self.last_data[0][1]
         for i, (qname, cnt) in enumerate(self.last_data, start=0):
@@ -121,9 +124,14 @@ class TopNViz(object):
                 pos += 1
                 last_cnt = cnt
 
-            line = "{0!s: >{poslen}} {1: <{strlen}} {2!s: >{cntlen}}".format(pos, truncate(qname), cnt,
-                                                                             poslen=self.n_width, strlen=str_width,
-                                                                             cntlen=cnt_width)
+            line = "{0!s: >{poslen}} " \
+                   "{1: <{strlen}}" \
+                   " {2!s: >{cntlen}}".format(pos,
+                                              truncate(qname, str_width),
+                                              cnt,
+                                              poslen=self.n_width,
+                                              strlen=str_width,
+                                              cntlen=cnt_width)
             # print(len(line), file=sys.stderr)
             if self.high_line == i:
                 self.pad.addstr(i, 0, line, curses.A_REVERSE)
@@ -136,7 +144,8 @@ class TopNViz(object):
             else:
                 self.pad.addstr(i, 0, "~")
 
-        self.pad.refresh(self.headline, 0, 0, 0, self.term_size[0] - 1, self.term_size[1] - 1)
+        self.pad.refresh(self.headline, 0, 0, 0, self.term_size[
+                         0] - 1, self.term_size[1] - 1)
 
     def get_term_size(self):
         self.term_size = self.stdscr.getmaxyx()
@@ -155,22 +164,29 @@ class TopNViz(object):
         self.pad.redrawwin()
 
     def move_high_line(self, direction):
-        if direction == self.UP and self.headline == self.high_line:  # Top highlight
+        if direction == self.UP and \
+                        self.headline == self.high_line:  # Top highlight
             if self.headline > 0:  # Not first line
                 self.headline += self.UP
             else:
-                # print("headline ", str(self.headline), "\nhighline ", str(self.high_line), file=sys.stderr)
+                # print("headline ", str(self.headline), "\nhighline ",
+                #      str(self.high_line), file=sys.stderr)
                 return
-        elif direction == self.DOWN and self.headline + self.term_size[0] - 1 == self.high_line:  # Bottom highlight
-            if self.headline + self.term_size[0] < len(self.last_data) - 1:  # Not last line
+        # Bottom highlight
+        elif direction == self.DOWN and self.headline + self.term_size[0] - 1 \
+                == self.high_line:
+            # Not last line
+            if self.headline + self.term_size[0] < len(self.last_data) - 1:
                 self.headline += self.DOWN
             else:
-                # print("headline ", str(self.headline), "\nhighline ", str(self.high_line), file=sys.stderr)
+                # print("headline ", str(self.headline), "\nhighline ",
+                #      str(self.high_line), file=sys.stderr)
                 return
 
         self.high_line += direction
         self.need_refresh = True
-        # print("headline ", str(self.headline), "\nhighline ", str(self.high_line), file=sys.stderr)
+        # print("headline ", str(self.headline), "\nhighline ",
+        #      str(self.high_line), file=sys.stderr)
 
 
 if __name__ == '__main__':
