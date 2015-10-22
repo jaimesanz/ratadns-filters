@@ -1,4 +1,4 @@
-from core import keyswithmaxvals
+from core import keys_with_max_vals
 from prer import PreR
 
 
@@ -41,7 +41,7 @@ class TopN(PreR):
             self.names[qname] = 1
 
     def get_data(self):
-        last_n = keyswithmaxvals(self.names, self.n)
+        last_n = keys_with_max_vals(self.names, self.n)
         return last_n
 
     def reset(self):

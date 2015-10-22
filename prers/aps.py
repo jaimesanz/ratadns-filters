@@ -22,6 +22,7 @@ class AnswersPerSecond(PreR):
 
     <FILL>
     """
+
     def __init__(self, f):
         PreR.__init__(self, f)
         self.counter = 0

@@ -5,7 +5,7 @@ import json
 import heapq
 
 
-def openfifo(path, fifos):
+def open_fifo(path, fifos):
     if not os.path.exists(path):
         os.mkfifo(path)
     f = open(path, "w")
@@ -13,7 +13,7 @@ def openfifo(path, fifos):
     return f
 
 
-def hextoip(h):
+def hex_to_ip(h):
     o1 = int(h[0:1], 16)
     o2 = int(h[2:3], 16)
     o3 = int(h[4:5], 16)
@@ -21,7 +21,7 @@ def hextoip(h):
     return str(o1) + "." + str(o2) + "." + str(o3) + "." + str(o4)
 
 
-def keyswithmaxvals(d, n):
+def keys_with_max_vals(d, n):
     # The - is for python min-heap
     inverse = [[-p[1], p[0]] for p in d.items()]
     n = min(n, len(inverse))
@@ -140,8 +140,8 @@ class Packet(object):
     """Encapsulates the information packet and the size of its window
     """
 
-    def __init__(self, input, windowSize=1000):
-        self._windowSize = windowSize
+    def __init__(self, input, window_size=1000):
+        self._window_size = window_size
         self._input = input
 
     @property
@@ -190,9 +190,9 @@ class Packet(object):
             raise PacketWithoutInfoError('queries')
 
     @property
-    def windowSize(self):
-        """Return the windowSize where is the packet"""
-        return self._windowSize
+    def window_size(self):
+        """Return the window_size where is the packet"""
+        return self._window_size
 
     def is_answer(self):
         """Return True if the packet is an answer"""
@@ -202,7 +202,7 @@ class Packet(object):
         except KeyError:
             raise PacketWithoutInfoError('flags')
 
-    def isCriticalType(self):
+    def is_critical_type(self):
         """Return True if the packet type forbids
         have an underscore in its qname (for queries)"""
         try:

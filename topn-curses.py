@@ -12,7 +12,7 @@ import sys
 
 
 def truncate(s, str_width):
-        return len(s) > str_width and s[:str_width - 3] + "..." or s
+    return len(s) > str_width and s[:str_width - 3] + "..." or s
 
 
 class TopNViz(object):
@@ -165,7 +165,7 @@ class TopNViz(object):
 
     def move_high_line(self, direction):
         if direction == self.UP and \
-                        self.headline == self.high_line:  # Top highlight
+                self.headline == self.high_line:  # Top highlight
             if self.headline > 0:  # Not first line
                 self.headline += self.UP
             else:

@@ -32,7 +32,7 @@ class PacketHasUnderscore(PreR):
     def __call__(self, p):
         if not p.is_answer():
             qname = p.qname
-            if "_" in qname and p.isCriticalType():
+            if "_" in qname and p.is_critical_type():
                 sender = p.source
                 query = p.query
                 if sender in self.names:

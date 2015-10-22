@@ -39,7 +39,7 @@ class QueriesWithUnderscoredName(PreR):
             sender = p.source
             server = p.dest
             qname = p.qname
-            if "_" in qname and p.isCriticalType():
+            if "_" in qname and p.is_critical_type():
                 if qname not in self.names:
                     self.names[qname] = []
                 newQuery = {'sender': sender, 'server': server, 'query': query}
