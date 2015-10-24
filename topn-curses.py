@@ -173,8 +173,8 @@ class TopNViz(object):
                 #      str(self.high_line), file=sys.stderr)
                 return
         # Bottom highlight
-        elif direction == self.DOWN and self._headline + self._term_size[0] - 1 \
-                == self._high_line:
+        elif direction == self.DOWN and self._headline +\
+                self._term_size[0] - 1 == self._high_line:
             # Not last line
             if self._headline + self._term_size[0] < len(self._last_data) - 1:
                 self._headline += self.DOWN
