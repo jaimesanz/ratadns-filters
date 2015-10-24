@@ -7,22 +7,22 @@ class TopNPP(PreR):
 
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
-        self.k = int(kwargs['n'])
-        self.packet_pocket = PacketPocket(self.k)
+        self._k = int(kwargs['n'])
+        self._packet_pocket = PacketPocket(self._k)
 
     def __call__(self, p):
-        if not hasattr(self, 'n'):
-            self.n = p.window_size
-            self.packet_pocket = PacketPocket(self.k, self.n)
-        self.packet_pocket.incr_count(p.qname)
+        if not hasattr(self, '_n'):
+            self._n = p.window_size
+            self._packet_pocket = PacketPocket(self._k, self._n)
+        self._packet_pocket.incr_count(p.qname)
 
     def get_data(self):
         ans = []
-        top_k = self.packet_pocket.top_k()
+        top_k = self._packet_pocket.top_k()
         for name in top_k:
-            freq = self.packet_pocket.reverse_dict[name]
+            freq = self._packet_pocket._reverse_dict[name]
             ans.append([name, freq])
         return ans
 
     def reset(self):
-        self.packet_pocket = PacketPocket(self.k, self.n)
+        self._packet_pocket = PacketPocket(self._k, self._n)

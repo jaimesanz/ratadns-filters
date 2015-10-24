@@ -29,20 +29,20 @@ class TopN(PreR):
 
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
-        self.names = {}
-        self.n = int(kwargs['n'])
+        self._names = {}
+        self._n = int(kwargs['n'])
 
     def __call__(self, p):
         qname = p.qname
 
-        if qname in self.names:
-            self.names[qname] += 1
+        if qname in self._names:
+            self._names[qname] += 1
         else:
-            self.names[qname] = 1
+            self._names[qname] = 1
 
     def get_data(self):
-        last_n = keys_with_max_vals(self.names, self.n)
+        last_n = keys_with_max_vals(self._names, self._n)
         return last_n
 
     def reset(self):
-        self.names.clear()
+        self._names.clear()

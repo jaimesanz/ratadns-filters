@@ -29,22 +29,22 @@ class Options:
         config.read(config_file)
 
         # Get the window size (self.window_size)
-        self.window_size = config.getint("core", "WindowSize")
+        self._window_size = config.getint("core", "WindowSize")
 
         # Create the input method (self.input)
         input_method = config.get("core", "InputMethod")
         if input_method == 'stdin':
-            self.input = sys.stdin
+            self._input = sys.stdin
         elif input_method == 'file':
             input_file = config.get("core", "FileName")
-            self.input = open(input_file, "r", 1)
+            self._input = open(input_file, "r", 1)
         else:  # Default input method
-            self.input = sys.stdin
+            self._input = sys.stdin
 
-        # Create the PreR's with each's input methods (self.prers)
+        # Create the PreR's with each's input methods (self._prers)
         prers_path = config.get("core", "PreliminarReducersPackage")
         prers_names = config.get("core", "PreliminarReducers").split(",")
-        self.prers = []
+        self._prers = []
         for prer_name in prers_names:
             module_name, class_name = prer_name.rsplit(".", 1)
             prer_class = getattr(importlib.import_module(
@@ -70,7 +70,7 @@ class Options:
             # else:
             #     prer = PreR(f, **prer_args)
 
-            self.prers.append(prer_instance)
+            self._prers.append(prer_instance)
 
 
 if __name__ == '__main__':

@@ -27,7 +27,7 @@ class PacketHasUnderscore(PreR):
 
     def __init__(self, f):
         PreR.__init__(self, f)
-        self.names = {}
+        self._names = {}
 
     def __call__(self, p):
         if not p.is_answer():
@@ -35,14 +35,14 @@ class PacketHasUnderscore(PreR):
             if "_" in qname and p.is_critical_type():
                 sender = p.source
                 query = p.query
-                if sender in self.names:
-                    self.names[sender]['cnt'] += 1
-                    self.names[sender]['queries'].append(query)
+                if sender in self._names:
+                    self._names[sender]['cnt'] += 1
+                    self._names[sender]['queries'].append(query)
                 else:
-                    self.names[sender] = {'cnt': 1, 'queries': [query]}
+                    self._names[sender] = {'cnt': 1, 'queries': [query]}
 
     def get_data(self):
-        return self.names
+        return self._names
 
     def reset(self):
-        self.names.clear()
+        self._names.clear()

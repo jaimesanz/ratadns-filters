@@ -25,16 +25,16 @@ class PacketsPerSecond(PreR):
 
     def __init__(self, f):
         PreR.__init__(self, f)
-        self.counter = 0
-        self.start = time.time()
+        self._counter = 0
+        self._start = time.time()
 
     def __call__(self, p):
-        self.counter += 1
+        self._counter += 1
 
     def get_data(self):
-        data = {'pps': self.counter / (time.time() - self.start)}
+        data = {'pps': self._counter / (time.time() - self._start)}
         return data
 
     def reset(self):
-        self.counter = 0
-        self.start = time.time()
+        self._counter = 0
+        self._start = time.time()

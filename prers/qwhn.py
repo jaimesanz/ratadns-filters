@@ -31,7 +31,7 @@ class QueriesWithUnderscoredName(PreR):
 
     def __init__(self, f):
         PreR.__init__(self, f)
-        self.names = {}
+        self._names = {}
 
     def __call__(self, p):
         if not p.is_answer():
@@ -40,13 +40,13 @@ class QueriesWithUnderscoredName(PreR):
             server = p.dest
             qname = p.qname
             if "_" in qname and p.is_critical_type():
-                if qname not in self.names:
-                    self.names[qname] = []
+                if qname not in self._names:
+                    self._names[qname] = []
                 newQuery = {'sender': sender, 'server': server, 'query': query}
-                self.names[qname].append(newQuery)
+                self._names[qname].append(newQuery)
 
     def get_data(self):
-        return self.names
+        return self._names
 
     def reset(self):
-        self.names.clear()
+        self._names.clear()

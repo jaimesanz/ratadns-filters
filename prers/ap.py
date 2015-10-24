@@ -26,34 +26,33 @@ class AlonePackets(PreR):
 
     def __init__(self, f):
         PreR.__init__(self, f)
-        self.qcounter = 0
-        self.acounter = 0
-        self.alone_queries_ids = {}  # Dicts {id : InputDict}
-        self.alone_answers_ids = {}
+        self._qcounter = 0
+        self._acounter = 0
+        self._alone_queries_ids = {}  # Dicts {id : InputDict}
+        self._alone_answers_ids = {}
 
     def __call__(self, p):
         if p.is_answer():
-            self.acounter += 1
-            if p.id in self.alone_queries_ids:
-                self.alone_queries_ids.pop(p.id, None)
+            self._acounter += 1
+            if p.id in self._alone_queries_ids:
+                self._alone_queries_ids.pop(p.id, None)
             else:
-                self.alone_answers_ids[p.id] = p.input
+                self._alone_answers_ids[p.id] = p.input
 
         else:
-            self.qcounter += 1
-            if p.id in self.alone_answers_ids:
-                self.alone_answers_ids.pop(p.id, None)
+            self._qcounter += 1
+            if p.id in self._alone_answers_ids:
+                self._alone_answers_ids.pop(p.id, None)
             else:
-                self.alone_queries_ids[p.id] = p.input
+                self._alone_queries_ids[p.id] = p.input
 
     def get_data(self):
-        data = {'queries': self.qcounter, 'answers': self.acounter,
-                'AloneAnswers': self.alone_answers_ids.values(),
-                'AloneQueries': self.alone_queries_ids.values()}
+        data = {'queries': self._qcounter, 'answers': self._acounter,
+                'AloneAnswers': self._alone_answers_ids.values(),
+                'AloneQueries': self._alone_queries_ids.values()}
         return data
 
     def reset(self):
-        self.pcounter = self.qcounter = self.acounter\
-            = self.alpcounter = self.alqcounter = self.alacounter = 0
-        self.alone_queries_ids = {}  # Dicts {id : Input}
-        self.alone_answers_ids = {}
+        self._qcounter = self._acounter = 0
+        self._alone_queries_ids = {}  # Dicts {id : Input}
+        self._alone_answers_ids = {}
