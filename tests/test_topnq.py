@@ -159,6 +159,7 @@ class TestTopNQ(unittest.TestCase):
         example = self.data_example()
         for packet in example:
             self.__p1(packet)
+        for packet in example:
             self.__p2(packet)
 
         result1 = self.__p1.get_data()
