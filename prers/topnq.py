@@ -3,19 +3,21 @@ from prer import PreR
 
 
 class TopNQ(PreR):
-    """Show the ranking of qnames coming from the queries in a window.
+    """Show the ranking of qnames coming from the packets in a window.
 
     - Result
 
-    Dict with 'n' keys.
-    The keys are the 'qnames' with the highest number of appearances
-    in the queries in the current window.
-    The values are the number of number of appearances of the
+    List of the n-top most consulted 'qnames'
+    The elements are list of two elements
+    The first are the 'qnames' with the highest number of appearances
+    in the packets in the current window.
+    The second are the number of number of appearances of the
     corresponding 'qname'.
 
-    - Example(N=2)
+    - Example(N=3)
 
-    {"www.pinky.cl": 8, "www.fievel.cl.": 13}
+    [['www.nic.cl', 5], ['www.niclabs.cl', 4],
+     ['www.jerry.cl', 3], ['www.uchile.cl', 3]]
 
 
     - Complexity Note
