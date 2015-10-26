@@ -13,7 +13,7 @@ class TestQueriesNameCounter(unittest.TestCase):
     def test_has_info(self):
         info = {}
         info['id'] = 'id'
-        info['queries'] = [{'qname':'qname'}]
+        info['queries'] = [{'qname': 'qname'}]
         info['source'] = 'source'
         info['dest'] = 'dest'
 
@@ -25,7 +25,6 @@ class TestQueriesNameCounter(unittest.TestCase):
         self.assertEqual(a.source, info['source'])
         self.assertEqual(a.dest, info['dest'])
         self.assertEqual(a.window_size, 1000)
-
 
     def test_does_not_have_info(self):
         info = {}
@@ -63,10 +62,10 @@ class TestQueriesNameCounter(unittest.TestCase):
                             'queries': [
                                 {'qname': 'www.ni_c.cl', 'qtype': '1'}]}
         answer = {'dest': 'encrypted(ip3)',
-                         'source': 'encrypted(dnsip3)',
-                         'flags': '8000',
-                         'queries': [
-                             {'qname': 'www.jerry.cl', 'qtype': '5'}]}
+                  'source': 'encrypted(dnsip3)',
+                  'flags': '8000',
+                  'queries': [
+                      {'qname': 'www.jerry.cl', 'qtype': '5'}]}
 
         q = Packet(queryProblematic)
         a = Packet(answer)
