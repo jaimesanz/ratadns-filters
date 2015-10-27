@@ -24,6 +24,8 @@ class Options:
         config = ConfigParser.ConfigParser()
         config.read(config_file)
 
+        self.server_id = config.get("core", "ServerId")
+
         # Get the window size (self.window_size)
         self.window_size = config.getint("core", "WindowSize")
 
