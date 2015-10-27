@@ -68,9 +68,9 @@ def mainloop(options):
                 for fun in flist:
                     f = fun.get_file()
                     message = {
-                        "serverId" : options.server_id,
-                        "data" : fun.get_data(),
-                        "type" : fun.get_type()
+                        "serverId": options.server_id,
+                        "data": fun.get_data(),
+                        "type": fun.get_type()
                     }
                     f.write(json.dumps(message))
                     f.write("\n")
