@@ -76,8 +76,12 @@ def mainloop(options):
                 counter = 0
                 for fun in flist:
                     f = fun.get_file()
-                    s = json.dumps(fun.get_data())
-                    f.write(s)
+                    message = {
+                        "serverId": options.server_id,
+                        "data": fun.get_data(),
+                        "type": fun.get_type()
+                    }
+                    f.write(json.dumps(message))
                     f.write("\n")
                     fun.reset()
         except ValueError:

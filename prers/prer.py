@@ -22,5 +22,8 @@ class PreR(object):
     def get_file(self):
         return self.__f
 
+    def get_type(self):
+        return self.__class__.__name__
+
     def reset(self):
         raise NotImplementedError('Method reset not implemented')
