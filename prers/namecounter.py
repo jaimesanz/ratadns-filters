@@ -1,4 +1,3 @@
-__author__ = 'franchoco'
 from prer import PreR
 
 
@@ -31,7 +30,7 @@ class NameCounter(PreR):
 
     def __call__(self, p):
         qname = p.qname
-        if self.names.has_key(qname):
+        if qname in self.names:
             self.names[qname] += 1
         else:
             self.names[qname] = 1

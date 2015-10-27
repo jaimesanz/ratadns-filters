@@ -1,5 +1,3 @@
-__author__ = 'sking32'
-
 import unittest
 import StringIO
 
@@ -21,25 +19,35 @@ class TestIdentity(unittest.TestCase):
 
         listOfPackets = []
 
-        for i in range(5) :
-            data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.nic.cl'}]})
-            listOfPackets.append({'flags': '8000', 'queries' : [{'qname' : 'www.nic.cl'}]})
+        for i in range(5):
+            data.addPacket({'flags': '8000', 'queries': [
+                           {'qname': 'www.nic.cl'}]})
+            listOfPackets.append(
+                {'flags': '8000', 'queries': [{'qname': 'www.nic.cl'}]})
 
-        for i in range(4) :
-            data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.niclabs.cl'}]})
-            listOfPackets.append({'flags': '0', 'queries' : [{'qname' : 'www.niclabs.cl'}]})
+        for i in range(4):
+            data.addPacket({'flags': '0', 'queries': [
+                           {'qname': 'www.niclabs.cl'}]})
+            listOfPackets.append(
+                {'flags': '0', 'queries': [{'qname': 'www.niclabs.cl'}]})
 
-        for i in range(3) :
-            data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.uchile.cl'}]})
-            listOfPackets.append({'flags': '0', 'queries' : [{'qname' : 'www.uchile.cl'}]})
+        for i in range(3):
+            data.addPacket({'flags': '0', 'queries': [
+                           {'qname': 'www.uchile.cl'}]})
+            listOfPackets.append(
+                {'flags': '0', 'queries': [{'qname': 'www.uchile.cl'}]})
 
-        for i in range(3) :
-            data.addPacket({'flags': '8000', 'queries' : [{'qname' : 'www.jerry.cl'}]})
-            listOfPackets.append({'flags': '8000', 'queries' : [{'qname' : 'www.jerry.cl'}]})
+        for i in range(3):
+            data.addPacket({'flags': '8000', 'queries': [
+                           {'qname': 'www.jerry.cl'}]})
+            listOfPackets.append(
+                {'flags': '8000', 'queries': [{'qname': 'www.jerry.cl'}]})
 
-        for i in range(2) :
-            data.addPacket({'flags': '0', 'queries' : [{'qname' : 'www.pinky.cl'}]})
-            listOfPackets.append({'flags': '0', 'queries' : [{'qname' : 'www.pinky.cl'}]})
+        for i in range(2):
+            data.addPacket({'flags': '0', 'queries': [
+                           {'qname': 'www.pinky.cl'}]})
+            listOfPackets.append(
+                {'flags': '0', 'queries': [{'qname': 'www.pinky.cl'}]})
 
         data.putInformation('packets', listOfPackets)
 
@@ -47,7 +55,6 @@ class TestIdentity(unittest.TestCase):
 
     def setUp(self):
         self.reInit()
-
 
     def test_rightFormat(self):
         self.reInit()

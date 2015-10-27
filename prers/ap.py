@@ -1,5 +1,5 @@
-__author__ = 'sking32'
 from prer import PreR
+
 
 class AlonePackets(PreR):
     """Show information about alone packets in a window
@@ -34,24 +34,26 @@ class AlonePackets(PreR):
     def __call__(self, p):
         if p.is_answer():
             self.acounter += 1
-            if self.aloneQueriesIds.has_key(p.id):
+            if p.id in self.aloneQueriesIds:
                 self.aloneQueriesIds.pop(p.id, None)
             else:
                 self.aloneAnswersIds[p.id] = p.input
 
         else:
             self.qcounter += 1
-            if self.aloneAnswersIds.has_key(p.id):
+            if p.id in self.aloneAnswersIds:
                 self.aloneAnswersIds.pop(p.id, None)
             else:
                 self.aloneQueriesIds[p.id] = p.input
 
     def get_data(self):
-        data = {'queries': self.qcounter, 'answers': self.acounter, 'AloneAnswers': self.aloneAnswersIds.values(),
+        data = {'queries': self.qcounter, 'answers': self.acounter,
+                'AloneAnswers': self.aloneAnswersIds.values(),
                 'AloneQueries': self.aloneQueriesIds.values()}
         return data
 
     def reset(self):
-        self.pcounter = self.qcounter = self.acounter = self.alpcounter = self.alqcounter = self.alacounter = 0
+        self.pcounter = self.qcounter = self.acounter\
+            = self.alpcounter = self.alqcounter = self.alacounter = 0
         self.aloneQueriesIds = {}  # Dicts {id : Input}
         self.aloneAnswersIds = {}

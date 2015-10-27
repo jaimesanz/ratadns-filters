@@ -1,5 +1,3 @@
-__author__ = 'sking32'
-
 import unittest
 import StringIO
 from time import time
@@ -19,40 +17,38 @@ class TestPacketsQueriesAndAnswersPerSecond(unittest.TestCase):
     def dataExample(self):
         na = 2
         nq = 2
-        data = PacketsExample({'na' : na, 'nq' : nq})
+        data = PacketsExample({'na': na, 'nq': nq})
 
         for i in range(na):
-            data.addPacket({'flags' : '8000'})
+            data.addPacket({'flags': '8000'})
         for i in range(nq):
-            data.addPacket({'flags' : '0'})
+            data.addPacket({'flags': '0'})
 
         return data
 
     def dataOnlyQueries(self):
         na = 0
         nq = 2
-        data = PacketsExample({'na' : na, 'nq' : nq})
+        data = PacketsExample({'na': na, 'nq': nq})
 
         data = PacketsExample()
         for i in range(nq):
-            data.addPacket({'flags' : '0'})
+            data.addPacket({'flags': '0'})
 
         return data
 
     def dataOnlyAnswers(self):
         na = 2
         nq = 0
-        data = PacketsExample({'na' : na, 'nq' : nq})
+        data = PacketsExample({'na': na, 'nq': nq})
 
         for i in range(na):
-            data.addPacket({'flags' : '8000'})
+            data.addPacket({'flags': '8000'})
 
         return data
 
-
     def setUp(self):
         self.reInit()
-
 
     def test_rightFormat(self):
         self.reInit()
@@ -61,18 +57,17 @@ class TestPacketsQueriesAndAnswersPerSecond(unittest.TestCase):
 
         self.assertEquals(type(result), dict)
 
-        self.assertTrue(result.has_key('pps'))
+        self.assertTrue('pps' in result)
         self.assertEqual(type(result['pps']), float)
         self.assertGreaterEqual(result['pps'], 0)
 
-        self.assertTrue(result.has_key('qps'))
+        self.assertTrue('qps' in result)
         self.assertEqual(type(result['qps']), float)
         self.assertGreaterEqual(result['qps'], 0)
 
-        self.assertTrue(result.has_key('aps'))
+        self.assertTrue('aps' in result)
         self.assertEqual(type(result['aps']), float)
         self.assertGreaterEqual(result['aps'], 0)
-
 
     def test_noData(self):
         self.reInit()
@@ -83,8 +78,7 @@ class TestPacketsQueriesAndAnswersPerSecond(unittest.TestCase):
         self.assertEqual(result['qps'], 0)
         self.assertEqual(result['aps'], 0)
 
-
-    def test_dataExample(self): #AQUI VOY
+    def test_dataExample(self):  # AQUI VOY
 
         beforeInitTime = time()
         self.reInit()
@@ -99,14 +93,22 @@ class TestPacketsQueriesAndAnswersPerSecond(unittest.TestCase):
         result = self.__p1.get_data()
         afterEndTime = time()
 
-        self.assertLessEqual((example.expectedValue('na')+example.expectedValue('nq'))/(afterEndTime-beforeInitTime), result['pps'])
-        self.assertGreaterEqual((example.expectedValue('na')+example.expectedValue('nq'))/(beforeEndTime-afterInitTime), result['pps'])
+        na = example.expectedValue('na')
+        nq = example.expectedValue('nq')
+        self.assertLessEqual((na+nq) / (afterEndTime - beforeInitTime),
+                             result['pps'])
+        self.assertGreaterEqual((na+nq) / (beforeEndTime - afterInitTime),
+                                result['pps'])
 
-        self.assertLessEqual(example.expectedValue('nq')/(afterEndTime-beforeInitTime), result['qps'])
-        self.assertGreaterEqual(example.expectedValue('nq')/(beforeEndTime-afterInitTime), result['qps'])
+        self.assertLessEqual(nq / (afterEndTime - beforeInitTime),
+                             result['qps'])
+        self.assertGreaterEqual(nq / (beforeEndTime - afterInitTime),
+                                result['qps'])
 
-        self.assertLessEqual(example.expectedValue('na')/(afterEndTime-beforeInitTime), result['aps'])
-        self.assertGreaterEqual(example.expectedValue('na')/(beforeEndTime-afterInitTime), result['aps'])
+        self.assertLessEqual(na / (afterEndTime - beforeInitTime),
+                             result['aps'])
+        self.assertGreaterEqual(na / (beforeEndTime - afterInitTime),
+                                result['aps'])
 
     def test_dataOnlyQueries(self):
 
@@ -134,7 +136,6 @@ class TestPacketsQueriesAndAnswersPerSecond(unittest.TestCase):
 
         self.assertLessEqual(result['qps'], 0)
 
-
     def test_reset(self):
         beforeInitTime = time()
         self.reInit()
@@ -150,14 +151,22 @@ class TestPacketsQueriesAndAnswersPerSecond(unittest.TestCase):
             result = self.__p1.get_data()
             afterEndTime = time()
 
-            self.assertLessEqual((example.expectedValue('na')+example.expectedValue('nq'))/(afterEndTime-beforeInitTime), result['pps'])
-            self.assertGreaterEqual((example.expectedValue('na')+example.expectedValue('nq'))/(beforeEndTime-afterInitTime), result['pps'])
+            na = example.expectedValue('na')
+            nq = example.expectedValue('nq')
+            self.assertLessEqual((na+nq) / (afterEndTime - beforeInitTime),
+                                 result['pps'])
+            self.assertGreaterEqual((na+nq) / (beforeEndTime - afterInitTime),
+                                    result['pps'])
 
-            self.assertLessEqual(example.expectedValue('nq')/(afterEndTime-beforeInitTime), result['qps'])
-            self.assertGreaterEqual(example.expectedValue('nq')/(beforeEndTime-afterInitTime), result['qps'])
+            self.assertLessEqual(example.expectedValue(
+                'nq') / (afterEndTime - beforeInitTime), result['qps'])
+            self.assertGreaterEqual(example.expectedValue(
+                'nq') / (beforeEndTime - afterInitTime), result['qps'])
 
-            self.assertLessEqual(example.expectedValue('na')/(afterEndTime-beforeInitTime), result['aps'])
-            self.assertGreaterEqual(example.expectedValue('na')/(beforeEndTime-afterInitTime), result['aps'])
+            self.assertLessEqual(example.expectedValue(
+                'na') / (afterEndTime - beforeInitTime), result['aps'])
+            self.assertGreaterEqual(example.expectedValue(
+                'na') / (beforeEndTime - afterInitTime), result['aps'])
 
             beforeInitTime = time()
             self.__p1.reset()

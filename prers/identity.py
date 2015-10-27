@@ -1,4 +1,3 @@
-__author__ = 'franchoco'
 from prer import PreR
 
 

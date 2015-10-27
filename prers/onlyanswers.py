@@ -1,4 +1,3 @@
-__author__ = 'sking32'
 from prer import PreR
 
 

@@ -1,4 +1,3 @@
-__author__ = 'franchoco'
 from core import keyswithmaxvals
 from prer import PreR
 
@@ -27,6 +26,7 @@ class TopNQ(PreR):
 
     <FILL>
     """
+
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
         self.names = {}
@@ -36,7 +36,7 @@ class TopNQ(PreR):
         qname = p.qname
         # print str(flags)
         if not p.is_answer():
-            if self.names.has_key(qname):
+            if qname in self.names:
                 self.names[qname] += 1
             else:
                 self.names[qname] = 1
