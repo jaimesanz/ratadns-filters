@@ -1,5 +1,6 @@
 __author__ = 'sking32'
 
+
 class PreR(object):
     """Implement transformation of the packet-analyzer output.
 
@@ -8,6 +9,7 @@ class PreR(object):
     give the current result and
     reset its own state.
     """
+
     def __init__(self, f):
         self.__f = f
 

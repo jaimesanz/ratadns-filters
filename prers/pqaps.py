@@ -1,9 +1,10 @@
-__author__ = 'franchoco'
 from prer import PreR
 import time
 
+
 class PacketsQueriesAndAnswersPerSecond(PreR):
-    """Show the average number of packets, queries and answers per second in a window.
+    """Show the average number of packets, queries and
+     answers per second in a window.
 
     - Result
 
@@ -25,6 +26,7 @@ class PacketsQueriesAndAnswersPerSecond(PreR):
 
     <FILL>
     """
+
     def __init__(self, f):
         PreR.__init__(self, f)
         self.pcounter = 0
@@ -41,7 +43,7 @@ class PacketsQueriesAndAnswersPerSecond(PreR):
 
     def get_data(self):
         data = {}
-        t=time.time()
+        t = time.time()
         data['pps'] = self.pcounter / (t - self.start)
         data['qps'] = self.qcounter / (t - self.start)
         data['aps'] = self.acounter / (t - self.start)

@@ -1,5 +1,3 @@
-__author__ = 'sking32'
-
 import unittest
 import StringIO
 
@@ -16,14 +14,14 @@ class TestAlonePackets(unittest.TestCase):
         self.__p2 = AlonePackets(self.__stringBuffer2)
 
     def dataExample(self):
-        data = PacketsExample({'queries' : 2, 'answers' : 2})
-        answerWithoutQuery = {'flags' : '8000', 'id' : '1111'}
-        queryWithoutAnswer = {'flags' : '0', 'id' : '3333'}
+        data = PacketsExample({'queries': 2, 'answers': 2})
+        answerWithoutQuery = {'flags': '8000', 'id': '1111'}
+        queryWithoutAnswer = {'flags': '0', 'id': '3333'}
 
-        data.addPacket(answerWithoutQuery) #Answer without query
-        data.addPacket({'flags' : '0', 'id' : '12cb'})
-        data.addPacket({'flags' : '8000', 'id' : '12cb'})
-        data.addPacket(queryWithoutAnswer) #Query without answer
+        data.addPacket(answerWithoutQuery)  # Answer without query
+        data.addPacket({'flags': '0', 'id': '12cb'})
+        data.addPacket({'flags': '8000', 'id': '12cb'})
+        data.addPacket(queryWithoutAnswer)  # Query without answer
 
         data.setExpected('AloneAnswers', [answerWithoutQuery])
         data.setExpected('AloneQueries', [queryWithoutAnswer])
@@ -31,10 +29,11 @@ class TestAlonePackets(unittest.TestCase):
         return data
 
     def dataWithoutQueries(self):
-        answers = [{'flags' : '8000', 'id' : 'a6c7'}, {'flags' : '8000', 'id' : '5433'}, {'flags' : '8000', 'id' : 'a276'}]
-        data = PacketsExample({'queries' : 0, 'answers' : len(answers)})
+        answers = [{'flags': '8000', 'id': 'a6c7'}, {
+            'flags': '8000', 'id': '5433'}, {'flags': '8000', 'id': 'a276'}]
+        data = PacketsExample({'queries': 0, 'answers': len(answers)})
 
-        for answer in answers :
+        for answer in answers:
             data.addPacket(answer)
 
         data.setExpected('AloneAnswers', answers)
@@ -43,10 +42,11 @@ class TestAlonePackets(unittest.TestCase):
         return data
 
     def dataWithoutAnswers(self):
-        queries = [{'flags' : '0', 'id' : 'a6c7'}, {'flags' : '0', 'id' : '5433'}, {'flags' : '0', 'id' : 'a276'}, {'flags' : '0', 'id' : '4321'}]
-        data = PacketsExample({'queries' : len(queries), 'answers' : 0})
+        queries = [{'flags': '0', 'id': 'a6c7'}, {'flags': '0', 'id': '5433'},
+                   {'flags': '0', 'id': 'a276'}, {'flags': '0', 'id': '4321'}]
+        data = PacketsExample({'queries': len(queries), 'answers': 0})
 
-        for query in queries :
+        for query in queries:
             data.addPacket(query)
 
         data.setExpected('AloneAnswers', [])
@@ -55,13 +55,12 @@ class TestAlonePackets(unittest.TestCase):
         return data
 
     def dataWithoutAlonePackets(self):
-        data = PacketsExample({'queries' : 2, 'answers' : 2})
+        data = PacketsExample({'queries': 2, 'answers': 2})
 
-        data.addPacket({'flags' : '8000', 'id' : '1111'})
-        data.addPacket({'flags' : '0', 'id' : '12cb'})
-        data.addPacket({'flags' : '8000', 'id' : '12cb'})
-        data.addPacket({'flags' : '0', 'id' : '1111'})
-
+        data.addPacket({'flags': '8000', 'id': '1111'})
+        data.addPacket({'flags': '0', 'id': '12cb'})
+        data.addPacket({'flags': '8000', 'id': '12cb'})
+        data.addPacket({'flags': '0', 'id': '1111'})
 
         data.setExpected('AloneAnswers', [])
         data.setExpected('AloneQueries', [])
@@ -71,21 +70,19 @@ class TestAlonePackets(unittest.TestCase):
     def setUp(self):
         self.reInit()
 
-
     def test_rightFormat(self):
         self.reInit()
 
         result = self.__p1.get_data()
 
         self.assertEquals(type(result), dict)
-        self.assertTrue(result.has_key('queries'))
-        self.assertTrue(result.has_key('answers'))
-        self.assertTrue(result.has_key('AloneAnswers'))
-        self.assertTrue(result.has_key('AloneQueries'))
-        
+        self.assertTrue('queries' in result)
+        self.assertTrue('answers' in result)
+        self.assertTrue('AloneAnswers' in result)
+        self.assertTrue('AloneQueries' in result)
+
         self.assertEquals(type(result['AloneAnswers']), list)
         self.assertEquals(type(result['AloneQueries']), list)
-
 
     def test_noData(self):
         self.reInit()
@@ -122,10 +119,12 @@ class TestAlonePackets(unittest.TestCase):
 
         result = self.__p1.get_data()
 
-        self.assertEquals(example.expectedValue('queries'),result['queries'])
+        self.assertEquals(example.expectedValue('queries'), result['queries'])
         self.assertEquals(example.expectedValue('answers'), result['answers'])
-        self.assertItemsEqual(example.expectedValue('AloneAnswers'), result['AloneAnswers'])
-        self.assertItemsEqual(example.expectedValue('AloneQueries'), result['AloneQueries'])
+        self.assertItemsEqual(example.expectedValue(
+            'AloneAnswers'), result['AloneAnswers'])
+        self.assertItemsEqual(example.expectedValue(
+            'AloneQueries'), result['AloneQueries'])
 
     def test_reset(self):
         self.reInit()
@@ -138,10 +137,14 @@ class TestAlonePackets(unittest.TestCase):
 
             result = self.__p1.get_data()
 
-            self.assertEquals(example.expectedValue('queries'),result['queries'])
-            self.assertEquals(example.expectedValue('answers'), result['answers'])
-            self.assertItemsEqual(example.expectedValue('AloneAnswers'), result['AloneAnswers'])
-            self.assertItemsEqual(example.expectedValue('AloneQueries'), result['AloneQueries'])
+            self.assertEquals(example.expectedValue(
+                'queries'), result['queries'])
+            self.assertEquals(example.expectedValue(
+                'answers'), result['answers'])
+            self.assertItemsEqual(example.expectedValue(
+                'AloneAnswers'), result['AloneAnswers'])
+            self.assertItemsEqual(example.expectedValue(
+                'AloneQueries'), result['AloneQueries'])
 
             self.__p1.reset()
 
@@ -154,11 +157,12 @@ class TestAlonePackets(unittest.TestCase):
 
         result = self.__p1.get_data()
 
-        self.assertEquals(example.expectedValue('queries'),result['queries'])
+        self.assertEquals(example.expectedValue('queries'), result['queries'])
         self.assertEquals(example.expectedValue('answers'), result['answers'])
-        self.assertItemsEqual(example.expectedValue('AloneAnswers'), result['AloneAnswers'])
-        self.assertItemsEqual(example.expectedValue('AloneQueries'), result['AloneQueries'])
-
+        self.assertItemsEqual(example.expectedValue(
+            'AloneAnswers'), result['AloneAnswers'])
+        self.assertItemsEqual(example.expectedValue(
+            'AloneQueries'), result['AloneQueries'])
 
     def test_dataWithoutAnswers(self):
         self.reInit()
@@ -169,10 +173,12 @@ class TestAlonePackets(unittest.TestCase):
 
         result = self.__p1.get_data()
 
-        self.assertEquals(example.expectedValue('queries'),result['queries'])
+        self.assertEquals(example.expectedValue('queries'), result['queries'])
         self.assertEquals(example.expectedValue('answers'), result['answers'])
-        self.assertItemsEqual(example.expectedValue('AloneAnswers'), result['AloneAnswers'])
-        self.assertItemsEqual(example.expectedValue('AloneQueries'), result['AloneQueries'])
+        self.assertItemsEqual(example.expectedValue(
+            'AloneAnswers'), result['AloneAnswers'])
+        self.assertItemsEqual(example.expectedValue(
+            'AloneQueries'), result['AloneQueries'])
 
     def test_dataWithoutAlonePackets(self):
         self.reInit()
@@ -183,10 +189,12 @@ class TestAlonePackets(unittest.TestCase):
 
         result = self.__p1.get_data()
 
-        self.assertEquals(example.expectedValue('queries'),result['queries'])
+        self.assertEquals(example.expectedValue('queries'), result['queries'])
         self.assertEquals(example.expectedValue('answers'), result['answers'])
-        self.assertItemsEqual(example.expectedValue('AloneAnswers'), result['AloneAnswers'])
-        self.assertItemsEqual(example.expectedValue('AloneQueries'), result['AloneQueries'])
+        self.assertItemsEqual(example.expectedValue(
+            'AloneAnswers'), result['AloneAnswers'])
+        self.assertItemsEqual(example.expectedValue(
+            'AloneQueries'), result['AloneQueries'])
 
     def test_file(self):
         self.reInit()

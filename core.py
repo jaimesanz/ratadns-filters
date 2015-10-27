@@ -1,6 +1,9 @@
-__author__ = 'franchoco'
+import operator
+import os
+import redis
+import json
+import heapq
 
-import operator, os, redis, json, heapq
 
 def openfifo(path, fifos):
     if not os.path.exists(path):
@@ -9,31 +12,36 @@ def openfifo(path, fifos):
     fifos.append(f)
     return f
 
+
 def hextoip(h):
-   o1 = int(h[0:1], 16)
-   o2 = int(h[2:3], 16)
-   o3 = int(h[4:5], 16)
-   o4 = int(h[6:7], 16)
-   return str(o1) + "." + str(o2) + "." + str(o3) + "." + str(o4)
+    o1 = int(h[0:1], 16)
+    o2 = int(h[2:3], 16)
+    o3 = int(h[4:5], 16)
+    o4 = int(h[6:7], 16)
+    return str(o1) + "." + str(o2) + "." + str(o3) + "." + str(o4)
+
 
 def keyswithmaxvals(d, n):
-    inverse = [[-p[1], p[0]] for p in d.items()] #The - is for min-heap python :)
+    # The - is for python min-heap
+    inverse = [[-p[1], p[0]] for p in d.items()]
     n = min(n, len(inverse))
     heapq.heapify(inverse)
 
     result = []
-    for i in range(n): #First n s
+    for i in range(n):  # First n s
         elem = heapq.heappop(inverse)
         result.append([elem[1], -elem[0]])
 
-    while len(inverse) > 0 and n>0: #The rest
+    while len(inverse) > 0 and n > 0:  # The rest
         elem = heapq.heappop(inverse)
-        if -elem[0] != result[n-1][1]:
+        if -elem[0] != result[n - 1][1]:
             break
         result.append([elem[1], -elem[0]])
     return result
 
+
 class RedisFile(object):
+
     def __init__(self, server, channel):
         self.r = redis.StrictRedis(host=server, db=0)
         self.channel = channel
@@ -43,6 +51,7 @@ class RedisFile(object):
 
     def close(self):
         self.r.connection_pool.disconnect()
+
 
 def mainloop(options):
     flist, window, input = options.prers, options.window_size, options.input
@@ -54,10 +63,10 @@ def mainloop(options):
         try:
             char = input.read(1)
             while char != '{':
-                length = 10*length + int(char)
+                length = 10 * length + int(char)
                 char = input.read(1)
 
-            json_str = '{' + input.read(length-1)
+            json_str = '{' + input.read(length - 1)
             json_dict = json.loads(json_str)
             packet = Packet(json_dict, window)
             counter += 1
@@ -75,16 +84,18 @@ def mainloop(options):
             running = False
             pass
 
-#Counting-Sort
+
+# Counting-Sort
 class PacketPocket(object):
-    def __init__(self, k, n=1000): #n es el tamano de la ventana en paquetes
+
+    def __init__(self, k, n=1000):  # n es el tamano de la ventana en paquetes
         self.k = k
-        self.reverse_dict = {}       #k define el top
-        self.bucket_list = [set() for i in range(n+1)]
+        self.reverse_dict = {}  # k define el top
+        self.bucket_list = [set() for i in range(n + 1)]
         self.max_bucket = 1
 
     def incr_count(self, qname):
-        if self.reverse_dict.has_key(qname):
+        if qname in self.reverse_dict:
             bucket = self.reverse_dict[qname]
             self.bucket_list[bucket + 1].add(qname)
             self.bucket_list[bucket].remove(qname)
@@ -108,8 +119,10 @@ class PacketPocket(object):
             next_bucket -= 1
         return ans
 
+
 class PacketWithoutInfoError(Exception):
-    """The Packet does not have the requested info. This usually happens because the serializer output does not have it.
+    """The Packet does not have the requested info.
+    This usually happens because the serializer output does not have it.
     """
 
     def __init__(self, info):
@@ -190,7 +203,8 @@ class Packet(object):
             raise PacketWithoutInfoError('flags')
 
     def isCriticalType(self):
-        """Return True if the packet type forbids have an underscore in its qname (for queries)"""
+        """Return True if the packet type forbids
+        have an underscore in its qname (for queries)"""
         try:
             return int(self.query['qtype'], 16) in [1, 2, 6, 15]
         except KeyError:

@@ -1,4 +1,3 @@
-__author__ = 'raticate'
 from prer import PreR
 import time
 
@@ -23,6 +22,7 @@ class QueriesPerSecond(PreR):
 
     <FILL>
     """
+
     def __init__(self, f):
         PreR.__init__(self, f)
         self.counter = 0
@@ -33,7 +33,7 @@ class QueriesPerSecond(PreR):
             self.counter += 1
 
     def get_data(self):
-        data = { 'qps' : self.counter / (time.time() - self.start) }
+        data = {'qps': self.counter / (time.time() - self.start)}
         return data
 
     def reset(self):

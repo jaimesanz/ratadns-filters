@@ -1,4 +1,3 @@
-__author__ = 'franchoco'
 from prer import PreR
 import time
 
@@ -23,6 +22,7 @@ class PacketsPerSecond(PreR):
 
     <FILL>
     """
+
     def __init__(self, f):
         PreR.__init__(self, f)
         self.counter = 0
@@ -32,7 +32,7 @@ class PacketsPerSecond(PreR):
         self.counter += 1
 
     def get_data(self):
-        data = { 'pps' : self.counter / (time.time() - self.start) }
+        data = {'pps': self.counter / (time.time() - self.start)}
         return data
 
     def reset(self):

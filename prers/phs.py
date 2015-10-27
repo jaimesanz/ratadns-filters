@@ -1,9 +1,9 @@
-__author__ = 'franchoco'
 from prer import PreR
 
 
 class PacketHasUnderscore(PreR):
-    """Group the queries in a window which qtype are in {1, 2, 6, 15} and its qnames have an underscore by the ipsource
+    """Group the queries in a window which qtype are in {1, 2, 6, 15}
+     and its qnames have an underscore by the ipsource
 
     - Result
 
@@ -35,7 +35,7 @@ class PacketHasUnderscore(PreR):
             if "_" in qname and p.isCriticalType():
                 sender = p.source
                 query = p.query
-                if self.names.has_key(sender):
+                if sender in self.names:
                     self.names[sender]['cnt'] += 1
                     self.names[sender]['queries'].append(query)
                 else:

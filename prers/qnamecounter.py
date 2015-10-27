@@ -1,4 +1,3 @@
-__author__ = 'sking32'
 from prer import PreR
 
 
@@ -32,7 +31,7 @@ class QueriesNameCounter(PreR):
     def __call__(self, p):
         if not p.is_answer():
             qname = p.qname
-            if self.names.has_key(qname):
+            if qname in self.names:
                 self.names[qname] += 1
             else:
                 self.names[qname] = 1

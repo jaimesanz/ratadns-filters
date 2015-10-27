@@ -1,9 +1,9 @@
-__author__ = 'sking32'
 from prer import PreR
 
 
 class QueriesWithUnderscoredName(PreR):
-    """Group the queries in a window which qtype are in {1, 2, 6, 15} and its qnames have an underscore by the qname
+    """Group the queries in a window which qtype are in
+    {1, 2, 6, 15} and its qnames have an underscore by the qname
 
     - Result
 
@@ -40,7 +40,7 @@ class QueriesWithUnderscoredName(PreR):
             server = p.dest
             qname = p.qname
             if "_" in qname and p.isCriticalType():
-                if not self.names.has_key(qname):
+                if qname not in self.names:
                     self.names[qname] = []
                 newQuery = {'sender': sender, 'server': server, 'query': query}
                 self.names[qname].append(newQuery)

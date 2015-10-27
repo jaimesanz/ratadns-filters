@@ -9,17 +9,21 @@ from core import RedisFile, mainloop
 
 
 class Options:
+
     def __init__(self):
         self.__default_config_file = "rata.cfg"
 
         # Get the configuration file name from command line arguments.
         parser = OptionParser()
-        parser.add_option("-c", "--configuration", dest="config_file",
-                          help="Set the configuration file to FILE", metavar="FILE")
+        parser.add_option("-c", "--configuration",
+                          dest="config_file",
+                          help="Set the configuration file to FILE",
+                          metavar="FILE")
         opts, args = parser.parse_args()
 
         # Parse the configuration file
-        config_file = opts.config_file if opts.config_file is not None else self.__default_config_file
+        config_file = opts.config_file \
+            if opts.config_file is not None else self.__default_config_file
 
         config = ConfigParser.ConfigParser()
         config.read(config_file)
@@ -43,7 +47,8 @@ class Options:
         self.prers = []
         for prer_name in prers_names:
             module_name, class_name = prer_name.rsplit(".", 1)
-            prer_class = getattr(importlib.import_module(prers_path + "." + module_name), class_name)
+            prer_class = getattr(importlib.import_module(
+                prers_path + "." + module_name), class_name)
             prer_args = dict(config.items(class_name))
 
             output_method = prer_args.pop('outputmethod')

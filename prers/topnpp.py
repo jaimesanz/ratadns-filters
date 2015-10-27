@@ -4,6 +4,7 @@ from core import PacketPocket
 
 
 class TopNPP(PreR):
+
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
         self.k = int(kwargs['n'])
