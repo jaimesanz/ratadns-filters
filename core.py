@@ -170,6 +170,13 @@ class Packet(object):
             raise PacketWithoutInfoError('qname')
 
     @property
+    def qtype(self):
+        try:
+            return self.query['qtype']
+        except KeyError:
+            raise PacketWithoutInfoError('qtype')
+
+    @property
     def source(self):
         """Return the source of the packet"""
         try:
