@@ -5,7 +5,7 @@ from core import Packet
 from core import PacketWithoutInfoError
 
 
-class TestQueriesNameCounter(unittest.TestCase):
+class TestPacket(unittest.TestCase):
 
     def setUp(self):
         pass
