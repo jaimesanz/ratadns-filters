@@ -7,76 +7,76 @@ from prers.qnamecounter import QueriesNameCounter
 
 class TestQueriesNameCounter(unittest.TestCase):
 
-    def reInit(self):
-        self.__stringBuffer1 = StringIO.StringIO()
-        self.__stringBuffer2 = StringIO.StringIO()
-        self.__p1 = QueriesNameCounter(self.__stringBuffer1)
-        self.__p2 = QueriesNameCounter(self.__stringBuffer2)
+    def reinit(self):
+        self.__stringbuffer1 = StringIO.StringIO()
+        self.__stringbuffer2 = StringIO.StringIO()
+        self.__p1 = QueriesNameCounter(self.__stringbuffer1)
+        self.__p2 = QueriesNameCounter(self.__stringbuffer2)
 
-    def dataExample(self):
+    def data_example(self):
         data = PacketsExample()
 
         for i in range(4):
-            data.addPacket({'flags': '0', 'queries': [
-                           {'qname': 'www.niclabs.cl'}]})
-        data.setExpected('www.niclabs.cl', 4)
+            data.add_packet({'flags': '0', 'queries': [
+                {'qname': 'www.niclabs.cl'}]})
+        data.set_expected('www.niclabs.cl', 4)
 
         for i in range(3):
-            data.addPacket({'flags': '0', 'queries': [
-                           {'qname': 'www.uchile.cl'}]})
-        data.setExpected('www.uchile.cl', 3)
+            data.add_packet({'flags': '0', 'queries': [
+                {'qname': 'www.uchile.cl'}]})
+        data.set_expected('www.uchile.cl', 3)
 
         for i in range(2):
-            data.addPacket({'flags': '0', 'queries': [
-                           {'qname': 'www.pinky.cl'}]})
-        data.setExpected('www.pinky.cl', 2)
+            data.add_packet({'flags': '0', 'queries': [
+                {'qname': 'www.pinky.cl'}]})
+        data.set_expected('www.pinky.cl', 2)
 
-        data.putInformation(
+        data.put_information(
             'QNames', {'www.niclabs.cl', 'www.uchile.cl', 'www.pinky.cl'})
         return data
 
-    def dataOnlyAnswers(self):
+    def data_only_answers(self):
 
         data = PacketsExample()
         for i in range(5):
-            data.addPacket({'flags': '8000', 'queries': [
-                           {'qname': 'www.nic.cl'}]})
-        data.setExpected('www.nic.cl', 5)
+            data.add_packet({'flags': '8000', 'queries': [
+                {'qname': 'www.nic.cl'}]})
+        data.set_expected('www.nic.cl', 5)
 
         for i in range(3):
-            data.addPacket({'flags': '8000', 'queries': [
-                           {'qname': 'www.jerry.cl'}]})
-        data.setExpected('www.jerry.cl', 3)
+            data.add_packet({'flags': '8000', 'queries': [
+                {'qname': 'www.jerry.cl'}]})
+        data.set_expected('www.jerry.cl', 3)
 
         return data
 
-    def dataDifferenCase(self):
+    def data_differen_case(self):
         data = PacketsExample()
 
         for i in range(5):
-            data.addPacket({'flags': '0', 'queries': [
-                           {'qname': 'www.nic.cl'}]})
+            data.add_packet({'flags': '0', 'queries': [
+                {'qname': 'www.nic.cl'}]})
         for i in range(5):
-            data.addPacket({'flags': '0', 'queries': [
-                           {'qname': 'WWW.NIC.CL'}]})
-        data.setExpected('www.nic.cl', 10)
+            data.add_packet({'flags': '0', 'queries': [
+                {'qname': 'WWW.NIC.CL'}]})
+        data.set_expected('www.nic.cl', 10)
 
         for i in range(5):
-            data.addPacket({'flags': '0', 'queries': [
-                           {'qname': 'WWW:NIC.CL'}]})
+            data.add_packet({'flags': '0', 'queries': [
+                {'qname': 'WWW:NIC.CL'}]})
         for i in range(5):
-            data.addPacket({'flags': '0', 'queries': [
-                           {'qname': 'wwww.nic.cl'}]})
-        data.putInformation('criticalQName', 'www.nic.cl')
+            data.add_packet({'flags': '0', 'queries': [
+                {'qname': 'wwww.nic.cl'}]})
+        data.put_information('criticalQName', 'www.nic.cl')
         return data
 
     def setUp(self):
-        self.reInit()
+        self.reinit()
 
-    def test_rightFormat(self):
-        self.reInit()
+    def test_right_format(self):
+        self.reinit()
 
-        example = self.dataExample()
+        example = self.data_example()
 
         for packet in example:
             self.__p1(packet)
@@ -91,19 +91,20 @@ class TestQueriesNameCounter(unittest.TestCase):
             frec = result[key]
             self.assertGreater(frec, 0)
 
-    def test_noData(self):
-        self.reInit()
+    def test_no_data(self):
+        self.reinit()
 
         result = self.__p1.get_data()
 
         self.assertEquals({}, result)
 
-    def test_sameBehavior(self):
-        self.reInit()
+    def test_same_behavior(self):
+        self.reinit()
 
-        example = self.dataExample()
+        example = self.data_example()
         for packet in example:
             self.__p1(packet)
+        for packet in example:
             self.__p2(packet)
 
         result1 = self.__p1.get_data()
@@ -116,45 +117,45 @@ class TestQueriesNameCounter(unittest.TestCase):
         for qname in result2.keys():
             self.assertTrue(qname in result1)
 
-    def test_dataExample(self):
-        self.reInit()
+    def test_data_example(self):
+        self.reinit()
 
-        example = self.dataExample()
+        example = self.data_example()
         for packet in example:
             self.__p1(packet)
 
         result = self.__p1.get_data()
 
-        for qname in example.getInformation('QNames'):
+        for qname in example.get_information('QNames'):
             self.assertTrue(qname in result)
-            self.assertEquals(example.expectedValue(qname), result[qname])
+            self.assertEquals(example.expected_value(qname), result[qname])
 
-    def test_dataOnlyAnswers(self):
-        self.reInit()
+    def test_data_only_answers(self):
+        self.reinit()
 
-        example = self.dataOnlyAnswers()
+        example = self.data_only_answers()
         for packet in example:
             self.__p1(packet)
 
         result = self.__p1.get_data()
         self.assertEquals(result, {})
 
-    def test_dataDifferentCase(self):
-        self.reInit()
+    def test_data_different_case(self):
+        self.reinit()
 
-        example = self.dataDifferenCase()
+        example = self.data_differen_case()
         for packet in example:
             self.__p1(packet)
 
         result = self.__p1.get_data()
 
-        critical = example.getInformation('criticalQName')
-        self.assertEquals(example.expectedValue(critical), result[critical])
+        critical = example.get_information('criticalQName')
+        self.assertEquals(example.expected_value(critical), result[critical])
 
     def test_reset(self):
-        self.reInit()
+        self.reinit()
 
-        example = self.dataExample()
+        example = self.data_example()
 
         for i in range(2):
             for packet in example:
@@ -163,14 +164,14 @@ class TestQueriesNameCounter(unittest.TestCase):
             result = self.__p1.get_data()
 
             for qname in result.keys():
-                self.assertEquals(example.expectedValue(qname), result[qname])
+                self.assertEquals(example.expected_value(qname), result[qname])
 
             self.__p1.reset()
 
     def test_file(self):
-        self.reInit()
+        self.reinit()
 
-        self.assertEquals(self.__stringBuffer1, self.__p1.get_file())
+        self.assertEquals(self.__stringbuffer1, self.__p1.get_file())
 
     def tearDown(self):
         pass
