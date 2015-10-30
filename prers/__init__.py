@@ -1,5 +1,3 @@
-__author__ = 'Francisco Cifuentes'
-
 from anamecounter import AnswersNameCounter
 from ap import AlonePackets
 from aps import AnswersPerSecond
@@ -18,3 +16,5 @@ from qwhn import QueriesWithUnderscoredName
 from topn import TopN
 from topnpp import TopNPP
 from topnq import TopNQ
+
+__author__ = 'Francisco Cifuentes'
