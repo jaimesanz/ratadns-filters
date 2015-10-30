@@ -48,7 +48,8 @@ class Options:
         prers_names = config.get("core", "PreliminarReducers").split(",")
         self._prers = []
         for prer_name in prers_names:
-            prer_class = getattr(importlib.import_module(prers_package), prer_name)
+            prer_class = getattr(importlib.import_module(prers_package),
+                                 prer_name)
             prer_args = dict(config.items(prer_name))
 
             output_method = prer_args.pop('outputmethod')
