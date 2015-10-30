@@ -27,69 +27,69 @@ class TestPacketSummary(unittest.TestCase):
 
         data = PacketsExample(expected_output)
 
-        data.doNotChangeOrder()
+        data.do_not_change_order()
 
-        data.addPacket({"source": "bec47b2d",
+        data.add_packet({"source": "bec47b2d",
                         "flags": "0",
                         "queries": [
                             {"qname": "www.nic.cl.", "qtype": "1"}
                         ]})
-        data.addPacket({"source": "bec47b2d",
+        data.add_packet({"source": "bec47b2d",
                         "flags": "8000",
                         "queries": [
                             {"qname": "www.nic.cl.", "qtype": "1"}
                         ]})
-        data.addPacket({"source": "bec47b2d",
+        data.add_packet({"source": "bec47b2d",
                         "flags": "0",
                         "queries": [
                             {"qname": "uchile.cl.", "qtype": "1"}
                         ]})
-        data.addPacket({"source": "bec47b2d",
+        data.add_packet({"source": "bec47b2d",
                         "flags": "0",
                         "queries": [
                             {"qname": "tests.cl.", "qtype": "1"}
                         ]})
-        data.addPacket({"source": "c800aec8",
+        data.add_packet({"source": "c800aec8",
                         "flags": "0",
                         "queries": [
                             {"qname": "ns.ns.cl.", "qtype": "1"}
                         ]})
-        data.addPacket({"source": "c800aec8",
+        data.add_packet({"source": "c800aec8",
                         "flags": "0",
                         "queries": [
                             {"qname": "ns.ns.cl.", "qtype": "1"}
                         ]})
-        data.addPacket({"source": "bec47b2d",
+        data.add_packet({"source": "bec47b2d",
                         "flags": "0",
                         "queries": [
                             {"qname": "www.www.cl.", "qtype": "10"}
                         ]})
-        data.addPacket({"source": "c81b0202",
+        data.add_packet({"source": "c81b0202",
                         "flags": "0",
                         "queries": [
                             {"qname": "qwerty.cl.", "qtype": "10"}
                         ]})
-        data.addPacket({"source": "c81b0202",
+        data.add_packet({"source": "c81b0202",
                         "flags": "0",
                         "queries": [
                             {"qname": "azerty.cl.", "qtype": "10"}
                         ]})
-        data.addPacket({"source": "c81b0202",
+        data.add_packet({"source": "c81b0202",
                         "flags": "8000",
                         "queries": [
                             {"qname": "awerty.cl.", "qtype": "10"}
                         ]})
-        data.addPacket({"source": "c81ba202",
+        data.add_packet({"source": "c81ba202",
                         "flags": "8000",
                         "queries": [
                             {"qname": "awerdasdasty.cl.", "qtype": "10"}
                         ]})
-        data.addPacket({"source": "c81bb202",
+        data.add_packet({"source": "c81bb202",
                         "flags": "8000",
                         "queries": [
                             {"qname": "awrqwereqwrerty.cl.", "qtype": "10"}
                         ]})
-        data.addPacket({"source": "ba43f806",
+        data.add_packet({"source": "ba43f806",
                         "flags": "0",
                         "queries": [
                             {"qname": "google.cl.", "qtype": "10"}
