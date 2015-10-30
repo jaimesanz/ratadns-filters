@@ -5,6 +5,7 @@ from prers.packetsummary import PacketSummary
 
 __author__ = 'franchoco'
 
+
 class TestPacketSummary(unittest.TestCase):
     def setUp(self):
         self.__stringBuffer1 = StringIO.StringIO()
