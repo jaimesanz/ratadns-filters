@@ -2,7 +2,7 @@ import unittest
 import StringIO
 
 from packetsexample import PacketsExample
-from prers.onlyanswers import OnlyAnswers
+from prers import OnlyAnswers
 
 
 class TestOnlyAnswers(unittest.TestCase):

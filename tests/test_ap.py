@@ -2,7 +2,7 @@ import unittest
 import StringIO
 
 from packetsexample import PacketsExample
-from prers.ap import AlonePackets
+from prers import AlonePackets
 
 
 class TestAlonePackets(unittest.TestCase):

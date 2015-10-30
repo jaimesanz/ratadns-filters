@@ -1,7 +1,7 @@
 import unittest
 from packetsexample import PacketsExample
 import StringIO
-from prers.packetsummary import PacketSummary
+from prers import PacketSummary
 
 __author__ = 'franchoco'
 

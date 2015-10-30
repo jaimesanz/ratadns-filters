@@ -3,7 +3,7 @@ import StringIO
 import operator
 
 from packetsexample import PacketsExample
-from prers.topn import TopN
+from prers import TopN
 
 
 class TestTopN(unittest.TestCase):

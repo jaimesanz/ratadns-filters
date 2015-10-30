@@ -2,7 +2,7 @@ import unittest
 import StringIO
 
 from packetsexample import PacketsExample
-from prers.identity import Identity
+from prers import Identity
 
 
 class TestIdentity(unittest.TestCase):

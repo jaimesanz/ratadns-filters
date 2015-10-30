@@ -2,7 +2,7 @@ import unittest
 import StringIO
 
 from packetsexample import PacketsExample
-from prers.qnamecounter import QueriesNameCounter
+from prers import QueriesNameCounter
 
 
 class TestQueriesNameCounter(unittest.TestCase):

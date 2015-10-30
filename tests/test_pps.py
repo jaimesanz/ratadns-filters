@@ -3,7 +3,7 @@ import StringIO
 from time import time
 
 from packetsexample import PacketsExample
-from prers.pps import PacketsPerSecond
+from prers import PacketsPerSecond
 
 
 class TestPacketsPerSecond(unittest.TestCase):

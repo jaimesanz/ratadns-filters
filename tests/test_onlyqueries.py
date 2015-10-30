@@ -2,7 +2,7 @@ import unittest
 import StringIO
 
 from packetsexample import PacketsExample
-from prers.onlyqueries import OnlyQueries
+from prers import OnlyQueries
 
 
 class TestOnlyQueries(unittest.TestCase):
