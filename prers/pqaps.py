@@ -29,26 +29,26 @@ class PacketsQueriesAndAnswersPerSecond(PreR):
 
     def __init__(self, f):
         PreR.__init__(self, f)
-        self.pcounter = 0
-        self.qcounter = 0
-        self.acounter = 0
-        self.start = time.time()
+        self._pcounter = 0
+        self._qcounter = 0
+        self._acounter = 0
+        self._start = time.time()
 
     def __call__(self, p):
-        self.pcounter += 1
+        self._pcounter += 1
         if p.is_answer():
-            self.acounter += 1
+            self._acounter += 1
         else:
-            self.qcounter += 1
+            self._qcounter += 1
 
     def get_data(self):
         data = {}
         t = time.time()
-        data['pps'] = self.pcounter / (t - self.start)
-        data['qps'] = self.qcounter / (t - self.start)
-        data['aps'] = self.acounter / (t - self.start)
+        data['pps'] = self._pcounter / (t - self._start)
+        data['qps'] = self._qcounter / (t - self._start)
+        data['aps'] = self._acounter / (t - self._start)
         return data
 
     def reset(self):
-        self.pcounter = self.qcounter = self.acounter = 0
-        self.start = time.time()
+        self._pcounter = self._qcounter = self._acounter = 0
+        self._start = time.time()

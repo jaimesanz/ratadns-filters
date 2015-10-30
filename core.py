@@ -5,7 +5,7 @@ import json
 import heapq
 
 
-def openfifo(path, fifos):
+def open_fifo(path, fifos):
     if not os.path.exists(path):
         os.mkfifo(path)
     f = open(path, "w")
@@ -13,7 +13,7 @@ def openfifo(path, fifos):
     return f
 
 
-def hextoip(h):
+def hex_to_ip(h):
     o1 = int(h[0:1], 16)
     o2 = int(h[2:3], 16)
     o3 = int(h[4:5], 16)
@@ -21,7 +21,7 @@ def hextoip(h):
     return str(o1) + "." + str(o2) + "." + str(o3) + "." + str(o4)
 
 
-def keyswithmaxvals(d, n):
+def keys_with_max_vals(d, n):
     # The - is for python min-heap
     inverse = [[-p[1], p[0]] for p in d.items()]
     n = min(n, len(inverse))
@@ -43,14 +43,14 @@ def keyswithmaxvals(d, n):
 class RedisFile(object):
 
     def __init__(self, server, channel):
-        self.r = redis.StrictRedis(host=server, db=0)
-        self.channel = channel
+        self._r = redis.StrictRedis(host=server, db=0)
+        self._channel = channel
 
     def write(self, value):
-        self.r.publish(self.channel, value)
+        self._r.publish(self._channel, value)
 
     def close(self):
-        self.r.connection_pool.disconnect()
+        self._r.connection_pool.disconnect()
 
 
 def mainloop(options):
@@ -93,29 +93,29 @@ def mainloop(options):
 class PacketPocket(object):
 
     def __init__(self, k, n=1000):  # n es el tamano de la ventana en paquetes
-        self.k = k
-        self.reverse_dict = {}  # k define el top
-        self.bucket_list = [set() for i in range(n + 1)]
-        self.max_bucket = 1
+        self._k = k
+        self._reverse_dict = {}  # k define el top
+        self._bucket_list = [set() for i in range(n + 1)]
+        self._max_bucket = 1
 
     def incr_count(self, qname):
-        if qname in self.reverse_dict:
-            bucket = self.reverse_dict[qname]
-            self.bucket_list[bucket + 1].add(qname)
-            self.bucket_list[bucket].remove(qname)
-            self.reverse_dict[qname] += 1
-            if(bucket + 1 > self.max_bucket):
-                self.max_bucket = bucket + 1
+        if qname in self._reverse_dict:
+            bucket = self._reverse_dict[qname]
+            self._bucket_list[bucket + 1].add(qname)
+            self._bucket_list[bucket].remove(qname)
+            self._reverse_dict[qname] += 1
+            if(bucket + 1 > self._max_bucket):
+                self._max_bucket = bucket + 1
         else:
-            self.reverse_dict[qname] = 1
-            self.bucket_list[1].add(qname)
+            self._reverse_dict[qname] = 1
+            self._bucket_list[1].add(qname)
 
     def top_k(self):
-        left = self.k
+        left = self._k
         ans = []
-        next_bucket = self.max_bucket
+        next_bucket = self._max_bucket
         while(left > 0 and next_bucket > 0):
-            keys = self.bucket_list[next_bucket]
+            keys = self._bucket_list[next_bucket]
             l = len(keys)
             if(l > 0):
                 left -= l
@@ -130,13 +130,13 @@ class PacketWithoutInfoError(Exception):
     """
 
     def __init__(self, info):
-        self.info = info
+        self._info = info
 
     def __str__(self):
         ans = "\n\tThis package does not have the '"
-        ans += self.info
+        ans += self._info
         ans += "' info.\n\tBe sure to set the serializer for including '"
-        ans += self.info + "'"
+        ans += self._info + "'"
         return ans
 
 
@@ -144,8 +144,8 @@ class Packet(object):
     """Encapsulates the information packet and the size of its window
     """
 
-    def __init__(self, input, windowSize=1000):
-        self._windowSize = windowSize
+    def __init__(self, input, window_size=1000):
+        self._window_size = window_size
         self._input = input
 
     @property
@@ -201,9 +201,9 @@ class Packet(object):
             raise PacketWithoutInfoError('queries')
 
     @property
-    def windowSize(self):
-        """Return the windowSize where is the packet"""
-        return self._windowSize
+    def window_size(self):
+        """Return the window_size where is the packet"""
+        return self._window_size
 
     def is_answer(self):
         """Return True if the packet is an answer"""
@@ -213,7 +213,7 @@ class Packet(object):
         except KeyError:
             raise PacketWithoutInfoError('flags')
 
-    def isCriticalType(self):
+    def is_critical_type(self):
         """Return True if the packet type forbids
         have an underscore in its qname (for queries)"""
         try:
