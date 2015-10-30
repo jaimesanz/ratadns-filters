@@ -3,7 +3,7 @@ import StringIO
 import operator
 
 from packetsexample import PacketsExample
-from prers.topnq import TopNQ
+from prers import TopNQ
 
 
 class TestTopNQ(unittest.TestCase):

@@ -2,7 +2,7 @@ import unittest
 import StringIO
 
 from packetsexample import PacketsExample
-from prers.anamecounter import AnswersNameCounter
+from prers import AnswersNameCounter
 
 
 class TestAnswersNameCounter(unittest.TestCase):

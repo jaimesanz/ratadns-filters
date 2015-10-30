@@ -2,7 +2,7 @@ import unittest
 import StringIO
 
 from packetsexample import PacketsExample
-from prers.phs import PacketHasUnderscore
+from prers import PacketHasUnderscore
 from core import Packet
 
 

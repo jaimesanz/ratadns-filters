@@ -2,7 +2,7 @@ import unittest
 import StringIO
 
 from packetsexample import PacketsExample
-from prers.null import NullPreR
+from prers import NullPreR
 
 
 class TestNullPreR(unittest.TestCase):

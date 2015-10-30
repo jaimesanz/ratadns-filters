@@ -44,14 +44,12 @@ class Options:
             self._input = sys.stdin
 
         # Create the PreR's with each's input methods (self._prers)
-        prers_path = config.get("core", "PreliminarReducersPackage")
+        prers_package = config.get("core", "PreliminarReducersPackage")
         prers_names = config.get("core", "PreliminarReducers").split(",")
         self._prers = []
         for prer_name in prers_names:
-            module_name, class_name = prer_name.rsplit(".", 1)
-            prer_class = getattr(importlib.import_module(
-                prers_path + "." + module_name), class_name)
-            prer_args = dict(config.items(class_name))
+            prer_class = getattr(importlib.import_module(prers_package), prer_name)
+            prer_args = dict(config.items(prer_name))
 
             output_method = prer_args.pop('outputmethod')
 
@@ -73,6 +71,18 @@ class Options:
             #     prer = PreR(f, **prer_args)
 
             self._prers.append(prer_instance)
+
+    @property
+    def prers(self):
+        return self._prers
+
+    @property
+    def window_size(self):
+        return self._window_size
+
+    @property
+    def input(self):
+        return self._input
 
 
 if __name__ == '__main__':

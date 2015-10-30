@@ -2,7 +2,7 @@ import unittest
 import StringIO
 
 from packetsexample import PacketsExample
-from prers.qwhn import QueriesWithUnderscoredName
+from prers import QueriesWithUnderscoredName
 from core import Packet
 
 

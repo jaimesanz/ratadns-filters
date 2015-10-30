@@ -3,7 +3,7 @@ import StringIO
 import operator
 
 from packetsexample import PacketsExample
-from prers.topnpp import TopNPP
+from prers import TopNPP
 
 
 class TestTopNPP(unittest.TestCase):
