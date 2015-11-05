@@ -13,14 +13,18 @@ class TestPacketSummary(unittest.TestCase):
 
     def test_example(self):
         expected_output = {
-            "1": {
-                "bec47b2d": ["www.nic.cl.", "uchile.cl.", "tests.cl."],
-                "c800aec8": ["ns.ns.cl.", "ns.ns.cl."]
+            "bec47b2d": {
+                "1": ["www.nic.cl.", "uchile.cl.", "tests.cl."],
+                "10": ["www.www.cl."]
             },
-            "10": {
-                "bec47b2d": ["www.www.cl."],
-                "c81b0202": ["qwerty.cl.", "azerty.cl."],
-                "ba43f806": ["google.cl."]
+            "c800aec8": {
+                "1": ["ns.ns.cl.", "ns.ns.cl."]
+            },
+            "c81b0202": {
+                "10": ["qwerty.cl.", "azerty.cl."]
+            },
+            "ba43f806": {
+                "10": ["google.cl."]
             }
         }
 
