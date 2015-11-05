@@ -16,13 +16,13 @@ class PacketSummary(PreR):
         if p.is_answer():
             return
 
-        if p.qtype in self._acc:
-            if p.source in self._acc[p.qtype]:
-                self._acc[p.qtype][p.source].append(p.qname)
+        if p.source in self._acc:
+            if p.qtype in self._acc[p.source]:
+                self._acc[p.source][p.qtype].append(p.qname)
             else:
-                self._acc[p.qtype][p.source] = [p.qname]
+                self._acc[p.source][p.qtype] = [p.qname]
         else:
-            self._acc[p.qtype] = {p.source: [p.qname]}
+            self._acc[p.source] = {p.qtype: [p.qname]}
 
     def get_data(self):
         return self._acc
