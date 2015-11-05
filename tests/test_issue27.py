@@ -1,4 +1,3 @@
-
 import unittest
 import StringIO
 
@@ -8,7 +7,6 @@ from core import PacketWithoutInfoError
 
 
 class TestIssue27(unittest.TestCase):
-
     def reInit(self):
         self.__stringBuffer1 = StringIO.StringIO()
         self.__stringBuffer2 = StringIO.StringIO()
@@ -34,7 +32,6 @@ class TestIssue27(unittest.TestCase):
         for packet in example:
             with self.assertRaises(PacketWithoutInfoError):
                 self.__p1(packet)
-
 
     def test_file(self):
         self.reInit()
