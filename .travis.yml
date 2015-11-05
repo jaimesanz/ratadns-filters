@@ -1,7 +1,7 @@
 language: python
-install:
+install: 
   - "pip install redis"
   - "pip install pep8"
-script:
+script: 
   - python -m unittest discover -s tests
   - pep8 .

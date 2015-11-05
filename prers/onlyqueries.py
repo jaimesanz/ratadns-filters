@@ -1,4 +1,3 @@
-__author__ = 'franchoco'
 from prer import PreR
 
 
@@ -26,15 +25,15 @@ class OnlyQueries(PreR):
 
     def __init__(self, f):
         PreR.__init__(self, f)
-        self.l = []
+        self._l = []
 
     def __call__(self, p):
         # flags = d['flags']
         if not p.is_answer():
-            self.l.append(p.input)
+            self._l.append(p.input)
 
     def get_data(self):
-        return self.l
+        return self._l
 
     def reset(self):
-        self.l = []
+        self._l = []

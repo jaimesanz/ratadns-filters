@@ -1,102 +1,106 @@
-__author__ = 'sking32'
-
 import unittest
 import StringIO
 from time import time
 
 from packetsexample import PacketsExample
-from prers.pps import PacketsPerSecond
+from prers import PacketsPerSecond
 
 
 class TestPacketsPerSecond(unittest.TestCase):
 
-    def reInit(self):
-        self.__stringBuffer1 = StringIO.StringIO()
-        self.__stringBuffer2 = StringIO.StringIO()
-        self.__p1 = PacketsPerSecond(self.__stringBuffer1)
-        self.__p2 = PacketsPerSecond(self.__stringBuffer2)
+    def reinit(self):
+        self.__stringbuffer1 = StringIO.StringIO()
+        self.__stringbuffer2 = StringIO.StringIO()
+        self.__p1 = PacketsPerSecond(self.__stringbuffer1)
+        self.__p2 = PacketsPerSecond(self.__stringbuffer2)
 
-    def dataExample(self):
+    def data_example(self):
         na = 2
         nq = 2
-        data = PacketsExample({'na' : na, 'nq' : nq})
+        data = PacketsExample({'na': na, 'nq': nq})
 
         for i in range(na):
-            data.addPacket({'flags' : '8000'})
+            data.add_packet({'flags': '8000'})
         for i in range(nq):
-            data.addPacket({'flags' : '0'})
+            data.add_packet({'flags': '0'})
 
         return data
 
     def setUp(self):
-        self.reInit()
+        self.reinit()
 
-
-    def test_rightFormat(self):
-        self.reInit()
+    def test_right_format(self):
+        self.reinit()
 
         result = self.__p1.get_data()
 
         self.assertEquals(type(result), dict)
-        self.assertTrue(result.has_key('pps'))
+        self.assertTrue('pps' in result)
         self.assertEqual(type(result['pps']), float)
         self.assertGreaterEqual(result['pps'], 0)
 
-
-    def test_noData(self):
-        self.reInit()
+    def test_no_data(self):
+        self.reinit()
 
         result = self.__p1.get_data()
 
         self.assertEqual(result['pps'], 0)
 
+    def test_data_example(self):
 
-    def test_dataExample(self):
+        before_init_time = time()
+        self.reinit()
+        after_init_time = time()
 
-        beforeInitTime = time()
-        self.reInit()
-        afterInitTime = time()
-
-        example = self.dataExample()
+        example = self.data_example()
 
         for packet in example:
             self.__p1(packet)
 
-        beforeEndTime = time()
+        before_end_time = time()
         result = self.__p1.get_data()
-        afterEndTime = time()
+        after_end_time = time()
 
-        self.assertLessEqual((example.expectedValue('na')+example.expectedValue('nq'))/(afterEndTime-beforeInitTime), result['pps'])
-        self.assertGreaterEqual((example.expectedValue('na')+example.expectedValue('nq'))/(beforeEndTime-afterInitTime), result['pps'])
+        na = example.expected_value('na')
+        nq = example.expected_value('nq')
+        self.assertLessEqual((na + nq) / (after_end_time - before_init_time),
+                             result['pps'])
+        self.assertGreaterEqual(
+            (na + nq) / (before_end_time - after_init_time),
+            result['pps'])
 
     def test_reset(self):
-        beforeInitTime = time()
-        self.reInit()
-        afterInitTime = time()
+        before_init_time = time()
+        self.reinit()
+        after_init_time = time()
 
-        example = self.dataExample()
+        example = self.data_example()
 
         for i in range(2):
             for packet in example:
                 self.__p1(packet)
 
-            beforeEndTime = time()
+            before_end_time = time()
             result = self.__p1.get_data()
-            afterEndTime = time()
+            after_end_time = time()
 
-            self.assertLessEqual((example.expectedValue('na')+example.expectedValue('nq'))/(afterEndTime-beforeInitTime), result['pps'])
-            self.assertGreaterEqual((example.expectedValue('na')+example.expectedValue('nq'))/(beforeEndTime-afterInitTime), result['pps'])
+            na = example.expected_value('na')
+            nq = example.expected_value('nq')
+            self.assertLessEqual(
+                (na + nq) / (after_end_time - before_init_time),
+                result['pps'])
+            self.assertGreaterEqual(
+                (na + nq) / (before_end_time - after_init_time),
+                result['pps'])
 
-            beforeInitTime = time()
+            before_init_time = time()
             self.__p1.reset()
-            afterInitTime = time()
-
-
+            after_init_time = time()
 
     def test_file(self):
-        self.reInit()
+        self.reinit()
 
-        self.assertEquals(self.__stringBuffer1, self.__p1.get_file())
+        self.assertEquals(self.__stringbuffer1, self.__p1.get_file())
 
     def tearDown(self):
         pass

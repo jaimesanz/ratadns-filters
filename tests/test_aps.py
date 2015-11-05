@@ -1,101 +1,97 @@
-__author__ = 'sking32'
-
 import unittest
 import StringIO
 from time import time
 
 from packetsexample import PacketsExample
-from prers.aps import AnswersPerSecond
+from prers import AnswersPerSecond
 
 
 class TestAnswersPerSecond(unittest.TestCase):
 
-    def reInit(self):
-        self.__stringBuffer1 = StringIO.StringIO()
-        self.__stringBuffer2 = StringIO.StringIO()
-        self.__p1 = AnswersPerSecond(self.__stringBuffer1)
-        self.__p2 = AnswersPerSecond(self.__stringBuffer2)
+    def reinit(self):
+        self.__stringbuffer1 = StringIO.StringIO()
+        self.__stringbuffer2 = StringIO.StringIO()
+        self.__p1 = AnswersPerSecond(self.__stringbuffer1)
+        self.__p2 = AnswersPerSecond(self.__stringbuffer2)
 
-    def dataExample(self):
+    def data_example(self):
         na = 2
         nq = 2
-        data = PacketsExample({'na' : na, 'nq' : nq})
+        data = PacketsExample({'na': na, 'nq': nq})
 
         for i in range(na):
-            data.addPacket({'flags' : '8000'})
+            data.add_packet({'flags': '8000'})
         for i in range(nq):
-            data.addPacket({'flags' : '0'})
+            data.add_packet({'flags': '0'})
 
         return data
 
-    def dataOnlyQueries(self):
+    def data_only_queries(self):
         na = 0
         nq = 2
-        data = PacketsExample({'na' : na, 'nq' : nq})
+        data = PacketsExample({'na': na, 'nq': nq})
 
         data = PacketsExample()
         for i in range(nq):
-            data.addPacket({'flags' : '0'})
+            data.add_packet({'flags': '0'})
 
         return data
 
-    def dataOnlyAnswers(self):
+    def data_only_answers(self):
         na = 2
         nq = 0
-        data = PacketsExample({'na' : na, 'nq' : nq})
+        data = PacketsExample({'na': na, 'nq': nq})
 
         for i in range(na):
-            data.addPacket({'flags' : '8000'})
+            data.add_packet({'flags': '8000'})
 
         return data
 
-
     def setUp(self):
-        self.reInit()
+        self.reinit()
 
-
-    def test_rightFormat(self):
-        self.reInit()
+    def test_right_format(self):
+        self.reinit()
 
         result = self.__p1.get_data()
 
         self.assertEquals(type(result), dict)
-        self.assertTrue(result.has_key('aps'))
+        self.assertTrue('aps' in result)
         self.assertEqual(type(result['aps']), float)
         self.assertGreaterEqual(result['aps'], 0)
 
-
-    def test_noData(self):
-        self.reInit()
+    def test_no_data(self):
+        self.reinit()
 
         result = self.__p1.get_data()
 
         self.assertEqual(result['aps'], 0)
 
+    def test_data_example(self):
 
-    def test_dataExample(self):
+        before_init_time = time()
+        self.reinit()
+        after_init_time = time()
 
-        beforeInitTime = time()
-        self.reInit()
-        afterInitTime = time()
-
-        example = self.dataExample()
+        example = self.data_example()
 
         for packet in example:
             self.__p1(packet)
 
-        beforeEndTime = time()
+        before_end_time = time()
         result = self.__p1.get_data()
-        afterEndTime = time()
+        after_end_time = time()
 
-        self.assertLessEqual(example.expectedValue('na')/(afterEndTime-beforeInitTime), result['aps'])
-        self.assertGreaterEqual(example.expectedValue('na')/(beforeEndTime-afterInitTime), result['aps'])
+        self.assertLessEqual(example.expected_value(
+            'na') / (after_end_time - before_init_time), result['aps'])
+        self.assertGreaterEqual(example.expected_value(
+            'na') / (before_end_time - after_init_time), result['aps'])
 
-    def test_dataOnlyQueries(self):
+    def test_data_only_queries(self):
 
-        self.reInit()
+        self.reinit()
 
-        example = self.dataOnlyQueries()
+        example = self.data_only_queries()
 
         for packet in example:
             self.__p1(packet)
@@ -104,52 +100,54 @@ class TestAnswersPerSecond(unittest.TestCase):
 
         self.assertLessEqual(result['aps'], 0)
 
-    def test_dataOnlyAnswers(self):
+    def test_data_only_answers(self):
 
-        beforeInitTime = time()
-        self.reInit()
-        afterInitTime = time()
+        before_init_time = time()
+        self.reinit()
+        after_init_time = time()
 
-        example = self.dataOnlyAnswers()
+        example = self.data_only_answers()
 
         for packet in example:
             self.__p1(packet)
 
-        beforeEndTime = time()
+        before_end_time = time()
         result = self.__p1.get_data()
-        afterEndTime = time()
+        after_end_time = time()
 
-        self.assertLessEqual(example.expectedValue('na')/(afterEndTime-beforeInitTime), result['aps'])
-        self.assertGreaterEqual(example.expectedValue('na')/(beforeEndTime-afterInitTime), result['aps'])
+        self.assertLessEqual(example.expected_value(
+            'na') / (after_end_time - before_init_time), result['aps'])
+        self.assertGreaterEqual(example.expected_value(
+            'na') / (before_end_time - after_init_time), result['aps'])
 
     def test_reset(self):
-        beforeInitTime = time()
-        self.reInit()
-        afterInitTime = time()
+        before_init_time = time()
+        self.reinit()
+        after_init_time = time()
 
-        example = self.dataExample()
+        example = self.data_example()
 
         for i in range(2):
             for packet in example:
                 self.__p1(packet)
 
-            beforeEndTime = time()
+            before_end_time = time()
             result = self.__p1.get_data()
-            afterEndTime = time()
+            after_end_time = time()
 
-            self.assertLessEqual(example.expectedValue('na')/(afterEndTime-beforeInitTime), result['aps'])
-            self.assertGreaterEqual(example.expectedValue('na')/(beforeEndTime-afterInitTime), result['aps'])
+            self.assertLessEqual(example.expected_value(
+                'na') / (after_end_time - before_init_time), result['aps'])
+            self.assertGreaterEqual(example.expected_value(
+                'na') / (before_end_time - after_init_time), result['aps'])
 
-            beforeInitTime = time()
+            before_init_time = time()
             self.__p1.reset()
-            afterInitTime = time()
-
-
+            after_init_time = time()
 
     def test_file(self):
-        self.reInit()
+        self.reinit()
 
-        self.assertEquals(self.__stringBuffer1, self.__p1.get_file())
+        self.assertEquals(self.__stringbuffer1, self.__p1.get_file())
 
     def tearDown(self):
         pass

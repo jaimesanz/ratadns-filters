@@ -1,44 +1,42 @@
-__author__ = 'sking32'
-
 import unittest
 import StringIO
 
 from packetsexample import PacketsExample
-from prers.null import NullPreR
+from prers import NullPreR
 
 
 class TestNullPreR(unittest.TestCase):
 
-    def reInit(self):
-        self.__stringBuffer1 = StringIO.StringIO()
-        self.__stringBuffer2 = StringIO.StringIO()
-        self.__p1 = NullPreR(self.__stringBuffer1)
-        self.__p2 = NullPreR(self.__stringBuffer2)
+    def reinit(self):
+        self.__stringbuffer1 = StringIO.StringIO()
+        self.__stringbuffer2 = StringIO.StringIO()
+        self.__p1 = NullPreR(self.__stringbuffer1)
+        self.__p2 = NullPreR(self.__stringbuffer2)
 
-    def dataExample(self):
+    def data_example(self):
         data = PacketsExample()
-        data.addPacket({'flags' : '0', 'id' : '12cb'})
-        data.addPacket({'flags' : '8000', 'id' : '12cb'})
+        data.add_packet({'flags': '0', 'id': '12cb'})
+        data.add_packet({'flags': '8000', 'id': '12cb'})
 
         return data
 
     def setUp(self):
-        self.reInit()
+        self.reinit()
 
-
-    def test_rightFormatNoData(self):
-        self.reInit()
+    def test_right_format_no_data(self):
+        self.reinit()
 
         result = self.__p1.get_data()
 
         self.assertEquals(result, None)
 
-    def test_sameBehavior(self):
-        self.reInit()
+    def test_same_behavior(self):
+        self.reinit()
 
-        example = self.dataExample()
+        example = self.data_example()
         for packet in example:
             self.__p1(packet)
+        for packet in example:
             self.__p2(packet)
 
         result1 = self.__p1.get_data()
@@ -46,10 +44,10 @@ class TestNullPreR(unittest.TestCase):
 
         self.assertEquals(result1, result2)
 
-    def test_dataExample(self):
-        self.reInit()
+    def test_data_example(self):
+        self.reinit()
 
-        example = self.dataExample()
+        example = self.data_example()
         for packet in example:
             self.__p1(packet)
 
@@ -58,9 +56,9 @@ class TestNullPreR(unittest.TestCase):
         self.assertEquals(result, None)
 
     def test_reset(self):
-        self.reInit()
+        self.reinit()
 
-        example = self.dataExample()
+        example = self.data_example()
 
         for i in range(2):
             for packet in example:
@@ -73,9 +71,9 @@ class TestNullPreR(unittest.TestCase):
             self.__p1.reset()
 
     def test_file(self):
-        self.reInit()
+        self.reinit()
 
-        self.assertEquals(self.__stringBuffer1, self.__p1.get_file())
+        self.assertEquals(self.__stringbuffer1, self.__p1.get_file())
 
     def tearDown(self):
         pass

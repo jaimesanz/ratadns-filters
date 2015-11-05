@@ -1,5 +1,6 @@
 __author__ = 'sking32'
 
+
 class PreR(object):
     """Implement transformation of the packet-analyzer output.
 
@@ -8,6 +9,7 @@ class PreR(object):
     give the current result and
     reset its own state.
     """
+
     def __init__(self, f):
         self.__f = f
 
@@ -19,6 +21,9 @@ class PreR(object):
 
     def get_file(self):
         return self.__f
+
+    def get_type(self):
+        return self.__class__.__name__
 
     def reset(self):
         raise NotImplementedError('Method reset not implemented')
