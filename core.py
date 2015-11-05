@@ -3,6 +3,7 @@ import os
 import redis
 import json
 import heapq
+import sys
 
 
 def open_fifo(path, fifos):
@@ -71,7 +72,13 @@ def mainloop(options):
             packet = Packet(json_dict, window)
             counter += 1
             for fun in flist:
-                fun(packet)
+                try:
+                    fun(packet)
+                except PacketWithoutInfoError as pwie:
+                    print >> sys.stderr, "The "+type(fun).__name__+ " PreR"
+                    print >> sys.stderr, "requires the "+pwie.info+" info."
+                    print >> sys.stderr, "Packet: "+str(packet)
+
             if counter >= window:
                 counter = 0
                 for fun in flist:
@@ -138,6 +145,10 @@ class PacketWithoutInfoError(Exception):
         ans += "' info.\n\tBe sure to set the serializer for including '"
         ans += self._info + "'"
         return ans
+
+    @property
+    def info(self):
+        return self._info
 
 
 class Packet(object):
