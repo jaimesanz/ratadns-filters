@@ -197,8 +197,9 @@ class Packet(object):
         """Return some querie of the packet"""
         try:
             return self._input['queries'][0]
-        except KeyError:
+        except (KeyError, IndexError):
             raise PacketWithoutInfoError('queries')
+
 
     @property
     def window_size(self):
