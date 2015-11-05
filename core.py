@@ -42,6 +42,7 @@ def keys_with_max_vals(d, n):
 
 
 class RedisFile(object):
+
     def __init__(self, server, channel):
         self._r = redis.StrictRedis(host=server, db=0)
         self._channel = channel
@@ -74,9 +75,9 @@ def mainloop(options):
                 try:
                     fun(packet)
                 except PacketWithoutInfoError as pwie:
-                    print >> sys.stderr, "The " + type(fun).__name__ + " PreR"
-                    print >> sys.stderr, "requires the " + pwie.info + " info."
-                    print >> sys.stderr, "Packet: " + str(packet)
+                    print >> sys.stderr, "The "+type(fun).__name__+" PreR"
+                    print >> sys.stderr, "requires the \""+pwie.info+"\" info."
+                    print >> sys.stderr, "Packet: "+str(packet)+"\n"
 
             if counter >= window:
                 counter = 0
@@ -97,6 +98,7 @@ def mainloop(options):
 
 # Counting-Sort
 class PacketPocket(object):
+
     def __init__(self, k, n=1000):  # n es el tamano de la ventana en paquetes
         self._k = k
         self._reverse_dict = {}  # k define el top
@@ -156,6 +158,9 @@ class Packet(object):
     def __init__(self, input, window_size=1000):
         self._window_size = window_size
         self._input = input
+
+    def __str__(self):
+        return str(self._input)
 
     @property
     def input(self):
