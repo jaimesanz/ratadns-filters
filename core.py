@@ -251,6 +251,12 @@ class Packet(object):
         pass
 
     @property
+    def opcode(self):
+        """Return the opcode of the packet
+        Return type: Integer"""
+        pass
+
+    @property
     def tc_bit(self):
         """Return the tc_bit of the packet
         Return type: Integer (1 or 0)"""
