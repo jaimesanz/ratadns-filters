@@ -34,7 +34,7 @@ class opcodes(PreR):
         self._opcodes = {}
 
     def __call__(self, p):
-        if p.is_answer():
+        if not p.is_answer():
             opcode = p.opcode
             if opcode not in self._opcodes:
                 self._opcodes[opcode]=0
