@@ -255,3 +255,9 @@ class Packet(object):
         """Return the tc_bit of the packet
         Return type: Integer (1 or 0)"""
         pass
+
+    @property
+    def do_bit(self):
+        """Return the do_bit of the packet
+        Return type: Integer (1 or 0)"""
+        pass
