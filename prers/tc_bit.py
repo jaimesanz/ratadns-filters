@@ -34,12 +34,13 @@ class tc_bit(PreR):
         self._tc_bit = {"set":0, "clr":0}
 
     def __call__(self, p):
-        tc_bit = p.tc_bit
+        if p.is_answer():
+            tc_bit = p.tc_bit
 
-        if tc_bit==1:
-            self._tc_bit["set"] += 1
-        else:
-            self._tc_bit["clr"] += 1
+            if tc_bit==1:
+                self._tc_bit["set"] += 1
+            else:
+                self._tc_bit["clr"] += 1
 
     def get_data(self):
         return self._tc_bit
