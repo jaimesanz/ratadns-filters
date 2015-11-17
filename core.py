@@ -267,3 +267,9 @@ class Packet(object):
         """Return the do_bit of the packet
         Return type: Integer (1 or 0)"""
         pass
+
+    @property
+    def edns_version(self):
+        """Returns the EDNS version of the packet
+        Return type: Integer or None"""
+        pass
