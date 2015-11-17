@@ -219,6 +219,7 @@ class Packet(object):
         """Return the window_size where is the packet"""
         return self._window_size
 
+
     def is_answer(self):
         """Return True if the packet is an answer"""
         try:
@@ -234,3 +235,17 @@ class Packet(object):
             return int(self.query['qtype'], 16) in [1, 2, 6, 15]
         except KeyError:
             raise PacketWithoutInfoError('qtype')
+
+
+    ############# hedgehog stuff ############## 
+    @property
+    def rd_bit(self):
+        """Return the rd_bit of the packet
+        Return type: Integer (1 or 0)"""
+        pass
+
+    @property
+    def rcode(self):
+        """Return the rcode of the packet
+        Return type: Integer"""
+        pass
