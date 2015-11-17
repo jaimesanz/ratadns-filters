@@ -237,7 +237,7 @@ class Packet(object):
             raise PacketWithoutInfoError('qtype')
 
 
-    ############# hedgehog stuff ############## 
+    ############# hedgehog stuff ##############
     @property
     def rd_bit(self):
         """Return the rd_bit of the packet
@@ -248,4 +248,10 @@ class Packet(object):
     def rcode(self):
         """Return the rcode of the packet
         Return type: Integer"""
+        pass
+
+    @property
+    def tc_bit(self):
+        """Return the tc_bit of the packet
+        Return type: Integer (1 or 0)"""
         pass
