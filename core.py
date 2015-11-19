@@ -273,3 +273,15 @@ class Packet(object):
         """Returns the EDNS version of the packet
         Return type: Integer or None"""
         pass
+
+    @property
+    def transport_protocol(self):
+        """Returns the transport protocol
+        Return type: string"""
+        pass
+
+    @property
+    def size(self):
+        """Returns the packet size (in bytes)
+        Return type: Integer"""
+        pass
