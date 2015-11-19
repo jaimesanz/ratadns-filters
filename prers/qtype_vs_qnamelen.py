@@ -1,7 +1,7 @@
 from prer import PreR
 
 
-class traffic_sizes_responses(PreR):
+class qtype_vs_qnamelen(PreR):
     """Shows the count of the different rcodes for each reply in a window.
 
     - Result
@@ -28,7 +28,7 @@ class traffic_sizes_responses(PreR):
     """
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
-        self._traffic_sizes_responses = {}
+        self._qtype_vs_qnamelen = {}
 
     def __call__(self, p):
         # ejemplo de como queremos que quede el json:
@@ -44,28 +44,29 @@ class traffic_sizes_responses(PreR):
         # d = {"tcp" : {"IPv4":4700 , "IPv6":38315}, "udp":{...}}
 
         # la info de este filtro
-        # <Transport val="tcp">
-        #     <MsgLen count="87826" val="1">
-        #     <MsgLen count="17846" val="28">
-        # </Transport>
-        # <Transport val="udp">
-        #     <MsgLen count="67404" val="1">
-        #     <MsgLen count="67404" val="28">
-        # </Transport>
+        # <Qtype val="1">
+        #     <QnameLen count="17846" val="7"/>
+        # </Qtype>
+        # <Qtype val="29">
+        #     <QnameLen count="87826" val="15"/>
+        # </Qtype>
 
-        if p.is_answer():
-            protocol = p.transport_protocol
-            size = p.size
-            if protocol not in self._traffic_sizes_responses:
-                self._traffic_sizes_responses[protocol] = {}
-            if size not in self._traffic_sizes_responses[protocol]:
-                self._traffic_sizes_responses[protocol][size] = 0
-            self._traffic_sizes_responses[protocol][size] += 1
+        if not p.is_answer():
+            size = self.qname_size(p.qname)
+            if p.qtype not in self._qtype_vs_qnamelen:
+                self._qtype_vs_qnamelen[p.qtype] = {}
+            if size not in self._qtype_vs_qnamelen[p.qtype]:
+                self._qtype_vs_qnamelen[p.qtype][size] = 0
+            self._qtype_vs_qnamelen[p.qtype][size] += 1
 
 
     def get_data(self):
-        return self._traffic_sizes_responses
+        return self._qtype_vs_qnamelen
 
 
     def reset(self):
-        self._traffic_sizes_responses.clear(
+        self._qtype_vs_qnamelen.clear()
+
+    def qname_size(self,name):
+        # assuming 1 char = 1 byte
+        return len(name)

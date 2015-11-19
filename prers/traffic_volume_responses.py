@@ -1,7 +1,7 @@
 from prer import PreR
 
 
-class traffic_sizes_responses(PreR):
+class traffic_volume_responses(PreR):
     """Shows the count of the different rcodes for each reply in a window.
 
     - Result
@@ -28,7 +28,7 @@ class traffic_sizes_responses(PreR):
     """
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
-        self._traffic_sizes_responses = {}
+        self._traffic_volume_responses = {}
 
     def __call__(self, p):
         # ejemplo de como queremos que quede el json:
@@ -45,27 +45,28 @@ class traffic_sizes_responses(PreR):
 
         # la info de este filtro
         # <Transport val="tcp">
-        #     <MsgLen count="87826" val="1">
-        #     <MsgLen count="17846" val="28">
+        #     <IPVersion count="75275" val="IPv4">
+        #     <IPVersion count="49423" val="IPv6">
         # </Transport>
         # <Transport val="udp">
-        #     <MsgLen count="67404" val="1">
-        #     <MsgLen count="67404" val="28">
+        #     <IPVersion count="42069" val="IPv4">
+        #     <IPVersion count="42069" val="IPv6">
         # </Transport>
 
         if p.is_answer():
             protocol = p.transport_protocol
-            size = p.size
-            if protocol not in self._traffic_sizes_responses:
-                self._traffic_sizes_responses[protocol] = {}
-            if size not in self._traffic_sizes_responses[protocol]:
-                self._traffic_sizes_responses[protocol][size] = 0
-            self._traffic_sizes_responses[protocol][size] += 1
+            # using source ip
+            ip_version = 'IPv4' if len(p.source) == 8 else 'IPv6'
+            if protocol not in self._traffic_volume_responses:
+                self._traffic_volume_responses[protocol] = {}
+            if ip_version not in self._traffic_volume_responses[protocol]:
+                self._traffic_volume_responses[protocol][ip_version] = 0
+            self._traffic_volume_responses[protocol][ip_version] += 1
 
 
     def get_data(self):
-        return self._traffic_sizes_responses
+        return self._traffic_volume_responses
 
 
     def reset(self):
-        self._traffic_sizes_responses.clear(
+        self._traffic_volume_responses.clear()
