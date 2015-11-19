@@ -1,4 +1,4 @@
-from core import hex_to_ip, keys_with_max_vals
+from core import hex_to_ip, get_topk_with_skipped_count
 from prer import PreR
 
 
@@ -69,21 +69,7 @@ class ipv6_rsn_abusers(PreR):
 
 
     def get_data(self):
-        data = {}
-        top_ips = keys_with_max_vals(self._ipv6_rsn_abusers, self._n)
-
-        for ip in self._ipv6_rsn_abusers.keys():
-            if ip in top_ips:
-                data[ip]=self._ipv6_rsn_abusers[ip]
-            else:
-                if "skipped" not in data:
-                    data["skipped"]=0
-                    data["skipped_sum"]=0
-                data["skipped"]+=1
-                data["skipped_sum"]+=self._ipv6_rsn_abusers[ip]
-
-        return data
-
+        return get_topk_with_skipped_count(self._ipv6_rsn_abusers, self._n)
 
     def reset(self):
         self._ipv6_rsn_abusers.clear()
