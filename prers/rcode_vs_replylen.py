@@ -1,7 +1,7 @@
 from prer import PreR
 
 
-class traffic_sizes_responses(PreR):
+class rcode_vs_replylen(PreR):
     """Shows the count of the different rcodes for each reply in a window.
 
     - Result
@@ -28,7 +28,7 @@ class traffic_sizes_responses(PreR):
     """
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
-        self._traffic_sizes_responses = {}
+        self._rcode_vs_replylen = {}
 
     def __call__(self, p):
         # ejemplo de como queremos que quede el json:
@@ -44,28 +44,28 @@ class traffic_sizes_responses(PreR):
         # d = {"tcp" : {"IPv4":4700 , "IPv6":38315}, "udp":{...}}
 
         # la info de este filtro
-        # <Transport val="tcp">
-        #     <MsgLen count="87826" val="1">
-        #     <MsgLen count="17846" val="28">
-        # </Transport>
-        # <Transport val="udp">
-        #     <MsgLen count="67404" val="1">
-        #     <MsgLen count="67404" val="28">
-        # </Transport>
+        # <Rcode val="5">
+        #     <ReplyLen count="81332" val="18"/>
+        #     <ReplyLen count="67404" val="30"/>
+        # </Rcode>
+        # <Rcode val="4">
+        #     <ReplyLen count="17846" val="18"/>
+        # </Rcode>
+        # <Rcode val="1">
+        #     <ReplyLen count="87826" val="18"/>
+        # </Rcode>
 
         if p.is_answer():
-            protocol = p.transport_protocol
-            size = p.size
-            if protocol not in self._traffic_sizes_responses:
-                self._traffic_sizes_responses[protocol] = {}
-            if size not in self._traffic_sizes_responses[protocol]:
-                self._traffic_sizes_responses[protocol][size] = 0
-            self._traffic_sizes_responses[protocol][size] += 1
+            if p.rcode not in self._rcode_vs_replylen:
+                self._rcode_vs_replylen[p.rcode] = {}
+            if p.size not in self._rcode_vs_replylen[p.rcode]:
+                self._rcode_vs_replylen[p.rcode][p.size] = 0
+            self._rcode_vs_replylen[p.rcode][p.size] += 1
 
 
     def get_data(self):
-        return self._traffic_sizes_responses
+        return self._rcode_vs_replylen
 
 
     def reset(self):
-        self._traffic_sizes_responses.clear()
+        self._rcode_vs_replylen.clear()

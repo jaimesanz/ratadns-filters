@@ -1,7 +1,7 @@
 from prer import PreR
 
 
-class traffic_sizes_responses(PreR):
+class client_addr_vs_rcode(PreR):
     """Shows the count of the different rcodes for each reply in a window.
 
     - Result
@@ -28,7 +28,8 @@ class traffic_sizes_responses(PreR):
     """
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
-        self._traffic_sizes_responses = {}
+        self._client_addr_vs_rcode = {}
+        self._k = 50
 
     def __call__(self, p):
         # ejemplo de como queremos que quede el json:
@@ -44,28 +45,29 @@ class traffic_sizes_responses(PreR):
         # d = {"tcp" : {"IPv4":4700 , "IPv6":38315}, "udp":{...}}
 
         # la info de este filtro
-        # <Transport val="tcp">
-        #     <MsgLen count="87826" val="1">
-        #     <MsgLen count="17846" val="28">
-        # </Transport>
-        # <Transport val="udp">
-        #     <MsgLen count="67404" val="1">
-        #     <MsgLen count="67404" val="28">
-        # </Transport>
+        # <Rcode val="3">
+        #     <ClientAddr count="9215" val="201.84.138.226"/>
+        #     <ClientAddr count="85010" val="201.95.188.197"/>
+        #     <ClientAddr count="9215" val=":-SKIPPED:-"/>
+        #     <ClientAddr count="92852" val=":-SKIPPED_SUM:-"/>
+        # </Rcode>
+        # <Rcode val="0">
+        #     <ClientAddr count="9215" val="201.47.48.7"/>
+        #     <ClientAddr count="92852" val="201.140.90.2"/>
+        #     <ClientAddr count="92852" val="201.115.161.11"/>
+        # </Rcode>
 
         if p.is_answer():
-            protocol = p.transport_protocol
-            size = p.size
-            if protocol not in self._traffic_sizes_responses:
-                self._traffic_sizes_responses[protocol] = {}
-            if size not in self._traffic_sizes_responses[protocol]:
-                self._traffic_sizes_responses[protocol][size] = 0
-            self._traffic_sizes_responses[protocol][size] += 1
+            if p.rcode not in self._client_addr_vs_rcode:
+                self._client_addr_vs_rcode[p.rcode] = {}
+            if p.source not in self._client_addr_vs_rcode[p.rcode]:
+                self._client_addr_vs_rcode[p.rcode][p.source] = 0
+            self._client_addr_vs_rcode[p.rcode][p.source] += 1
 
 
     def get_data(self):
-        return self._traffic_sizes_responses
+        return get_topk_with_skipped_count(self._client_addr_vs_rcode,self._k)
 
 
     def reset(self):
-        self._traffic_sizes_responses.clear()
+        self._client_addr_vs_rcode.clear()

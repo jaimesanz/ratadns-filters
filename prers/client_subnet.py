@@ -1,7 +1,7 @@
 from prer import PreR
 
 
-class traffic_sizes_responses(PreR):
+class client_subnet(PreR):
     """Shows the count of the different rcodes for each reply in a window.
 
     - Result
@@ -28,7 +28,8 @@ class traffic_sizes_responses(PreR):
     """
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
-        self._traffic_sizes_responses = {}
+        self._client_subnet = {}
+        self._k = 200
 
     def __call__(self, p):
         # ejemplo de como queremos que quede el json:
@@ -44,28 +45,21 @@ class traffic_sizes_responses(PreR):
         # d = {"tcp" : {"IPv4":4700 , "IPv6":38315}, "udp":{...}}
 
         # la info de este filtro
-        # <Transport val="tcp">
-        #     <MsgLen count="87826" val="1">
-        #     <MsgLen count="17846" val="28">
-        # </Transport>
-        # <Transport val="udp">
-        #     <MsgLen count="67404" val="1">
-        #     <MsgLen count="67404" val="28">
-        # </Transport>
+        # <ClientSubnet count="98009" val="201.41.45.0"/>
+        # <ClientSubnet count="97581" val="201.84.138.0"/>
+        # <ClientSubnet count="62497" val="201.15.129.0"/>
+        # <ClientSubnet count="98009" val="-:SKIPPED:-"/>
+        # <ClientSubnet count="98009" val="-:SKIPPED_SUM:-"/>
 
-        if p.is_answer():
-            protocol = p.transport_protocol
-            size = p.size
-            if protocol not in self._traffic_sizes_responses:
-                self._traffic_sizes_responses[protocol] = {}
-            if size not in self._traffic_sizes_responses[protocol]:
-                self._traffic_sizes_responses[protocol][size] = 0
-            self._traffic_sizes_responses[protocol][size] += 1
+        if not p.is_answer():
+            if p.source not in self._client_subnet:
+                self._client_subnet[p.source] = 0
+            self._client_subnet[p.source] += 1
 
 
     def get_data(self):
-        return self._traffic_sizes_responses
+        return get_topk_with_skipped_count(self._client_subnet,self._k)
 
 
     def reset(self):
-        self._traffic_sizes_responses.clear()
+        self._client_subnet.clear()
