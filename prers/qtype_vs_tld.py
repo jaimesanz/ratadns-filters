@@ -85,23 +85,8 @@ class qtype_vs_tld(PreR):
 
             self._qtype_vs_tld[qtype][tld]+=1
 
-
-
     def get_data(self):
-        data = {}
-        for qt in self._qtype_vs_tld.keys():
-            top_keys = keys_with_max_vals(self._qtype_vs_tld[qt], self._k)
-            for key in self._qtype_vs_tld[qt].keys():
-                if key in top_keys:
-                    data[key]=self._qtype_vs_tld[qt][key]
-                else:
-                    if "skipped" not in data:
-                        data["skipped"]=0
-                        data["skipped_sum"]=0
-                    data["skipped"]+=1
-                    data["skipped_sum"]+=self._qtype_vs_tld[qt][key]
-
-        return data
+        return get_topk_with_skipped_count(self._qtype_vs_tld, self._k)
 
     def reset(self):
         self._qtype_vs_tld.clear()

@@ -40,6 +40,20 @@ def keys_with_max_vals(d, n):
         result.append([elem[1], -elem[0]])
     return result
 
+def get_topk_with_skipped_count(count_dict, k):
+    data = {}
+    for outter_key in count_dict.keys():
+        top_keys = keys_with_max_vals(count_dict[outter_key], k)
+        for inner_key in count_dict[outter_key].keys():
+            if inner_key in top_keys:
+                data[outter_key][inner_key]=count_dict[outter_key][inner_key]
+            else:
+                if "skipped" not in data:
+                    data[outter_key]["skipped"]=0
+                    data[outter_key]["skipped_sum"]=0
+                data[outter_key]["skipped"]+=1
+                data[outter_key]["skipped_sum"]+=count_dict[outter_key][inner_key]
+    return data
 
 class RedisFile(object):
 
@@ -284,4 +298,15 @@ class Packet(object):
     def size(self):
         """Returns the packet size (in bytes)
         Return type: Integer"""
+        pass
+
+    def qclass(self):
+        """Return the qclass of the packet
+        Return type: Integer """
+        pass
+
+  @property
+    def source_port(self):
+        """Return the source port of the packet
+        Return type: Integer """
         pass
