@@ -2,21 +2,21 @@ from prer import PreR
 
 
 class qtypes(PreR):
-    """Show the ranking of qnames coming from the packets in a window.
+    """Shows the count of the different qtypes received for each packet in a
+    window.
 
     - Result
 
-    List of the n-top most consulted 'qnames'
-    The elements are list of two elements
-    The first are the 'qnames' with the highest number of appearances
-    in the packets in the current window.
-    The second are the number of number of appearances of the
-    corresponding 'qname'.
+    A dict that has an entry for each qtype received where the key is the qtype
+    (as an integer) and the value is the count of the packets having that qtype.
 
-    - Example(N=3)
+    - Example
 
-    [['www.nic.cl', 5], ['www.niclabs.cl', 4],
-     ['www.jerry.cl', 3], ['www.uchile.cl', 3]]
+    {
+        1: 5, # A qtype
+        2: 6, # NS qtype
+        3: 3  # CNAME qtype
+    }
 
 
     - Complexity Note
@@ -26,7 +26,6 @@ class qtypes(PreR):
     - ReductionRatio Note
 
     <FILL>
-    TODO write the proper docstring for this
     """
 
     def __init__(self, f, **kwargs):

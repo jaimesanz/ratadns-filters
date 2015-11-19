@@ -3,22 +3,24 @@ from prer import PreR
 
 
 class ipv6_rsn_abusers(PreR):
-    """Show the ranking of qnames coming from the packets in a window.
+    """Shows the IP of the top 50 abusers (that is the IPs who query the most)
+    in IPv6 hex format.
 
     - Result
 
-    List of the n-top most consulted 'qnames'
-    The elements are list of two elements
-    The first are the 'qnames' with the highest number of appearances
-    in the packets in the current window.
-    The second are the number of number of appearances of the
-    corresponding 'qname'.
+    A dict having having entries for each top abuser where the key is the IP in
+    IPv6 format and the value is the count of queries done. It also has the
+    'skipped' key which holds the number of abusers not considered in the top,
+    and the 'skipped_sum' key which holds the number of queries not considered
+    in the top.
 
     - Example(N=3)
 
-    [['www.nic.cl', 5], ['www.niclabs.cl', 4],
-     ['www.jerry.cl', 3], ['www.uchile.cl', 3]]
+    {
+        '2001cdba000000000000000032579652': 30,
+        '2001cdba000000000000000032879626': 60
 
+    }
 
     - Complexity Note
 
@@ -27,7 +29,7 @@ class ipv6_rsn_abusers(PreR):
     - ReductionRatio Note
 
     <FILL>
-    todo
+    TODO review this docstring
     """
 
     def __init__(self, f, **kwargs):
@@ -81,7 +83,7 @@ class ipv6_rsn_abusers(PreR):
                 data["skipped_sum"]+=self._ipv6_rsn_abusers[ip]
 
         return data
-        
+
 
     def reset(self):
         self._ipv6_rsn_abusers.clear()

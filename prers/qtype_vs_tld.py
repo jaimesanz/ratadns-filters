@@ -3,22 +3,32 @@ from prer import PreR
 
 
 class qtype_vs_tld(PreR):
-    """Show the ranking of qnames coming from the packets in a window.
+    """For each qtype it shows the count of the top 200 TLDs of the queries
+    received.
 
     - Result
 
-    List of the n-top most consulted 'qnames'
-    The elements are list of two elements
-    The first are the 'qnames' with the highest number of appearances
-    in the packets in the current window.
-    The second are the number of number of appearances of the
-    corresponding 'qname'.
+    A dict having a key for each qtype whose value is another dict which has an
+    entrie for each top 200 TLD where the key is the TLD and the value is the
+    count. It also includes the key 'skipped' with the number of skipped
+    TLDs and the key 'skipped_sum' with the sum of the counts of each skipped
+    TLD.
 
-    - Example(N=3)
+    - Example
 
-    [['www.nic.cl', 5], ['www.niclabs.cl', 4],
-     ['www.jerry.cl', 3], ['www.uchile.cl', 3]]
-
+    {
+        #qtypes are integers
+        1: { # For illustration purposes we will just work with the top 2 TLDs
+             # in this example
+            'cl': 100,
+            'com': 40,
+            'skipped': 40,
+            'skipped_sum': 400
+        },
+        2: {
+            'net': 69
+        }
+    }
 
     - Complexity Note
 
@@ -27,7 +37,7 @@ class qtype_vs_tld(PreR):
     - ReductionRatio Note
 
     <FILL>
-    todo
+    TODO review this docstring
     """
 
     def __init__(self, f, **kwargs):
@@ -69,10 +79,10 @@ class qtype_vs_tld(PreR):
             tld = qname.split(".")[-2]
             if qtype not in self._qtype_vs_tld:
                 self._qtype_vs_tld[qtype] = {}
-            
+
             if tld not in self._qtype_vs_tld[qtype]:
                 self._qtype_vs_tld[qtype][tld] = 0
-                    
+
             self._qtype_vs_tld[qtype][tld]+=1
 
 

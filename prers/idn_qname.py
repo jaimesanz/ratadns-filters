@@ -3,21 +3,20 @@ from prer import PreR
 
 
 class idn_qname(PreR):
-    """Show the ranking of qnames coming from the packets in a window.
+    """Shows the count of the internationalized domain name queries received in
+    a window.
 
     - Result
 
-    List of the n-top most consulted 'qnames'
-    The elements are list of two elements
-    The first are the 'qnames' with the highest number of appearances
-    in the packets in the current window.
-    The second are the number of number of appearances of the
-    corresponding 'qname'.
+    A dict that has two entries: 'normal' (which has the count of normal domain
+    names) and 'idn' (which has the count of internationalized domain names)
 
-    - Example(N=3)
+    - Example
 
-    [['www.nic.cl', 5], ['www.niclabs.cl', 4],
-     ['www.jerry.cl', 3], ['www.uchile.cl', 3]]
+    {
+        'normal': 60, # vanilla domain names
+        'idn': 10 # internationalized domain names
+    }
 
 
     - Complexity Note
@@ -27,7 +26,6 @@ class idn_qname(PreR):
     - ReductionRatio Note
 
     <FILL>
-    todo
     """
 
     def __init__(self, f, **kwargs):
@@ -44,7 +42,7 @@ class idn_qname(PreR):
                 self._idn_qname["normal"] += 1
             except Exception, e:
                 self._idn_qname["idn"] += 1
-                
+
 
     def get_data(self):
         return self._idn_qname

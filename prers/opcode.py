@@ -2,21 +2,22 @@ from prer import PreR
 
 
 class opcodes(PreR):
-    """Show the ranking of qnames coming from the packets in a window.
+    """Shows the count of the different opcodes received for each query in a
+    window.
 
     - Result
 
-    List of the n-top most consulted 'qnames'
-    The elements are list of two elements
-    The first are the 'qnames' with the highest number of appearances
-    in the packets in the current window.
-    The second are the number of number of appearances of the
-    corresponding 'qname'.
+    A dict that has an entry for each opcode captured where the key is the
+    opcode (as an integer) and the value is the count of the packets having that
+    opcode.
 
-    - Example(N=3)
+    - Example
 
-    [['www.nic.cl', 5], ['www.niclabs.cl', 4],
-     ['www.jerry.cl', 3], ['www.uchile.cl', 3]]
+    {
+        0: 50, # QUERY
+        1: 10, # IQUERY
+        2: 1  # STATUS
+    }
 
 
     - Complexity Note
@@ -26,7 +27,6 @@ class opcodes(PreR):
     - ReductionRatio Note
 
     <FILL>
-    TODO write the proper docstring for this
     """
 
     def __init__(self, f, **kwargs):

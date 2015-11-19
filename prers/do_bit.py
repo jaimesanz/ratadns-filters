@@ -2,21 +2,16 @@ from prer import PreR
 
 
 class do_bit(PreR):
-    """Show the ranking of qnames coming from the packets in a window.
+    """Shows the count of queries received in a window that have the do-bit set.
 
     - Result
 
-    List of the n-top most consulted 'qnames'
-    The elements are list of two elements
-    The first are the 'qnames' with the highest number of appearances
-    in the packets in the current window.
-    The second are the number of number of appearances of the
-    corresponding 'qname'.
+    A dict having in the key "set" the count of packets that had the do-bit set,
+    and in the key "clr" the count of packets that didn't had the bit set.
 
-    - Example(N=3)
+    - Example
 
-    [['www.nic.cl', 5], ['www.niclabs.cl', 4],
-     ['www.jerry.cl', 3], ['www.uchile.cl', 3]]
+    {'clr': 45, 'set':70}
 
 
     - Complexity Note
@@ -26,7 +21,6 @@ class do_bit(PreR):
     - ReductionRatio Note
 
     <FILL>
-    TODO write the proper docstring for this
     """
 
     def __init__(self, f, **kwargs):

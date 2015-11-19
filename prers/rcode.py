@@ -2,21 +2,20 @@ from prer import PreR
 
 
 class rcodes(PreR):
-    """Show the ranking of qnames coming from the packets in a window.
+    """Shows the count of the different rcodes for each reply in a window.
 
     - Result
 
-    List of the n-top most consulted 'qnames'
-    The elements are list of two elements
-    The first are the 'qnames' with the highest number of appearances
-    in the packets in the current window.
-    The second are the number of number of appearances of the
-    corresponding 'qname'.
+    A dict that has an entry for each rcode captured where the key is the rcode
+    (as an integer) and the value is the count of the packets having that rcode.
 
-    - Example(N=3)
+    - Example
 
-    [['www.nic.cl', 5], ['www.niclabs.cl', 4],
-     ['www.jerry.cl', 3], ['www.uchile.cl', 3]]
+    {
+        0: 50, # No error
+        1: 10, # Format error
+        2: 1  # Server failure
+    }
 
 
     - Complexity Note
@@ -26,9 +25,7 @@ class rcodes(PreR):
     - ReductionRatio Note
 
     <FILL>
-    todo
     """
-
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
         self._rcodes = {}
@@ -62,7 +59,7 @@ class rcodes(PreR):
 
     def get_data(self):
         return self._rcodes
-        
+
 
     def reset(self):
         self._rcodes.clear()

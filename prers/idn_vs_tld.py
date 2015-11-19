@@ -3,21 +3,20 @@ from prer import PreR
 
 
 class idn_vs_tld(PreR):
-    """Show the ranking of qnames coming from the packets in a window.
+    """Shows the count of the queries whose qnames have an internationalized
+    TLD.
 
     - Result
 
-    List of the n-top most consulted 'qnames'
-    The elements are list of two elements
-    The first are the 'qnames' with the highest number of appearances
-    in the packets in the current window.
-    The second are the number of number of appearances of the
-    corresponding 'qname'.
+    A dict that has two entries: 'normal' (which has the count of normal tlds)
+    and 'idn' (which has the count of idn TLDs)
 
-    - Example(N=3)
+    - Example
 
-    [['www.nic.cl', 5], ['www.niclabs.cl', 4],
-     ['www.jerry.cl', 3], ['www.uchile.cl', 3]]
+    {
+        'normal': 60, # vanilla TLDs
+        'idn': 10 # internationalized TLDs
+    }
 
 
     - Complexity Note
@@ -27,7 +26,6 @@ class idn_vs_tld(PreR):
     - ReductionRatio Note
 
     <FILL>
-    todo
     """
 
     def __init__(self, f, **kwargs):
@@ -48,7 +46,7 @@ class idn_vs_tld(PreR):
             	if tld_key not in self._idn_vs_tld:
             		self._idn_vs_tld[tld_key]=0
                 self._idn_vs_tld[tld_key] += 1
-                
+
 
     def get_data(self):
         return self._idn_vs_tld
