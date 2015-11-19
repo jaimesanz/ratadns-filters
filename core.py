@@ -48,7 +48,7 @@ def keys_with_max_vals(d, n):
 def get_topk_with_skipped_count(count_dict, k):
     data = {}
     for outter_key in count_dict.keys():
-        top_keys = keys_with_max_vals(count_dict[outter_key], k)
+        top_keys = [pair[0] for pair in keys_with_max_vals(count_dict[outter_key], k)]
         for inner_key in count_dict[outter_key].keys():
             if inner_key in top_keys:
                 data[outter_key][inner_key]=count_dict[outter_key][inner_key]
