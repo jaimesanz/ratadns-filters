@@ -21,6 +21,11 @@ def hex_to_ip(h):
     o4 = int(h[6:7], 16)
     return str(o1) + "." + str(o2) + "." + str(o3) + "." + str(o4)
 
+def is_ipv4(ip_hex):
+    """Checks if given IP is in IPv4 format
+    Return type: Boolean"""
+    return len(ip_hex)==8
+
 
 def keys_with_max_vals(d, n):
     # The - is for python min-heap
