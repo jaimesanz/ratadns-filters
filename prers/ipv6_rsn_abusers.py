@@ -1,4 +1,4 @@
-from core import hex_to_ip, get_topk_with_skipped_count_2D
+from core import hex_to_ip, get_topk_with_skipped_count_1D
 from prer import PreR
 
 
