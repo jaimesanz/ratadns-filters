@@ -51,6 +51,8 @@ def get_topk_with_skipped_count(count_dict, k):
         top_keys = [pair[0] for pair in keys_with_max_vals(count_dict[outter_key], k)]
         for inner_key in count_dict[outter_key].keys():
             if inner_key in top_keys:
+                if outter_key not in data:
+                    data[outter_key] = {}
                 data[outter_key][inner_key]=count_dict[outter_key][inner_key]
             else:
                 if "skipped" not in data:

@@ -18,5 +18,6 @@ from topnpp import TopNPP
 from topnq import TopNQ
 from do_bit import DoBit
 from qtype_vs_qnamelen import QtypeVSQnamelen
+from qtype_vs_tld import QtypeVSTld
 
 __author__ = 'Francisco Cifuentes'
