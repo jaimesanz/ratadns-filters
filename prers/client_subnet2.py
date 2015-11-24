@@ -85,7 +85,7 @@ class client_subnet2(PreR):
                 # root-servers.net: a query for a root server IP address.
                 self.incr_count("root-servers.net", source_ip)
                 is_ok=False
-            if p.qname=="localhost":
+            if p.qname=="localhost.":
                 # localhost: a query for the localhost IP address.
                 self.incr_count("localhost", source_ip)
                 is_ok=False
