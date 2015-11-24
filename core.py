@@ -53,13 +53,13 @@ def get_topk_with_skipped_count(count_dict, k):
             if inner_key in top_keys:
                 if outter_key not in data:
                     data[outter_key] = {}
-                data[outter_key][inner_key]=count_dict[outter_key][inner_key]
+                data[outter_key][inner_key] = count_dict[outter_key][inner_key]
             else:
-                if "skipped" not in data:
-                    data[outter_key]["skipped"]=0
-                    data[outter_key]["skipped_sum"]=0
-                data[outter_key]["skipped"]+=1
-                data[outter_key]["skipped_sum"]+=count_dict[outter_key][inner_key]
+                if "skipped" not in data[outter_key]:
+                    data[outter_key]["skipped"] = 0
+                    data[outter_key]["skipped_sum"] = 0
+                data[outter_key]["skipped"] += 1
+                data[outter_key]["skipped_sum"] += count_dict[outter_key][inner_key]
     return data
 
 class RedisFile(object):
