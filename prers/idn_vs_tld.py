@@ -2,7 +2,7 @@ from encodings import idna
 from prer import PreR
 
 
-class idn_vs_tld(PreR):
+class IdnVSTld(PreR):
     """Shows the count of the queries whose qnames have an internationalized
     TLD.
 

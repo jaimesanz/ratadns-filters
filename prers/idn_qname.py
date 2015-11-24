@@ -2,7 +2,7 @@ from encodings import idna
 from prer import PreR
 
 
-class idn_qname(PreR):
+class IdnQname(PreR):
     """Shows the count of the internationalized domain name queries received in
     a window.
 

@@ -1,7 +1,7 @@
 from prer import PreR
 
 
-class rd_bit(PreR):
+class RdBit(PreR):
     """Shows the count of queries received in a window that have the rd-bit set.
 
     - Result

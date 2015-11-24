@@ -1,7 +1,7 @@
 from prer import PreR
 
 
-class traffic_volume_queries(PreR):
+class TrafficVolumeQueries(PreR):
     """Shows the count of the different rcodes for each reply in a window.
 
     - Result

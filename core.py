@@ -310,7 +310,7 @@ class Packet(object):
         Return type: Integer """
         pass
 
-  @property
+    @property
     def source_port(self):
         """Return the source port of the packet
         Return type: Integer """

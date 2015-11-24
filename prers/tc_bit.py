@@ -1,7 +1,7 @@
 from prer import PreR
 
 
-class tc_bit(PreR):
+class TcBit(PreR):
     """Shows the count of replies in a window that have the tc-bit set.
 
     - Result

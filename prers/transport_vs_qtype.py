@@ -1,7 +1,7 @@
 from prer import PreR
 
 
-class transport_vs_qtype(PreR):
+class TransportVSQtype(PreR):
     """Shows the count of the different rcodes for each reply in a window.
 
     - Result

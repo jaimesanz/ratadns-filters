@@ -1,7 +1,7 @@
 from prer import PreR
 
 
-class chaos_types_and_names(PreR):
+class ChaosTypesAndNames(PreR):
 
 
 	def __init__(self, f, **kwargs):

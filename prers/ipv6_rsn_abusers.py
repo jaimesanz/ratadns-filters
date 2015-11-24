@@ -2,7 +2,7 @@ from core import hex_to_ip, get_topk_with_skipped_count
 from prer import PreR
 
 
-class ipv6_rsn_abusers(PreR):
+class Ipv6RsnAbusers(PreR):
     """Shows the IP of the top 50 abusers (that is the IPs who query the most)
     in IPv6 hex format.
 

@@ -1,7 +1,7 @@
 from prer import PreR
 
 
-class opcodes(PreR):
+class Opcode(PreR):
     """Shows the count of the different opcodes received for each query in a
     window.
 

@@ -2,7 +2,7 @@ from core import keys_with_max_vals
 from prer import PreR
 
 
-class qtype_vs_tld(PreR):
+class QtypeVSTld(PreR):
     """For each qtype it shows the count of the top 200 TLDs of the queries
     received.
 

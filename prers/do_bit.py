@@ -1,7 +1,7 @@
 from prer import PreR
 
 
-class do_bit(PreR):
+class DoBit(PreR):
     """Shows the count of queries received in a window that have the do-bit set.
 
     - Result

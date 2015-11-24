@@ -2,7 +2,7 @@ from core import is_ipv4
 from prer import PreR
 
 
-class dns_ip_version_vs_qtype(PreR):
+class DnsIpVersionVSQtype(PreR):
 
 
 	def __init__(self, f, **kwargs):

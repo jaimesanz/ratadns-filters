@@ -2,7 +2,7 @@ from core import get_topk_with_skipped_count
 from prer import PreR
 
 
-class client_subnet2(PreR):
+class ClientSubnet2(PreR):
     """Show the ranking of qnames coming from the packets in a window.
 
     - Result

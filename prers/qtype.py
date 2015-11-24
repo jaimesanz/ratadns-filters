@@ -1,7 +1,7 @@
 from prer import PreR
 
 
-class qtypes(PreR):
+class Qtype(PreR):
     """Shows the count of the different qtypes received for each packet in a
     window.
 

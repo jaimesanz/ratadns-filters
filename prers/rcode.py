@@ -1,7 +1,7 @@
 from prer import PreR
 
 
-class rcodes(PreR):
+class Rcode(PreR):
     """Shows the count of the different rcodes for each reply in a window.
 
     - Result
