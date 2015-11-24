@@ -1,7 +1,7 @@
 from prer import PreR
 
 
-class EdnsVersions(PreR):
+class EdnsVersion(PreR):
     """Shows the count of the different edns_versions received for each query in
     a window.
 

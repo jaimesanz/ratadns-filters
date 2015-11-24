@@ -22,5 +22,6 @@ from opcode import Opcode
 from rd_bit import RdBit
 from tc_bit import TcBit
 from qtype import Qtype
+from edns_version import EdnsVersion
 
 __author__ = 'Francisco Cifuentes'
