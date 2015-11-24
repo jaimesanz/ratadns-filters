@@ -42,24 +42,6 @@ class EdnsBufsiz(PreR):
         }
 
     def __call__(self, p):
-        # ejemplo de como queremos que quede el json:
-        # <Transport val="tcp">
-        #     <IPVersion count="4700" val="IPv4">
-        #     <IPVersion count="38315" val="IPv6">
-        # </Transport>
-        # <Transport val="udp">
-        #     <IPVersion count="39011" val="IPv4">
-        #     <IPVersion count="39011" val="IPv6">
-        # </Transport>
-
-        # d = {"tcp" : {"IPv4":4700 , "IPv6":38315}, "udp":{...}}
-
-        # la info de este filtro
-        # <EDNSBufSiz count="87826" val="4096-4607">
-        # <EDNSBufSiz count="81332" val="None">
-
-
-        # ranges: 0-511, 512-1023, 1024-1535, 1536-2047, 2048-2559, 2560-3071, 3072-3583, 3584-4095, 4096-4607
         if not p.is_answer():
             if p.is_edns():
                 ebs = p.edns_bufsiz

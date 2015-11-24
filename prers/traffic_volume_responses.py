@@ -31,28 +31,6 @@ class TrafficVolumeResponses(PreR):
         self._traffic_volume_responses = {}
 
     def __call__(self, p):
-        # ejemplo de como queremos que quede el json:
-        # <Transport val="tcp">
-        #     <IPVersion count="4700" val="IPv4">
-        #     <IPVersion count="38315" val="IPv6">
-        # </Transport>
-        # <Transport val="udp">
-        #     <IPVersion count="39011" val="IPv4">
-        #     <IPVersion count="39011" val="IPv6">
-        # </Transport>
-
-        # d = {"tcp" : {"IPv4":4700 , "IPv6":38315}, "udp":{...}}
-
-        # la info de este filtro
-        # <Transport val="tcp">
-        #     <IPVersion count="75275" val="IPv4">
-        #     <IPVersion count="49423" val="IPv6">
-        # </Transport>
-        # <Transport val="udp">
-        #     <IPVersion count="42069" val="IPv4">
-        #     <IPVersion count="42069" val="IPv6">
-        # </Transport>
-
         if p.is_answer():
             protocol = p.transport_protocol
             # using source ip

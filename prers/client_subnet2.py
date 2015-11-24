@@ -33,46 +33,9 @@ class ClientSubnet2(PreR):
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
         self._client_subnet2 = {}
-        # k:= max-cells
-        # self._k = int(kwargs['k'])
         self._k = 200
 
     def __call__(self, p):
-        # ejemplo de como queremos que quede el json:
-        # <Transport val="tcp">
-        #     <IPVersion count="4700" val="IPv4">
-        #     <IPVersion count="38315" val="IPv6">
-        # </Transport>
-        # <Transport val="udp">
-        #     <IPVersion count="39011" val="IPv4">
-        #     <IPVersion count="39011" val="IPv6">
-        # </Transport>
-
-        # d = {"tcp" : {"IPv4":4700 , "IPv6":38315}, "udp":{...}}
-
-        # la info de este filtro
-        # <Class val="ok">
-        #     <ClientSubnet count="81332" val="201.177.7.0"/>
-        #     <ClientSubnet count="81332" val="-:SKIPPED:-"/>
-        #     <ClientSubnet count="17846" val="-:SKIPPED_SUM:-"/>
-        # </Class>
-        # <Class val="non-auth-tld">
-        #     <ClientSubnet count="87826" val="201.30.11.0"/>
-        #     <ClientSubnet count="87826" val="201.221.20.0"/>
-        # </Class>
-        # <Class val="root-servers.net">
-        #     <ClientSubnet count="17846" val="201.242.43.0"/>
-        # </Class>
-        # <Class val="localhost">
-        #     <ClientSubnet count="87826" val="201.95.188.0"/>
-        #     <ClientSubnet count="81332" val="201.109.216.0"/>
-        # </Class>
-        # <Class val="a-for-a">
-        #     <ClientSubnet count="67404" val="201.64.118.0"/>
-        #     <ClientSubnet count="17846" val="-:SKIPPED:-"/>
-        #     <ClientSubnet count="87826" val="-:SKIPPED_SUM:-"/>
-        # </Class>
-
         if not p.is_answer():
             is_ok=True
             source_ip = p.source
