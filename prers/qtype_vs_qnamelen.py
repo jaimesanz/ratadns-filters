@@ -31,26 +31,6 @@ class QtypeVSQnamelen(PreR):
         self._qtype_vs_qnamelen = {}
 
     def __call__(self, p):
-        # ejemplo de como queremos que quede el json:
-        # <Transport val="tcp">
-        #     <IPVersion count="4700" val="IPv4">
-        #     <IPVersion count="38315" val="IPv6">
-        # </Transport>
-        # <Transport val="udp">
-        #     <IPVersion count="39011" val="IPv4">
-        #     <IPVersion count="39011" val="IPv6">
-        # </Transport>
-
-        # d = {"tcp" : {"IPv4":4700 , "IPv6":38315}, "udp":{...}}
-
-        # la info de este filtro
-        # <Qtype val="1">
-        #     <QnameLen count="17846" val="7"/>
-        # </Qtype>
-        # <Qtype val="29">
-        #     <QnameLen count="87826" val="15"/>
-        # </Qtype>
-
         if not p.is_answer():
             size = self.qname_size(p.qname)
             if p.qtype not in self._qtype_vs_qnamelen:

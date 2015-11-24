@@ -31,30 +31,6 @@ class RcodeVSReplylen(PreR):
         self._rcode_vs_replylen = {}
 
     def __call__(self, p):
-        # ejemplo de como queremos que quede el json:
-        # <Transport val="tcp">
-        #     <IPVersion count="4700" val="IPv4">
-        #     <IPVersion count="38315" val="IPv6">
-        # </Transport>
-        # <Transport val="udp">
-        #     <IPVersion count="39011" val="IPv4">
-        #     <IPVersion count="39011" val="IPv6">
-        # </Transport>
-
-        # d = {"tcp" : {"IPv4":4700 , "IPv6":38315}, "udp":{...}}
-
-        # la info de este filtro
-        # <Rcode val="5">
-        #     <ReplyLen count="81332" val="18"/>
-        #     <ReplyLen count="67404" val="30"/>
-        # </Rcode>
-        # <Rcode val="4">
-        #     <ReplyLen count="17846" val="18"/>
-        # </Rcode>
-        # <Rcode val="1">
-        #     <ReplyLen count="87826" val="18"/>
-        # </Rcode>
-
         if p.is_answer():
             if p.rcode not in self._rcode_vs_replylen:
                 self._rcode_vs_replylen[p.rcode] = {}

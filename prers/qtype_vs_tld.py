@@ -48,31 +48,6 @@ class QtypeVSTld(PreR):
         self._k = 200
 
     def __call__(self, p):
-        # ejemplo de como queremos que quede el json:
-        # <Transport val="tcp">
-        #     <IPVersion count="4700" val="IPv4">
-        #     <IPVersion count="38315" val="IPv6">
-        # </Transport>
-        # <Transport val="udp">
-        #     <IPVersion count="39011" val="IPv4">
-        #     <IPVersion count="39011" val="IPv6">
-        # </Transport>
-
-        # d = {"tcp" : {"IPv4":4700 , "IPv6":38315}, "udp":{...}}
-
-        # la info de este filtro
-        # <Qtype val="2">
-        #     <TLD count="81332" val="cl"/>
-        #     <TLD count="87826" val="com"/>
-        #     <TLD count="67404" val="corp"/>
-        #     <TLD count="81332" val="-:SKIPPED:-"/>
-        #     <TLD count="17846" val="-:SKIPPED_SUM:-"/>
-        # </Qtype>
-        # <Qtype val="16">
-        #     <TLD count="81332" val="local"/>
-        #     <TLD count="87826" val="info"/>
-        # </Qtype>
-
         if not p.is_answer():
             qtype = p.qtype
             qname = p.qname

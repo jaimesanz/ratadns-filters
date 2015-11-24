@@ -58,11 +58,11 @@ def get_topk_with_skipped_count_1D(count_dict, k):
         if key in top_keys:
             data[key] = count_dict[key]
         else:
-            if "skipped" not in data:
-                data["skipped"] = 0
-                data["skipped_sum"] = 0
-            data["skipped"] += 1
-            data["skipped_sum"] += count_dict[key]
+            if "-:SKIPPED:-" not in data:
+                data["-:SKIPPED:-"] = 0
+                data["-:SKIPPED_SUM:-"] = 0
+            data["-:SKIPPED:-"] += 1
+            data["-:SKIPPED_SUM:-"] += count_dict[key]
     return data
 
 class RedisFile(object):

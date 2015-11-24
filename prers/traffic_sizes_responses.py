@@ -31,28 +31,6 @@ class TrafficSizesResponses(PreR):
         self._traffic_sizes_responses = {}
 
     def __call__(self, p):
-        # ejemplo de como queremos que quede el json:
-        # <Transport val="tcp">
-        #     <IPVersion count="4700" val="IPv4">
-        #     <IPVersion count="38315" val="IPv6">
-        # </Transport>
-        # <Transport val="udp">
-        #     <IPVersion count="39011" val="IPv4">
-        #     <IPVersion count="39011" val="IPv6">
-        # </Transport>
-
-        # d = {"tcp" : {"IPv4":4700 , "IPv6":38315}, "udp":{...}}
-
-        # la info de este filtro
-        # <Transport val="tcp">
-        #     <MsgLen count="87826" val="1">
-        #     <MsgLen count="17846" val="28">
-        # </Transport>
-        # <Transport val="udp">
-        #     <MsgLen count="67404" val="1">
-        #     <MsgLen count="67404" val="28">
-        # </Transport>
-
         if p.is_answer():
             protocol = p.transport_protocol
             size = p.size

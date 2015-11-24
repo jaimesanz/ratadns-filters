@@ -1,4 +1,4 @@
-from core import hex_to_ip, get_topk_with_skipped_count_2D
+from core import hex_to_ip, get_topk_with_skipped_count_1D
 from prer import PreR
 
 
@@ -39,25 +39,6 @@ class Ipv6RsnAbusers(PreR):
         self._n = 50
 
     def __call__(self, p):
-        # ejemplo de como queremos que quede el json:
-        # <Transport val="tcp">
-        #     <IPVersion count="4700" val="IPv4">
-        #     <IPVersion count="38315" val="IPv6">
-        # </Transport>
-        # <Transport val="udp">
-        #     <IPVersion count="39011" val="IPv4">
-        #     <IPVersion count="39011" val="IPv6">
-        # </Transport>
-
-        # d = {"tcp" : {"IPv4":4700 , "IPv6":38315}, "udp":{...}}
-
-        # la info de este filtro
-        # <ClientAddr count="81332" val="201.15.129.2"/>
-        # <ClientAddr count="67404" val="201.242.43.136"/>
-        # <ClientAddr count="17846" val="201.193.138.132"/>
-        # <ClientAddr count="67404" val="-:SKIPPED:-"/>
-        # <ClientAddr count="17846" val="-:SKIPPED_SUM:-"/>
-
         if not p.is_answer():
             source = p.source #IP is in hex format
             qname = p.qname
