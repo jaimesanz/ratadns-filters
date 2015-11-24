@@ -1,4 +1,4 @@
-from core import get_topk_with_skipped_count
+from core import get_topk_with_skipped_count_2D
 from prer import PreR
 
 
@@ -86,7 +86,7 @@ class QtypeVSTld(PreR):
             self._qtype_vs_tld[qtype][tld]+=1
 
     def get_data(self):
-        return get_topk_with_skipped_count(self._qtype_vs_tld, self._k)
+        return get_topk_with_skipped_count_2D(self._qtype_vs_tld, self._k)
 
     def reset(self):
         self._qtype_vs_tld.clear()

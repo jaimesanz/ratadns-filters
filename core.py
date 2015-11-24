@@ -45,21 +45,24 @@ def keys_with_max_vals(d, n):
         result.append([elem[1], -elem[0]])
     return result
 
-def get_topk_with_skipped_count(count_dict, k):
+def get_topk_with_skipped_count_2D(count_dict, k):
     data = {}
     for outter_key in count_dict.keys():
-        top_keys = [pair[0] for pair in keys_with_max_vals(count_dict[outter_key], k)]
-        for inner_key in count_dict[outter_key].keys():
-            if inner_key in top_keys:
-                if outter_key not in data:
-                    data[outter_key] = {}
-                data[outter_key][inner_key] = count_dict[outter_key][inner_key]
-            else:
-                if "skipped" not in data[outter_key]:
-                    data[outter_key]["skipped"] = 0
-                    data[outter_key]["skipped_sum"] = 0
-                data[outter_key]["skipped"] += 1
-                data[outter_key]["skipped_sum"] += count_dict[outter_key][inner_key]
+        data[outter_key] = get_topk_with_skipped_count_1D(count_dict[outter_key], k)
+    return data
+
+def get_topk_with_skipped_count_1D(count_dict, k):
+    data = {}
+    top_keys = [pair[0] for pair in keys_with_max_vals(count_dict, k)]
+    for key in count_dict.keys():
+        if key in top_keys:
+            data[key] = count_dict[key]
+        else:
+            if "skipped" not in data:
+                data["skipped"] = 0
+                data["skipped_sum"] = 0
+            data["skipped"] += 1
+            data["skipped_sum"] += count_dict[key]
     return data
 
 class RedisFile(object):

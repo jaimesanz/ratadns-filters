@@ -1,4 +1,4 @@
-from core import hex_to_ip, get_topk_with_skipped_count
+from core import hex_to_ip, get_topk_with_skipped_count_2D
 from prer import PreR
 
 
@@ -69,7 +69,7 @@ class Ipv6RsnAbusers(PreR):
 
 
     def get_data(self):
-        return get_topk_with_skipped_count(self._ipv6_rsn_abusers, self._n)
+        return get_topk_with_skipped_count_1D(self._ipv6_rsn_abusers, self._n)
 
     def reset(self):
         self._ipv6_rsn_abusers.clear()

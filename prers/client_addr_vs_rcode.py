@@ -1,5 +1,5 @@
 from prer import PreR
-from core import get_topk_with_skipped_count
+from core import get_topk_with_skipped_count_2D
 
 class ClientAddrVSRcode(PreR):
     """Shows the count of the different rcodes for each reply in a window.
@@ -66,7 +66,7 @@ class ClientAddrVSRcode(PreR):
 
 
     def get_data(self):
-        return get_topk_with_skipped_count(self._client_addr_vs_rcode,self._k)
+        return get_topk_with_skipped_count_2D(self._client_addr_vs_rcode,self._k)
 
 
     def reset(self):
