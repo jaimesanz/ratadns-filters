@@ -18,5 +18,6 @@ from topnpp import TopNPP
 from topnq import TopNQ
 from do_bit import DoBit
 from rcode import Rcode
+from opcode import Opcode
 
 __author__ = 'Francisco Cifuentes'
