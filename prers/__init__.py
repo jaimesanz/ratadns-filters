@@ -27,6 +27,7 @@ from rd_bit import RdBit
 from tc_bit import TcBit
 from qtype import Qtype
 from edns_version import EdnsVersion
+from edns_bufsiz import EdnsBufsiz
 from traffic_sizes_queries import TrafficSizesQueries
 from traffic_sizes_responses import TrafficSizesResponses
 from traffic_volume_queries import TrafficVolumeQueries
