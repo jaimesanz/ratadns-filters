@@ -33,5 +33,9 @@ from traffic_sizes_responses import TrafficSizesResponses
 from traffic_volume_queries import TrafficVolumeQueries
 from traffic_volume_responses import TrafficVolumeResponses
 from client_subnet import ClientSubnet
+from idn_qname import IdnQname
+from transport_vs_qtype import TransportVSQtype
+from idn_vs_tld import IdnVSTld
+from rcode_vs_replylen import RcodeVSReplylen
 
 __author__ = 'Francisco Cifuentes'
