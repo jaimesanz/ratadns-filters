@@ -315,3 +315,9 @@ class Packet(object):
         """Return the source port of the packet
         Return type: Integer """
         pass
+
+    @property
+    def edns_bufsiz(self):
+        """Return the edns buffer size  
+        Return type: Integer """
+        pass
