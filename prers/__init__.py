@@ -38,5 +38,6 @@ from transport_vs_qtype import TransportVSQtype
 from idn_vs_tld import IdnVSTld
 from rcode_vs_replylen import RcodeVSReplylen
 from client_addr_vs_rcode import ClientAddrVSRcode
+from dns_ip_version_vs_qtype import DnsIpVersionVSQtype
 
 __author__ = 'Francisco Cifuentes'
