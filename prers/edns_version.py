@@ -34,10 +34,15 @@ class EdnsVersions(PreR):
 
     def __call__(self, p):
         if not p.is_answer():
-            edns_version = p.edns_version
-            if edns_version not in self._edns_versions:
-                self._edns_versions[edns_version]=0
-            self._edns_versions[edns_version]+=1
+            if p.is_edns():
+                edns_version = p.edns_version
+                if edns_version not in self._edns_versions:
+                    self._edns_versions[edns_version]=0
+                self._edns_versions[edns_version]+=1
+            else:
+                if "none" not in self._edns_versions:
+                    self._edns_versions["none"]=0
+                self._edns_versions["none"]+=1
 
 
     def get_data(self):

@@ -290,7 +290,7 @@ class Packet(object):
     @property
     def edns_version(self):
         """Returns the EDNS version of the packet
-        Return type: Integer or None"""
+        Return type: Integer"""
         pass
 
     @property
@@ -304,7 +304,7 @@ class Packet(object):
         """Returns the packet size (in bytes)
         Return type: Integer"""
         pass
-
+    @property
     def qclass(self):
         """Return the qclass of the packet
         Return type: Integer """
@@ -314,6 +314,12 @@ class Packet(object):
     def source_port(self):
         """Return the source port of the packet
         Return type: Integer """
+        pass
+
+    
+    def is_edns(self):
+        """Returns wether or not the packet is EDNS 
+        Return type: Boolean """
         pass
 
     @property
