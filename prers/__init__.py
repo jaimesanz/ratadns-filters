@@ -19,5 +19,6 @@ from topnq import TopNQ
 from do_bit import DoBit
 from rcode import Rcode
 from opcode import Opcode
+from rd_bit import RdBit
 
 __author__ = 'Francisco Cifuentes'
