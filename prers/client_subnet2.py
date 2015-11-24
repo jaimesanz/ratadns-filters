@@ -1,4 +1,4 @@
-from core import get_topk_with_skipped_count
+from core import get_topk_with_skipped_count_2D
 from prer import PreR
 
 
@@ -128,7 +128,7 @@ class ClientSubnet2(PreR):
         self._client_subnet2[bogus_type]+=1
     
     def get_data(self):
-        return get_topk_with_skipped_count(self._client_subnet2, self._k)
+        return get_topk_with_skipped_count_2D(self._client_subnet2, self._k)
 
     def reset(self):
         self._client_subnet2.clear()
