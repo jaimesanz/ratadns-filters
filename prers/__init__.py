@@ -21,5 +21,6 @@ from rcode import Rcode
 from opcode import Opcode
 from rd_bit import RdBit
 from tc_bit import TcBit
+from qtype import Qtype
 
 __author__ = 'Francisco Cifuentes'
