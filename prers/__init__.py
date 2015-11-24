@@ -23,5 +23,6 @@ from rd_bit import RdBit
 from tc_bit import TcBit
 from qtype import Qtype
 from edns_version import EdnsVersion
+from edns_bufsiz import EdnsBufsiz
 
 __author__ = 'Francisco Cifuentes'
