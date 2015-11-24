@@ -32,6 +32,7 @@ class ClientAddrVSRcode(PreR):
         self._k = 50
 
     def __call__(self, p):
+
         if p.is_answer():
             if p.rcode not in self._client_addr_vs_rcode:
                 self._client_addr_vs_rcode[p.rcode] = {}

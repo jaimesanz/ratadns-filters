@@ -37,7 +37,12 @@ from idn_qname import IdnQname
 from transport_vs_qtype import TransportVSQtype
 from idn_vs_tld import IdnVSTld
 from rcode_vs_replylen import RcodeVSReplylen
+from client_addr_vs_rcode import ClientAddrVSRcode
+from dns_ip_version_vs_qtype import DnsIpVersionVSQtype
 from ipv6_rsn_abusers import Ipv6RsnAbusers
 from client_subnet2 import ClientSubnet2
+from chaos_types_and_names import ChaosTypesAndNames
+from certain_qnames_vs_qtype import CertainQnamesVSQtype
+from direction_vs_ipproto import DirectionVSIpproto
 
 __author__ = 'Francisco Cifuentes'

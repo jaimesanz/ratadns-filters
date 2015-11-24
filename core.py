@@ -314,7 +314,7 @@ class Packet(object):
     def qclass(self):
         """Return the qclass of the packet
         Return type: Integer """
-        return 1
+        return 3
 
     @property
     def source_port(self):
