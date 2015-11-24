@@ -2,26 +2,26 @@ import unittest
 import StringIO
 
 from packetsexample import PacketsExample
-from prers import DoBit
+from prers import TcBit
 
 
-class TestDoBit(unittest.TestCase):
+class TestTcBit(unittest.TestCase):
 
     def reinit(self):
         self.__stringbuffer1 = StringIO.StringIO()
-        self.__p1 = DoBit(self.__stringbuffer1)
+        self.__p1 = TcBit(self.__stringbuffer1)
 
     def data_example(self):
         data = PacketsExample()
 
         for i in range(5):
-            data.add_packet({'flags': '0', 'queries': [
+            data.add_packet({'flags': '8000', 'queries': [
                 {'qname': 'www.nic.cl'}]})
        
-        data.set_expected("set", 5)
-        data.set_expected("clr", 0)
+        data.set_expected("set", 0)
+        data.set_expected("clr", 5)
 
-        data.put_information('doBit', ["set", "clr"])
+        data.put_information('tcBit', ["set", "clr"])
 
         return data
 
@@ -34,6 +34,6 @@ class TestDoBit(unittest.TestCase):
 
         result = self.__p1.get_data()
 
-        for dobit in example.get_information('doBit'):
-            self.assertTrue(dobit in result)
-            self.assertEquals(example.expected_value(dobit), result[dobit])
+        for tcbit in example.get_information('tcBit'):
+            self.assertTrue(tcbit in result)
+            self.assertEquals(example.expected_value(tcbit), result[tcbit])

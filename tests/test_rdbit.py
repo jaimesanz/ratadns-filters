@@ -2,14 +2,14 @@ import unittest
 import StringIO
 
 from packetsexample import PacketsExample
-from prers import DoBit
+from prers import RdBit
 
 
-class TestDoBit(unittest.TestCase):
+class TestRdBit(unittest.TestCase):
 
     def reinit(self):
         self.__stringbuffer1 = StringIO.StringIO()
-        self.__p1 = DoBit(self.__stringbuffer1)
+        self.__p1 = RdBit(self.__stringbuffer1)
 
     def data_example(self):
         data = PacketsExample()
@@ -21,7 +21,7 @@ class TestDoBit(unittest.TestCase):
         data.set_expected("set", 5)
         data.set_expected("clr", 0)
 
-        data.put_information('doBit', ["set", "clr"])
+        data.put_information('rdBit', ["set", "clr"])
 
         return data
 
@@ -34,6 +34,6 @@ class TestDoBit(unittest.TestCase):
 
         result = self.__p1.get_data()
 
-        for dobit in example.get_information('doBit'):
-            self.assertTrue(dobit in result)
-            self.assertEquals(example.expected_value(dobit), result[dobit])
+        for rdbit in example.get_information('rdBit'):
+            self.assertTrue(rdbit in result)
+            self.assertEquals(example.expected_value(rdbit), result[rdbit])
