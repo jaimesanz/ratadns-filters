@@ -17,10 +17,11 @@ class TestDoBit(unittest.TestCase):
         for i in range(5):
             data.add_packet({'flags': '0', 'queries': [
                 {'qname': 'www.nic.cl'}]})
+       
         data.set_expected("set", 5)
         data.set_expected("clr", 0)
 
-        data.put_information('doBit', ["set"])
+        data.put_information('doBit', ["set", "clr"])
 
         return data
 
