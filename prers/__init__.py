@@ -38,5 +38,6 @@ from transport_vs_qtype import TransportVSQtype
 from idn_vs_tld import IdnVSTld
 from rcode_vs_replylen import RcodeVSReplylen
 from ipv6_rsn_abusers import Ipv6RsnAbusers
+from client_subnet2 import ClientSubnet2
 
 __author__ = 'Francisco Cifuentes'

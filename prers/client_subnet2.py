@@ -1,4 +1,4 @@
-from core import get_topk_with_skipped_count_2D
+from core import get_topk_with_skipped_count_2D, hex_to_ip
 from prer import PreR
 
 
@@ -75,7 +75,7 @@ class ClientSubnet2(PreR):
                 self.incr_count("funny-qtype", source_ip)
                 is_ok=False
             if p.source_port==0 and p.transport_protocol == "udp":
-                # src-port-zero: when the UDP message’s source port equals zero.
+                # src-port-zero: when the UDP message's source port equals zero.
                 self.incr_count("src-port-zero", source_ip)
                 is_ok=False
             # if is_malformed(p): NOT IMPLEMENTED: this can't be done because rata filters malformed queries, so they never get to this point of the process
@@ -88,7 +88,7 @@ class ClientSubnet2(PreR):
             self._client_subnet2[bogus_type]={}
         if source_ip not in self._client_subnet2[bogus_type]:
             self._client_subnet2[bogus_type][source_ip]=0
-        self._client_subnet2[bogus_type]+=1
+        self._client_subnet2[bogus_type][source_ip]+=1
     
     def get_data(self):
         return get_topk_with_skipped_count_2D(self._client_subnet2, self._k)
@@ -98,26 +98,29 @@ class ClientSubnet2(PreR):
 
     def is_non_auth_tld(self,p):
         # IMPORTANT: data/iana_approved_tlds.txt must be updated from https://data.iana.org/TLD/tlds-alpha-by-domain.txt daily
-        approved_tlds = [line.rstrip('\n') for line in open('data/iana_approved_tlds.txt')[1:]]
-        qname = p.qname
-        tld = qname.split(".")[-2]
-        return tld not in approved_tlds
+        with open('prers/data/iana_approved_tlds.txt') as f:
+            approved_tlds = [line.rstrip() for line in f][1:]
+            qname = p.qname
+            tld = qname.split(".")[-2]
+            return tld.upper() not in approved_tlds
 
     def is_funny_class(self,p):
         # reference http://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-2
         # 2, 5-253, 256-65279
-        funny_classes = [int(line.rstrip('\n')) for line in open('data/funny_classes.txt')]
-        qclass = p.qclass
-        return qclass in funny_classes
+        with open('prers/data/funny_classes.txt') as f:
+            funny_classes = [line.rstrip() for line in f]
+            qclass = p.qclass
+            return qclass in funny_classes
 
     def is_funny_qtype(self,p):
-        approved_qtypes = [int(line.rstrip('\n')) for line in open('data/iana_approved_qtypes.txt')]
-        return p.qtype not in approved_qtypes
+        with open('prers/data/iana_approved_qtypes.txt') as f:
+            approved_qtypes = [line.rstrip() for line in f]
+            return str(p.qtype) not in approved_qtypes
 
     def is_rfc1918_ptr(self,p):
-        ip = hex_to_ip(p.dest)
-        if len(ip)>8:
+        if len(p.dest)>8:
             return False
+        ip = hex_to_ip(p.dest)
         dest_ip = [int(n) for n in ip.split(".")]
 
         # RFC 1918 addresses
