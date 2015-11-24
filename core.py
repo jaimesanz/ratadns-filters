@@ -321,3 +321,9 @@ class Packet(object):
         """Returns wether or not the packet is EDNS 
         Return type: Boolean """
         pass
+
+    @property
+    def edns_bufsiz(self):
+        """Return the edns buffer size  
+        Return type: Integer """
+        pass
