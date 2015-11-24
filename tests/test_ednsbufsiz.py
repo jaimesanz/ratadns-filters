@@ -34,7 +34,5 @@ class TestEdnsBufsiz(unittest.TestCase):
         result = self.__p1.get_data()
 
         for ednsbufsiz in example.get_information('EdnsBufsiz'):
-            print ednsbufsiz
-            print result
             self.assertTrue(ednsbufsiz in result)
             self.assertEquals(example.expected_value(ednsbufsiz), result[ednsbufsiz])
