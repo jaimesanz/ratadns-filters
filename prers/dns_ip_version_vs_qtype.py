@@ -11,14 +11,10 @@ class DnsIpVersionVSQtype(PreR):
     def __call__(self, p):
 
         if not p.is_answer():
-            if is_ipv4(p.source):
-                if p.qtype not in self._dns_ip_version_vs_qtype['IPv4']:
-                    self._dns_ip_version_vs_qtype["IPv4"][p.qtype] = 0
-                self._dns_ip_version_vs_qtype["IPv4"][p.qtype] += 1
-            else:
-                if p.qtype not in self._dns_ip_version_vs_qtype['IPv6']:
-                    self._dns_ip_version_vs_qtype["IPv6"][p.qtype] = 0
-                self._dns_ip_version_vs_qtype["IPv6"][p.qtype] += 1
+            ip = 'IPv4' if is_ipv4(p.source) else 'IPv6'  
+            if p.qtype not in self._dns_ip_version_vs_qtype[ip]:
+                self._dns_ip_version_vs_qtype[ip][p.qtype] = 0
+            self._dns_ip_version_vs_qtype[ip][p.qtype] += 1
 
     def get_data(self):
     	return self._dns_ip_version_vs_qtype

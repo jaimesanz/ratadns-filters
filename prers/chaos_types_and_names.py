@@ -3,8 +3,7 @@ from prer import PreR
 
 class ChaosTypesAndNames(PreR):
 
-
-	def __init__(self, f, **kwargs):
+    def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
         self._chaos_types_and_names = {}
 

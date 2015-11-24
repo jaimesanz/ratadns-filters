@@ -40,5 +40,6 @@ from rcode_vs_replylen import RcodeVSReplylen
 from client_addr_vs_rcode import ClientAddrVSRcode
 from dns_ip_version_vs_qtype import DnsIpVersionVSQtype
 from ipv6_rsn_abusers import Ipv6RsnAbusers
+from chaos_types_and_names import ChaosTypesAndNames
 
 __author__ = 'Francisco Cifuentes'
