@@ -16,7 +16,11 @@ from qwhn import QueriesWithUnderscoredName
 from topn import TopN
 from topnpp import TopNPP
 from topnq import TopNQ
+
+######## Hedghog stuff #######################
 from do_bit import DoBit
+from qtype_vs_qnamelen import QtypeVSQnamelen
+from qtype_vs_tld import QtypeVSTld
 from rcode import Rcode
 from opcode import Opcode
 from rd_bit import RdBit
@@ -24,5 +28,9 @@ from tc_bit import TcBit
 from qtype import Qtype
 from edns_version import EdnsVersion
 from edns_bufsiz import EdnsBufsiz
+from traffic_sizes_queries import TrafficSizesQueries
+from traffic_sizes_responses import TrafficSizesResponses
+from traffic_volume_queries import TrafficVolumeQueries
+from traffic_volume_responses import TrafficVolumeResponses
 
 __author__ = 'Francisco Cifuentes'
