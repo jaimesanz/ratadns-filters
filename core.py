@@ -261,69 +261,70 @@ class Packet(object):
     def rd_bit(self):
         """Return the rd_bit of the packet
         Return type: Integer (1 or 0)"""
-        pass
+        return 1
 
     @property
     def rcode(self):
         """Return the rcode of the packet
         Return type: Integer"""
-        pass
+        return 0
 
     @property
     def opcode(self):
         """Return the opcode of the packet
         Return type: Integer"""
-        pass
+        return 0
 
     @property
     def tc_bit(self):
         """Return the tc_bit of the packet
         Return type: Integer (1 or 0)"""
-        pass
+        return 0
 
     @property
     def do_bit(self):
         """Return the do_bit of the packet
         Return type: Integer (1 or 0)"""
-        pass
+        return 1
 
     @property
     def edns_version(self):
         """Returns the EDNS version of the packet
         Return type: Integer"""
-        pass
+        return 0
 
     @property
     def transport_protocol(self):
         """Returns the transport protocol
         Return type: string"""
-        pass
+        return "udp"
 
     @property
     def size(self):
         """Returns the packet size (in bytes)
         Return type: Integer"""
-        pass
+        return 15
+
     @property
     def qclass(self):
         """Return the qclass of the packet
         Return type: Integer """
-        pass
+        return 1
 
     @property
     def source_port(self):
         """Return the source port of the packet
         Return type: Integer """
-        pass
+        return 8000
 
     
     def is_edns(self):
         """Returns wether or not the packet is EDNS 
         Return type: Boolean """
-        pass
+        return True
 
     @property
     def edns_bufsiz(self):
         """Return the edns buffer size  
         Return type: Integer """
-        pass
+        return 512

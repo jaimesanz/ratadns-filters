@@ -16,5 +16,6 @@ from qwhn import QueriesWithUnderscoredName
 from topn import TopN
 from topnpp import TopNPP
 from topnq import TopNQ
+from do_bit import DoBit
 
 __author__ = 'Francisco Cifuentes'
