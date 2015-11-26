@@ -6,7 +6,7 @@ class Rcode(PreR):
 
     - Result
 
-    A dict that has an entry for each rcode captured where the key is the rcode
+    A dict that has an entry for each rcode captured, where the key is the rcode
     (as an integer) and the value is the count of the packets having that rcode.
 
     - Example

@@ -7,7 +7,7 @@ class TcBit(PreR):
     - Result
 
     A dict having in the key "set" the count of packets that had the tc-bit set,
-    and in the key "clr" the count of packets that didn't had the bit set.
+    and in the key "clr" the count of packets that didn't have the bit set.
 
     - Example
 

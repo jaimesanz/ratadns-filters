@@ -3,19 +3,17 @@ from prer import PreR
 
 
 class IdnVSTld(PreR):
-    """Shows the count of the queries whose qnames have an internationalized
-    TLD.
+    """Shows the count of the different TLDs received on each packet which qname was in IDN format.
 
     - Result
 
-    A dict that has two entries: 'normal' (which has the count of normal tlds)
-    and 'idn' (which has the count of idn TLDs)
+    A dict which keys are TLDs of IDN queries
 
     - Example
 
     {
-        'normal': 60, # vanilla TLDs
-        'idn': 10 # internationalized TLDs
+        'cl': 60, # 
+        'com': 10 # 
     }
 
 
@@ -33,7 +31,6 @@ class IdnVSTld(PreR):
         self._idn_vs_tld = {}
 
     def __call__(self, p):
-        # {normal=45, idn=70}
         if not p.is_answer():
             qname = p.qname
             tld = qname.split(".")[-2]

@@ -3,21 +3,50 @@ from prer import PreR
 
 
 class ClientSubnet2(PreR):
-    """Show the ranking of qnames coming from the packets in a window.
+    """Shows the count of the different client addresses of each query in a window
+    with the same bogus query classification.
+
+    Bogus query classification:
+
+        non-auth-tld: when the TLD is not one of the IANA-approved TLDs.
+        root-servers.net: a query for a root server IP address.
+        localhost: a query for the localhost IP address.
+        a-for-root: an A query for the DNS root (.).
+        a-for-a: an A query for an IPv4 address.
+        rfc1918-ptr: a PTR query for an RFC 1918 address.
+        funny-class: a query with an unknown/undefined query class.
+        funny-qtype: a query with an unknown/undefined query type.
+        src-port-zero: when the UDP message’s source port equals zero.
+        malformed: a malformed DNS message that could not be entirelyparsed.
+        ok: not bogus.
 
     - Result
+    
+    A dict that has an entry for each different bogus query classification seen in a window.
+    The key is the classification (string) and the value is another dictionary, which keys
+    are the ip addresses of the clients (hex) and their values are the count of packets
+    having that ip. If there are more than 50 addresses with one same class, it 
+    will only show the top 200 addresses and two other keys will be added to the 
+    dictionary:
+         "-:SKIPPED:-" -> the amount of client addresses it's not showing
+         "-:SKIPPED_SUM:-:" -> the sum of the count of all the client addresses
+         it's not showing
 
-    List of the n-top most consulted 'qnames'
-    The elements are list of two elements
-    The first are the 'qnames' with the highest number of appearances
-    in the packets in the current window.
-    The second are the number of number of appearances of the
-    corresponding 'qname'.
+    - Example
 
-    - Example(N=3)
-
-    [['www.nic.cl', 5], ['www.niclabs.cl', 4],
-     ['www.jerry.cl', 3], ['www.uchile.cl', 3]]
+    {
+        "non-auth-tld":
+            {
+                AABBCCDD: 50,
+                AABBCCDA: 10,
+                -:SKIPPED:-: 1,
+                -:SKIPPED_SUM:-:7
+            },
+        "ok": 
+            {
+                AABBCCBB: 50
+            }
+    }
 
 
     - Complexity Note
@@ -27,7 +56,6 @@ class ClientSubnet2(PreR):
     - ReductionRatio Note
 
     <FILL>
-    todo
     """
 
     def __init__(self, f, **kwargs):

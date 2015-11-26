@@ -2,19 +2,34 @@ from prer import PreR
 from core import get_topk_with_skipped_count_2D
 
 class ClientAddrVSRcode(PreR):
-    """Shows the count of the different rcodes for each reply in a window.
+    """Shows the count of the different client addresses of each reply message with the same rcode.
 
     - Result
-
-    A dict that has an entry for each rcode captured where the key is the rcode
-    (as an integer) and the value is the count of the packets having that rcode.
+    
+    A dict that has an entry for each different rcode seen in a window. The key
+    is the rcode (as an integer) and the value is another dictionary, which keys
+    are the ip address of the client (hex) and its value is the count of packets
+    having that ip. If there are more than 50 addresses with one same Rcode, it 
+    will only show the top 50 addresses and two other keys will be added to the 
+    dictionary:
+         "-:SKIPPED:-" -> the amount of client addresses it's not showing
+         "-:SKIPPED_SUM:-:" -> the sum of the count of all the client addresses
+         it's not showing
 
     - Example
 
     {
-        0: 50, # No error
-        1: 10, # Format error
-        2: 1  # Server failure
+        3:
+            {
+                AABBCCDD: 50,
+                AABBCCDA: 10,
+                -:SKIPPED:-: 1,
+                -:SKIPPED_SUM:-:7
+            },
+        0: 
+            {
+                AABBCCBB: 50
+            }
     }
 
 

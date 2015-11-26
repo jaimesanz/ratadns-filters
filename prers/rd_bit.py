@@ -7,7 +7,7 @@ class RdBit(PreR):
     - Result
 
     A dict having in the key "set" the count of packets that had the rd-bit set,
-    and in the key "clr" the count of packets that didn't had the bit set.
+    and in the key "clr" the count of packets that didn't have the bit set.
 
     - Example
 
@@ -28,7 +28,6 @@ class RdBit(PreR):
         self._rd_bit = {"set":0, "clr":0}
 
     def __call__(self, p):
-        # {clr=45, set=70}
         if not p.is_answer():
             rd_bit = p.rd_bit
 

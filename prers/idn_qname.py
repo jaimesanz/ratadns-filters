@@ -33,7 +33,6 @@ class IdnQname(PreR):
         self._idn_qname = {"normal":0, "idn":0}
 
     def __call__(self, p):
-        # {normal=45, idn=70}
         if not p.is_answer():
             qname = p.qname
             try:
