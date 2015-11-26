@@ -45,6 +45,7 @@ def keys_with_max_vals(d, n):
         result.append([elem[1], -elem[0]])
     return result
 
+############# hedgehog functions ##############
 def get_topk_with_skipped_count_2D(count_dict, k):
     data = {}
     for outter_key in count_dict.keys():
@@ -64,6 +65,7 @@ def get_topk_with_skipped_count_1D(count_dict, k):
             data["-:SKIPPED:-"] += 1
             data["-:SKIPPED_SUM:-"] += count_dict[key]
     return data
+###############################################
 
 class RedisFile(object):
 

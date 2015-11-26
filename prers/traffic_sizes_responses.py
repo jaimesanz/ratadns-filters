@@ -2,19 +2,29 @@ from prer import PreR
 
 
 class TrafficSizesResponses(PreR):
-    """Shows the count of the different rcodes for each reply in a window.
+    """Shows the count of the different packet sizes (in bytes) received on each response packet grouped by
+    transport protocol
 
     - Result
-
-    A dict that has an entry for each rcode captured where the key is the rcode
-    (as an integer) and the value is the count of the packets having that rcode.
+    
+    A dict which has an entry for each transport protocol seen in a window. The key
+    is the transport protocol (as an string, for example "tcp" or "udp") and the value is another
+    dictionary, which keys are the sizes of the packet (as an integer), and its value is the count of packets
+    having that size.
 
     - Example
 
     {
-        0: 50, # No error
-        1: 10, # Format error
-        2: 1  # Server failure
+        tcp:
+            {
+
+                15: 10,
+                28: 1 
+            },
+        udp: 
+            {
+                21: 0
+            }
     }
 
 

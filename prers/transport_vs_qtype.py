@@ -2,19 +2,27 @@ from prer import PreR
 
 
 class TransportVSQtype(PreR):
-    """Shows the count of the different rcodes for each reply in a window.
+    """Shows the count of the different qtypes received on each packet with the same transport protocol
 
     - Result
-
-    A dict that has an entry for each rcode captured where the key is the rcode
-    (as an integer) and the value is the count of the packets having that rcode.
+    
+    A dict that has an entry for each transport protocol seen in a window. The key
+    is the qtype (as an string) and the value is another dictionary, which keys
+    are the qtypes and its value is the count of packets having that qtype.
 
     - Example
 
     {
-        0: 50, # No error
-        1: 10, # Format error
-        2: 1  # Server failure
+        udp:
+            {
+
+                1: 10,
+                10: 34 
+            },
+        tcp: 
+            {
+                2: 50
+            }
     }
 
 

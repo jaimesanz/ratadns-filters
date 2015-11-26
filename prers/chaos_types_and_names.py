@@ -3,6 +3,39 @@ from prer import PreR
 
 class ChaosTypesAndNames(PreR):
 
+    """Shows the count of the different queries grouped by qtype received on each packet with the same qname
+    and with qclass 3 (chaos class)
+
+    - Result
+    
+    A dict that has an entry for each qtype seen in a window. The key
+    is the qtype and the value is another dictionary, which keys
+    are the qnames and its value is the count of packets having that qname.
+    - Example
+
+    {
+        1:
+            {
+
+                "www.uchile.cl": 10,
+                "www.nic.cl": 1 
+            },
+        29: 
+            {
+                "www.facebook.com": 50
+            }
+    }
+
+
+    - Complexity Note
+
+    <FILL>
+
+    - ReductionRatio Note
+
+    <FILL>
+    """
+
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
         self._chaos_types_and_names = {}
@@ -19,7 +52,7 @@ class ChaosTypesAndNames(PreR):
             if qname not in self._chaos_types_and_names[qtype]:
                 self._chaos_types_and_names[qtype][qname] = 0
                     
-            self._chaos_types_and_names[qtype][qname]+=1
+            self._chaos_types_and_names[qtype][qname] += 1
 
     def get_data(self):
     	return self._chaos_types_and_names
