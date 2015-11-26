@@ -3,32 +3,35 @@ from prer import PreR
 
 
 class QtypeVSTld(PreR):
-    """For each qtype it shows the count of the top 200 TLDs of the queries
-    received.
+    """Shows the count of the different TLDs received on each packet with the same qtype
 
     - Result
-
-    A dict having a key for each qtype whose value is another dict which has an
-    entrie for each top 200 TLD where the key is the TLD and the value is the
-    count. It also includes the key 'skipped' with the number of skipped
-    TLDs and the key 'skipped_sum' with the sum of the counts of each skipped
-    TLD.
+    
+    A dict that has an entry for each qtype seen in a window. The key
+    is the qtype (as an integer) and the value is another dictionary, which keys
+    are the size of the qname (bytes) and its value is the count of packets
+    having that qname size.  If there are more
+    than 200 TLDs, it will only show the top 50 TLDs and two other keys will be 
+    added to the dictionary:
+         "-:SKIPPED:-" -> the amount of TLDs it's not showing
+         "-:SKIPPED_SUM:-:" -> the sum of the count of all the TLDs
+         it's not showing
 
     - Example
 
     {
-        #qtypes are integers
-        1: { # For illustration purposes we will just work with the top 2 TLDs
-             # in this example
-            'cl': 100,
-            'com': 40,
-            'skipped': 40,
-            'skipped_sum': 400
-        },
-        2: {
-            'net': 69
-        }
+        1:
+            {
+
+                "cl": 10,
+                "com": 1 
+            },
+        29: 
+            {
+                "local": 50
+            }
     }
+
 
     - Complexity Note
 
@@ -37,9 +40,7 @@ class QtypeVSTld(PreR):
     - ReductionRatio Note
 
     <FILL>
-    TODO review this docstring
     """
-
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
         self._qtype_vs_tld = {}

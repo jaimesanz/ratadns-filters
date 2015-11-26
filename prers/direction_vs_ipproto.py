@@ -16,16 +16,15 @@ class DirectionVSIpproto(PreR):
     - Example
 
     {
-        3:
+        "sent":
             {
-                AABBCCDD: 50,
-                AABBCCDA: 10,
-                -:SKIPPED:-: 1,
-                -:SKIPPED_SUM:-:7
+                "udp": 50,
+                "tcp": 10,
+                "icmp": 1,
             },
-        0: 
+        "recv": 
             {
-                AABBCCBB: 50
+                "udp": 50
             }
     }
 
