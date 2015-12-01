@@ -3,7 +3,7 @@ from prer import PreR
 
 
 class DirectionVSIpproto(PreR):
-  """Shows the count of the different transport protocols of each dns message with the same direction (sent
+    """Shows the count of the different transport protocols of each dns message with the same direction (sent
     or received).
 
     - Result
@@ -37,7 +37,7 @@ class DirectionVSIpproto(PreR):
 
     <FILL>
     """
-	
+
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
         self._direction_vs_ipproto = {}
