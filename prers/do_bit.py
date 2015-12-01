@@ -25,13 +25,13 @@ class DoBit(PreR):
 
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
-        self._do_bit = {"set":0, "clr":0}
+        self._do_bit = {"set": 0, "clr": 0}
 
     def __call__(self, p):
         if not p.is_answer():
             do_bit = p.do_bit
 
-            if do_bit==1:
+            if do_bit == 1:
                 self._do_bit["set"] += 1
             else:
                 self._do_bit["clr"] += 1
@@ -40,5 +40,5 @@ class DoBit(PreR):
         return self._do_bit
 
     def reset(self):
-        self._do_bit["set"]=0
-        self._do_bit["clr"]=0
+        self._do_bit["set"] = 0
+        self._do_bit["clr"] = 0

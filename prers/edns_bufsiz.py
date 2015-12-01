@@ -27,6 +27,7 @@ class EdnsBufsiz(PreR):
 
     <FILL>
     """
+
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
         self._edns_bufsiz = {
@@ -67,13 +68,11 @@ class EdnsBufsiz(PreR):
             else:
                 self._edns_bufsiz["None"] += 1
 
-
     def get_data(self):
         return self._edns_bufsiz
 
-
     def reset(self):
-         self._edns_bufsiz = {
+        self._edns_bufsiz = {
             "0-511": 0,
             "512-1023": 0,
             "1024-1535": 0,

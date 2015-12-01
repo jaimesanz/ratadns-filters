@@ -26,6 +26,7 @@ class Rcode(PreR):
 
     <FILL>
     """
+
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
         self._rcodes = {}
@@ -34,13 +35,11 @@ class Rcode(PreR):
         if p.is_answer():
             rcode = p.rcode
             if rcode not in self._rcodes:
-                self._rcodes[rcode]=0
-            self._rcodes[rcode]+=1
-
+                self._rcodes[rcode] = 0
+            self._rcodes[rcode] += 1
 
     def get_data(self):
         return self._rcodes
-
 
     def reset(self):
         self._rcodes.clear()

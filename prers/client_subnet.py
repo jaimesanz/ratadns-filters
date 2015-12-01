@@ -1,6 +1,7 @@
 from prer import PreR
 from core import get_topk_with_skipped_count_1D
 
+
 class ClientSubnet(PreR):
     """Shows the count of the different client addresses for each query in a window.
 
@@ -8,7 +9,7 @@ class ClientSubnet(PreR):
 
     A dict that has an entry for each client address, where the key is the client address
     (hex) and the value is the count of the packets having that address. If there are more
-    than 50 addresses, it will only show the top 200 addresses and two other keys will be 
+    than 50 addresses, it will only show the top 200 addresses and two other keys will be
     added to the dictionary:
          "-:SKIPPED:-" -> the amount of client addresses it's not showing
          "-:SKIPPED_SUM:-:" -> the sum of the count of all the client addresses
@@ -45,7 +46,7 @@ class ClientSubnet(PreR):
             self._client_subnet[p.source] += 1
 
     def get_data(self):
-        return get_topk_with_skipped_count_1D(self._client_subnet,self._k)
+        return get_topk_with_skipped_count_1D(self._client_subnet, self._k)
 
     def reset(self):
         self._client_subnet.clear()

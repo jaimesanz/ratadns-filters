@@ -5,11 +5,11 @@ class RcodeVSReplylen(PreR):
     """Shows the count of the different sizes (bytes) of each reply message with the same rcode.
 
     - Result
-    
+
     A dict that has an entry for each rcode seen in a window. The key
     is the rcode (as an integer) and the value is another dictionary, which keys
     are the size of the DNS msg (bytes) and its value is the count of packets
-    having that size. 
+    having that size.
 
     - Example
 
@@ -18,13 +18,13 @@ class RcodeVSReplylen(PreR):
             {
                 18: 50,
                 30: 10,
-                2: 1 
+                2: 1
             },
-        4: 
+        4:
             {
                 18: 50
             },
-        1: 
+        1:
             {
                 18: 55
             }
@@ -39,6 +39,7 @@ class RcodeVSReplylen(PreR):
 
     <FILL>
     """
+
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
         self._rcode_vs_replylen = {}
@@ -51,10 +52,8 @@ class RcodeVSReplylen(PreR):
                 self._rcode_vs_replylen[p.rcode][p.size] = 0
             self._rcode_vs_replylen[p.rcode][p.size] += 1
 
-
     def get_data(self):
         return self._rcode_vs_replylen
-
 
     def reset(self):
         self._rcode_vs_replylen.clear()

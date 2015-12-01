@@ -5,7 +5,7 @@ class TransportVSQtype(PreR):
     """Shows the count of the different qtypes received on each packet with the same transport protocol
 
     - Result
-    
+
     A dict that has an entry for each transport protocol seen in a window. The key
     is the qtype (as an string) and the value is another dictionary, which keys
     are the qtypes and its value is the count of packets having that qtype.
@@ -17,9 +17,9 @@ class TransportVSQtype(PreR):
             {
 
                 1: 10,
-                10: 34 
+                10: 34
             },
-        tcp: 
+        tcp:
             {
                 2: 50
             }
@@ -34,6 +34,7 @@ class TransportVSQtype(PreR):
 
     <FILL>
     """
+
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
         self._transport_vs_qtype = {}
@@ -47,10 +48,8 @@ class TransportVSQtype(PreR):
                 self._transport_vs_qtype[protocol][p.qtype] = 0
             self._transport_vs_qtype[protocol][p.qtype] += 1
 
-
     def get_data(self):
         return self._transport_vs_qtype
-
 
     def reset(self):
         self._transport_vs_qtype.clear()

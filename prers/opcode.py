@@ -37,13 +37,11 @@ class Opcode(PreR):
         if not p.is_answer():
             opcode = p.opcode
             if opcode not in self._opcodes:
-                self._opcodes[opcode]=0
-            self._opcodes[opcode]+=1
-
+                self._opcodes[opcode] = 0
+            self._opcodes[opcode] += 1
 
     def get_data(self):
         return self._opcodes
-
 
     def reset(self):
         self._opcodes.clear()

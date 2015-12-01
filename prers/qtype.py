@@ -36,13 +36,11 @@ class Qtype(PreR):
         if not p.is_answer():
             qtype = p.qtype
             if qtype not in self._qtypes:
-                self._qtypes[qtype]=0
-            self._qtypes[qtype]+=1
-
+                self._qtypes[qtype] = 0
+            self._qtypes[qtype] += 1
 
     def get_data(self):
         return self._qtypes
-
 
     def reset(self):
         self._qtypes.clear()

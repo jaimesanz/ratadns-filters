@@ -12,8 +12,8 @@ class IdnVSTld(PreR):
     - Example
 
     {
-        'cl': 60, # 
-        'com': 10 # 
+        'cl': 60, #
+        'com': 10 #
     }
 
 
@@ -37,13 +37,12 @@ class IdnVSTld(PreR):
             try:
                 idna.ToASCII(qname)
                 # not idn
-            except Exception, e:
-            	# idn
-            	tld_key = unicode(tld, "utf8").encode("idna")
-            	if tld_key not in self._idn_vs_tld:
-            		self._idn_vs_tld[tld_key]=0
+            except Exception as e:
+                # idn
+                tld_key = unicode(tld, "utf8").encode("idna")
+                if tld_key not in self._idn_vs_tld:
+                    self._idn_vs_tld[tld_key] = 0
                 self._idn_vs_tld[tld_key] += 1
-
 
     def get_data(self):
         return self._idn_vs_tld
