@@ -7,11 +7,11 @@ class CertainQnamesVSQtype(PreR):
     may only be "localhost" or "[a-m].root-servers.net".
 
         - Result
-        
+
         A dict that has an entry for certain qnames seen in a window (certain qnames:
         localhost and [a-m].root-servers.net) The key is the qname (as a string) and
         the value is another dictionary, which keys are the qtype of the DNS msg (as
-        an integer) and its value is the count of packets having that qtype. 
+        an integer) and its value is the count of packets having that qtype.
 
         - Example
 
@@ -21,12 +21,12 @@ class CertainQnamesVSQtype(PreR):
                                 1: 50,
                                 28: 10,
                         },
-                "X.rootservers.net": 
+                "X.rootservers.net":
                         {
                                 1: 50
                                 28: 10,
                         },
-                "else": 
+                "else":
                         {
                             1: 3,
                             28: 5,
