@@ -14,16 +14,18 @@ class TestTransportVSQtype(unittest.TestCase):
     def data_example(self):
         data = PacketsExample()
         for i in range(30):
-            data.add_packet({'flags': '0','queries': [{'qname': 'www.nic.cl.','qtype': 1}]})
-            data.add_packet({'flags': '0','queries': [{'qname': 'www.niclabs.cl.','qtype': 2}]})
+            data.add_packet({'flags': '0', 'queries': [
+                            {'qname': 'www.nic.cl.', 'qtype': 1}]})
+            data.add_packet({'flags': '0', 'queries': [
+                            {'qname': 'www.niclabs.cl.', 'qtype': 2}]})
 
         for i in range(25):
-            data.add_packet({'flags': '0','queries': [{'qname': 'www.uchile.cl.', 'qtype': 3}]})
+            data.add_packet({'flags': '0', 'queries': [
+                            {'qname': 'www.uchile.cl.', 'qtype': 3}]})
 
+        data.set_expected('udp', {1: 30, 2: 30, 3: 25})
 
-        data.set_expected('udp',{1: 30, 2: 30, 3: 25})
-
-        data.put_information('TransportVSQtype',['udp'])
+        data.put_information('TransportVSQtype', ['udp'])
 
         return data
 

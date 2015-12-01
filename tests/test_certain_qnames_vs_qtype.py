@@ -14,20 +14,26 @@ class TestCertainQnamesVSQtype(unittest.TestCase):
     def data_example(self):
         data = PacketsExample()
         for i in range(30):
-            data.add_packet({'flags': '0','queries': [{'qname': 'localhost.', 'qtype': 1}]})
-            data.add_packet({'flags': '0','queries': [{'qname': 'localhost.', 'qtype': 2}]})
-            data.add_packet({'flags': '0','queries': [{'qname': 'x.root-servers.net.', 'qtype': 2}]})
+            data.add_packet({'flags': '0', 'queries': [
+                            {'qname': 'localhost.', 'qtype': 1}]})
+            data.add_packet({'flags': '0', 'queries': [
+                            {'qname': 'localhost.', 'qtype': 2}]})
+            data.add_packet({'flags': '0', 'queries': [
+                            {'qname': 'x.root-servers.net.', 'qtype': 2}]})
 
         for i in range(25):
-            data.add_packet({'flags': '0','queries': [{'qname': 'www.uchile.cl.', 'qtype': 3}]})
-            data.add_packet({'flags': '0','queries': [{'qname': 'asdf.root-servers.net.', 'qtype': 3}]})
+            data.add_packet({'flags': '0', 'queries': [
+                            {'qname': 'www.uchile.cl.', 'qtype': 3}]})
+            data.add_packet({'flags': '0', 'queries': [
+                            {'qname': 'asdf.root-servers.net.', 'qtype': 3}]})
 
+        data.set_expected('localhost', {1: 30, 2: 30})
+        data.set_expected('root-servers.net', {2: 30, 3: 25})
+        data.set_expected('else', {3: 25})
 
-        data.set_expected('localhost',{1: 30, 2: 30})
-        data.set_expected('root-servers.net',{2: 30, 3: 25})
-        data.set_expected('else',{3: 25})
-
-        data.put_information('CertainQnamesVSQtype',['localhost','root-servers.net','else'])
+        data.put_information(
+            'CertainQnamesVSQtype', [
+                'localhost', 'root-servers.net', 'else'])
 
         return data
 

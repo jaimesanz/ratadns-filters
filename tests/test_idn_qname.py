@@ -16,17 +16,19 @@ class TestIdnQname(unittest.TestCase):
     def data_example(self):
         data = PacketsExample()
         for i in range(30):
-            data.add_packet({'flags': '0','queries': [{'qname': 'www.nandú.cl.'}]})
-            data.add_packet({'flags': '0','queries': [{'qname': 'www.ñandu.cl.'}]})
+            data.add_packet({'flags': '0', 'queries': [
+                            {'qname': 'www.nandú.cl.'}]})
+            data.add_packet({'flags': '0', 'queries': [
+                            {'qname': 'www.ñandu.cl.'}]})
 
         for i in range(25):
-            data.add_packet({'flags': '0','queries': [{'qname': 'www.uchile.cl.'}]})
+            data.add_packet({'flags': '0', 'queries': [
+                            {'qname': 'www.uchile.cl.'}]})
 
-
-        data.set_expected('normal',25)
+        data.set_expected('normal', 25)
         data.set_expected('idn', 60)
 
-        data.put_information('IdnQname',['normal','idn'])
+        data.put_information('IdnQname', ['normal', 'idn'])
 
         return data
 

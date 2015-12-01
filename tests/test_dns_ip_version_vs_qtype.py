@@ -14,22 +14,27 @@ class TestDnsIpVersionVSQtype(unittest.TestCase):
     def data_example(self):
         data = PacketsExample()
         for i in range(30):
-            data.add_packet({'flags': '0','source': '12345678','queries': [{'qname': 'www.nic.cl.','qtype':1}]})
+            data.add_packet({'flags': '0', 'source': '12345678', 'queries': [
+                            {'qname': 'www.nic.cl.', 'qtype': 1}]})
 
         for i in range(12):
-            data.add_packet({'flags': '0','source': '87654321','queries': [{'qname': 'www.niclabs.cl.','qtype': 2}]})
-            data.add_packet({'flags': '0','source': '8765432100','queries': [{'qname': 'www.niclabs.cl.','qtype': 2}]})
+            data.add_packet({'flags': '0', 'source': '87654321', 'queries': [
+                            {'qname': 'www.niclabs.cl.', 'qtype': 2}]})
+            data.add_packet({'flags': '0', 'source': '8765432100', 'queries': [
+                            {'qname': 'www.niclabs.cl.', 'qtype': 2}]})
 
         for i in range(25):
-            data.add_packet({'flags': '0','source': '12348765','queries': [{'qname': 'www.uchile.cl.','qtype': 3}]})
-            data.add_packet({'flags': '0','source': '1234876500','queries': [{'qname': 'www.uchile.cl.','qtype': 3}]})
-            data.add_packet({'flags': '0','source': '12345678','queries': [{'qname': 'www.uchile.cl.','qtype': 3}]})
+            data.add_packet({'flags': '0', 'source': '12348765', 'queries': [
+                            {'qname': 'www.uchile.cl.', 'qtype': 3}]})
+            data.add_packet({'flags': '0', 'source': '1234876500', 'queries': [
+                            {'qname': 'www.uchile.cl.', 'qtype': 3}]})
+            data.add_packet({'flags': '0', 'source': '12345678', 'queries': [
+                            {'qname': 'www.uchile.cl.', 'qtype': 3}]})
 
+        data.set_expected('IPv4', {1: 30, 2: 12, 3: 50})
+        data.set_expected('IPv6', {2: 12, 3: 25})
 
-        data.set_expected('IPv4',{1: 30, 2: 12, 3: 50})
-        data.set_expected('IPv6',{2: 12, 3: 25})
-
-        data.put_information('DnsIpVersionVSQtype',['IPv4','IPv6'])
+        data.put_information('DnsIpVersionVSQtype', ['IPv4', 'IPv6'])
 
         return data
 

@@ -14,21 +14,25 @@ class TestTrafficSizesQueries(unittest.TestCase):
     def data_example(self):
         data = PacketsExample()
         for i in range(50):
-            data.add_packet({'flags': '0', 'queries': [{'qname': 'www.nic.cl.','qtype': 1}]})
-            data.add_packet({'flags': '0', 'queries': [{'qname': 'www.uchile.cl.','qtype': 2}]})
+            data.add_packet({'flags': '0', 'queries': [
+                            {'qname': 'www.nic.cl.', 'qtype': 1}]})
+            data.add_packet({'flags': '0', 'queries': [
+                            {'qname': 'www.uchile.cl.', 'qtype': 2}]})
 
         for i in range(50):
-            data.add_packet({'flags': '0', 'queries': [{'qname': 'www.google.com.','qtype': 1}]})
-            data.add_packet({'flags': '0', 'queries': [{'qname': 'www.facebook.com.','qtype': 2}]})
-        
-        data.add_packet({'flags': '0', 'queries': [{'qname': 'www.asdf.net.','qtype': 3}]})
-        data.add_packet({'flags': '0', 'queries': [{'qname': 'www.qwerty.net.','qtype': 3}]})
-        
+            data.add_packet({'flags': '0', 'queries': [
+                            {'qname': 'www.google.com.', 'qtype': 1}]})
+            data.add_packet({'flags': '0', 'queries': [
+                            {'qname': 'www.facebook.com.', 'qtype': 2}]})
 
+        data.add_packet({'flags': '0', 'queries': [
+                        {'qname': 'www.asdf.net.', 'qtype': 3}]})
+        data.add_packet({'flags': '0', 'queries': [
+                        {'qname': 'www.qwerty.net.', 'qtype': 3}]})
 
         data.set_expected('udp', {15: 202})
 
-        data.put_information('TrafficSizesQueries',['udp'])
+        data.put_information('TrafficSizesQueries', ['udp'])
 
         return data
 

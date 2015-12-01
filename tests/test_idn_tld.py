@@ -16,13 +16,17 @@ class TestIdnVSTld(unittest.TestCase):
     def data_example(self):
         data = PacketsExample()
         for i in range(30):
-            data.add_packet({'flags': '0','queries': [{'qname': 'www.nic.cóm.'}]})
-            data.add_packet({'flags': '0','queries': [{'qname': 'www.uchile.cl.'}]})
+            data.add_packet({'flags': '0', 'queries': [
+                            {'qname': 'www.nic.cóm.'}]})
+            data.add_packet({'flags': '0', 'queries': [
+                            {'qname': 'www.uchile.cl.'}]})
 
+        data.set_expected(unicode('cóm', "utf8").encode("idna"), 30)
 
-        data.set_expected(unicode('cóm', "utf8").encode("idna"),30)
-
-        data.put_information('IdnVSTld',[unicode('cóm', "utf8").encode("idna")])
+        data.put_information(
+            'IdnVSTld', [
+                unicode(
+                    'cóm', "utf8").encode("idna")])
 
         return data
 

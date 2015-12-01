@@ -14,18 +14,22 @@ class TestClientAddrVSRcode(unittest.TestCase):
     def data_example(self):
         data = PacketsExample()
         for i in range(30):
-            data.add_packet({'flags': '8000','source': '12345678','queries': [{'qname': 'www.nic.cl.'}]})
+            data.add_packet({'flags': '8000',
+                             'source': '12345678',
+                             'queries': [{'qname': 'www.nic.cl.'}]})
 
         for i in range(12):
-            data.add_packet({'flags': '8000','source': '87654321','queries': [{'qname': 'www.niclabs.cl.'}]})
+            data.add_packet({'flags': '8000', 'source': '87654321', 'queries': [
+                            {'qname': 'www.niclabs.cl.'}]})
 
         for i in range(25):
-            data.add_packet({'flags': '8000','source': '12348765','queries': [{'qname': 'www.uchile.cl.'}]})
+            data.add_packet({'flags': '8000',
+                             'source': '12348765',
+                             'queries': [{'qname': 'www.uchile.cl.'}]})
 
+        data.set_expected(0, {'12345678': 30, '87654321': 12, '12348765': 25})
 
-        data.set_expected(0,{'12345678': 30,'87654321': 12, '12348765': 25})
-
-        data.put_information('ClientAddrVSRcode',[0])
+        data.put_information('ClientAddrVSRcode', [0])
 
         return data
 

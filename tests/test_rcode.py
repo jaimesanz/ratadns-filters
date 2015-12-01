@@ -17,7 +17,7 @@ class TestRcode(unittest.TestCase):
         for i in range(5):
             data.add_packet({'flags': '8000', 'queries': [
                 {'qname': 'www.nic.cl'}]})
-       
+
         data.set_expected(0, 5)
 
         data.put_information("Rcode", [0])

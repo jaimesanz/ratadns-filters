@@ -4,6 +4,7 @@ import StringIO
 from packetsexample import PacketsExample
 from prers import ClientSubnet2
 
+
 class TestRcode(unittest.TestCase):
 
     def reinit(self):
@@ -13,14 +14,43 @@ class TestRcode(unittest.TestCase):
     def data_example(self):
         data = PacketsExample()
 
-        data.add_packet({'dest': 'encrypted(dnsip1)', 'source': 'encrypted(ip1)','flags': '0','queries': [{'qname': 'www.nic.notapprovedtld.','qtype':1}]})
-        data.add_packet({'dest': 'encrypted(dnsip1)', 'source': 'encrypted(ip1)','flags': '0','queries': [{'qname': 'a-root-servers.net.','qtype':1}]})
-        data.add_packet({'dest': 'encrypted(dnsip1)', 'source': 'encrypted(ip1)','flags': '0','queries': [{'qname': 'localhost.','qtype':1}]})
-        data.add_packet({'dest': 'encrypted(dnsip1)', 'source': 'encrypted(ip1)','flags': '0','queries': [{'qname': '.','qtype':1}]})
-        data.add_packet({'dest': 'AABBCCDD', 'source': 'encrypted(ip1)','flags': '0','queries': [{'qname': 'www.nic.cl.','qtype':1}]})
-        data.add_packet({'dest': 'AC1FFFFF', 'source': 'encrypted(ip1)','flags': '0','queries': [{'qname': 'www.nic.cl.','qtype':12}]})
-        data.add_packet({'dest': 'encrypted(dnsip1)', 'source': 'encrypted(ip1)','flags': '0','queries': [{'qname': 'localhost.','qtype':134134345}]})
-        data.add_packet({'dest': 'encrypted(dnsip1)', 'source': 'encrypted(ip1)','flags': '0', 'queries': [{'qname': 'www.nic.cl.','qtype':1}]})
+        data.add_packet({'dest': 'encrypted(dnsip1)',
+                         'source': 'encrypted(ip1)',
+                         'flags': '0',
+                         'queries': [{'qname': 'www.nic.notapprovedtld.',
+                                      'qtype': 1}]})
+        data.add_packet({'dest': 'encrypted(dnsip1)',
+                         'source': 'encrypted(ip1)',
+                         'flags': '0',
+                         'queries': [{'qname': 'a-root-servers.net.',
+                                      'qtype': 1}]})
+        data.add_packet({'dest': 'encrypted(dnsip1)',
+                         'source': 'encrypted(ip1)',
+                         'flags': '0',
+                         'queries': [{'qname': 'localhost.',
+                                      'qtype': 1}]})
+        data.add_packet({'dest': 'encrypted(dnsip1)',
+                         'source': 'encrypted(ip1)',
+                         'flags': '0',
+                         'queries': [{'qname': '.',
+                                      'qtype': 1}]})
+        data.add_packet({'dest': 'AABBCCDD', 'source': 'encrypted(ip1)',
+                         'flags': '0', 'queries': [{'qname': 'www.nic.cl.', 'qtype': 1}]})
+        data.add_packet({'dest': 'AC1FFFFF',
+                         'source': 'encrypted(ip1)',
+                         'flags': '0',
+                         'queries': [{'qname': 'www.nic.cl.',
+                                      'qtype': 12}]})
+        data.add_packet({'dest': 'encrypted(dnsip1)',
+                         'source': 'encrypted(ip1)',
+                         'flags': '0',
+                         'queries': [{'qname': 'localhost.',
+                                      'qtype': 134134345}]})
+        data.add_packet({'dest': 'encrypted(dnsip1)',
+                         'source': 'encrypted(ip1)',
+                         'flags': '0',
+                         'queries': [{'qname': 'www.nic.cl.',
+                                      'qtype': 1}]})
 
         data.set_expected("non-auth-tld", {'encrypted(ip1)': 4})
         data.set_expected("root-servers.net", {'encrypted(ip1)': 1})
@@ -31,7 +61,15 @@ class TestRcode(unittest.TestCase):
         data.set_expected("funny-qtype", {'encrypted(ip1)': 1})
         data.set_expected("ok", {'encrypted(ip1)': 1})
 
-        data.put_information("class", ["non-auth-tld", "root-servers.net", "localhost", "a-for-root", "a-for-a", "rfc1918-ptr", "funny-qtype", "ok"])
+        data.put_information("class",
+                             ["non-auth-tld",
+                              "root-servers.net",
+                              "localhost",
+                              "a-for-root",
+                              "a-for-a",
+                              "rfc1918-ptr",
+                              "funny-qtype",
+                              "ok"])
 
         return data
 

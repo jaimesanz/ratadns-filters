@@ -17,7 +17,7 @@ class TestEdnsVersion(unittest.TestCase):
         for i in range(5):
             data.add_packet({'flags': '0', 'queries': [
                 {'qname': 'www.nic.cl'}]})
-       
+
         data.set_expected(0, 5)
 
         data.put_information("EdnsVersion", [0])
@@ -35,4 +35,6 @@ class TestEdnsVersion(unittest.TestCase):
 
         for ednsversion in example.get_information('EdnsVersion'):
             self.assertTrue(ednsversion in result)
-            self.assertEquals(example.expected_value(ednsversion), result[ednsversion])
+            self.assertEquals(
+                example.expected_value(ednsversion),
+                result[ednsversion])

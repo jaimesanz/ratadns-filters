@@ -14,20 +14,23 @@ class TestDirectionVSIpproto(unittest.TestCase):
     def data_example(self):
         data = PacketsExample()
         for i in range(30):
-            data.add_packet({'flags': '0','queries': [{'qname': 'www.nic.cl.'}]})
-            data.add_packet({'flags': '8000','queries': [{'qname': 'www.crecemujer.cl.'}]})
+            data.add_packet({'flags': '0', 'queries': [
+                            {'qname': 'www.nic.cl.'}]})
+            data.add_packet({'flags': '8000', 'queries': [
+                            {'qname': 'www.crecemujer.cl.'}]})
 
         for i in range(25):
-            data.add_packet({'flags': '0','queries': [{'qname': 'www.uchile.cl.'}]})
+            data.add_packet({'flags': '0', 'queries': [
+                            {'qname': 'www.uchile.cl.'}]})
 
         for i in range(12):
-            data.add_packet({'flags': '8000','queries': [{'qname': 'www.facebook.com.'}]})
+            data.add_packet({'flags': '8000', 'queries': [
+                            {'qname': 'www.facebook.com.'}]})
 
+        data.set_expected('recv', {'udp': 55})
+        data.set_expected('sent', {'udp': 42})
 
-        data.set_expected('recv',{'udp': 55})
-        data.set_expected('sent',{'udp': 42})
-
-        data.put_information('DirectionVSIpproto',['recv','sent'])
+        data.put_information('DirectionVSIpproto', ['recv', 'sent'])
 
         return data
 

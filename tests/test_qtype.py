@@ -16,11 +16,11 @@ class TestQtype(unittest.TestCase):
 
         for i in range(5):
             data.add_packet({'dest': 'encrypted(dnsip1)',
-                         'source': 'encrypted(ip1)',
-                         'flags': '0',
-                         'queries': [
-                             {'qname': 'www.ni_c.cl', 'qtype': '1'}]})
-       
+                             'source': 'encrypted(ip1)',
+                             'flags': '0',
+                             'queries': [
+                                 {'qname': 'www.ni_c.cl', 'qtype': '1'}]})
+
         data.set_expected('1', 5)
 
         data.put_information("Qtype", ['1'])

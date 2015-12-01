@@ -14,16 +14,18 @@ class TestRcodeVSReplylen(unittest.TestCase):
     def data_example(self):
         data = PacketsExample()
         for i in range(30):
-            data.add_packet({'flags': '8000','queries': [{'qname': 'www.nic.cl.'}]})
-            data.add_packet({'flags': '0','queries': [{'qname': 'www.niclabs.cl.'}]})
+            data.add_packet({'flags': '8000',
+                             'queries': [{'qname': 'www.nic.cl.'}]})
+            data.add_packet({'flags': '0', 'queries': [
+                            {'qname': 'www.niclabs.cl.'}]})
 
         for i in range(25):
-            data.add_packet({'flags': '8000','queries': [{'qname': 'www.uchile.cl.'}]})
+            data.add_packet({'flags': '8000', 'queries': [
+                            {'qname': 'www.uchile.cl.'}]})
 
+        data.set_expected(0, {15: 55})
 
-        data.set_expected(0,{15: 55})
-
-        data.put_information('RcodeVSReplylen',[0])
+        data.put_information('RcodeVSReplylen', [0])
 
         return data
 

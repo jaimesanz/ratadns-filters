@@ -14,15 +14,18 @@ class TestTrafficVolumeResponses(unittest.TestCase):
     def data_example(self):
         data = PacketsExample()
         for i in range(30):
-            data.add_packet({'flags': '8000', 'source':'12345678','queries': [{'qname': 'www.nic.cl.'}]})
+            data.add_packet({'flags': '8000',
+                             'source': '12345678',
+                             'queries': [{'qname': 'www.nic.cl.'}]})
 
         for i in range(25):
-            data.add_packet({'flags': '8000', 'source':'1234567890', 'queries': [{'qname': 'www.uchile.cl.'}]})
+            data.add_packet({'flags': '8000',
+                             'source': '1234567890',
+                             'queries': [{'qname': 'www.uchile.cl.'}]})
 
+        data.set_expected('udp', {'IPv4': 30, 'IPv6': 25})
 
-        data.set_expected('udp', {'IPv4': 30,'IPv6': 25})
-
-        data.put_information('TrafficVolumeResponses',['udp'])
+        data.put_information('TrafficVolumeResponses', ['udp'])
 
         return data
 
