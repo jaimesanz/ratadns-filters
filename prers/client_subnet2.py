@@ -3,7 +3,7 @@ from prer import PreR
 
 
 class ClientSubnet2(PreR):
-    """Shows the count of the different client addresses of each 
+    """Shows the count of the different client addresses of each
     query in a window with the same bogus query classification.
 
     Bogus query classification:
@@ -22,7 +22,7 @@ class ClientSubnet2(PreR):
 
     - Result
 
-    A dict that has an entry for each different bogus query classification 
+    A dict that has an entry for each different bogus query classification
     seen in a window. The key is the classification (string) and the value
     is another dictionary, which keys are the ip addresses of the clients
     (hex) and their values are the count of packets having that ip. If there
@@ -138,7 +138,9 @@ class ClientSubnet2(PreR):
             return tld.upper() not in approved_tlds
 
     def is_funny_class(self, p):
-        # reference http://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-2
+        # reference
+        # http://www.iana.org/assignments/dns-parameters/
+        # dns-parameters.xhtml#dns-parameters-2
         # 2, 5-253, 256-65279
         with open('prers/data/funny_classes.txt') as f:
             funny_classes = [line.rstrip() for line in f]

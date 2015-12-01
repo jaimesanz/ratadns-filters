@@ -11,7 +11,7 @@ class RcodeVSReplylen(PreR):
     The key is the rcode (as an integer) and the value is
     another dictionary, which keys are the size of the DNS msg
     (bytes) and its value is the count of packets
-    having that size. 
+    having that size.
 
     - Example
 

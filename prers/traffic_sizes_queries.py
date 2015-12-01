@@ -6,7 +6,6 @@ class TrafficSizesQueries(PreR):
     received on each query packet grouped by transport protocol
 
     - Result
-    
     A dict which has an entry for each transport protocol seen
     in a window. The key is the transport protocol (as an string,
         for example "tcp" or "udp") and the value is another
