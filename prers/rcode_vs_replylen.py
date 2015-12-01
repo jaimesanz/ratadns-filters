@@ -2,13 +2,15 @@ from prer import PreR
 
 
 class RcodeVSReplylen(PreR):
-    """Shows the count of the different sizes (bytes) of each reply message with the same rcode.
+    """Shows the count of the different sizes (bytes) of each reply
+    message with the same rcode.
 
     - Result
     
-    A dict that has an entry for each rcode seen in a window. The key
-    is the rcode (as an integer) and the value is another dictionary, which keys
-    are the size of the DNS msg (bytes) and its value is the count of packets
+    A dict that has an entry for each rcode seen in a window.
+    The key is the rcode (as an integer) and the value is
+    another dictionary, which keys are the size of the DNS msg
+    (bytes) and its value is the count of packets
     having that size. 
 
     - Example

@@ -2,13 +2,15 @@ from prer import PreR
 
 
 class TransportVSQtype(PreR):
-    """Shows the count of the different qtypes received on each packet with the same transport protocol
+    """Shows the count of the different qtypes received on each
+    packet with the same transport protocol
 
     - Result
     
-    A dict that has an entry for each transport protocol seen in a window. The key
-    is the qtype (as an string) and the value is another dictionary, which keys
-    are the qtypes and its value is the count of packets having that qtype.
+    A dict that has an entry for each transport protocol seen
+    in a window. The key is the qtype (as an string) and the
+    value is another dictionary, which keys are the qtypes
+    and its value is the count of packets having that qtype.
 
     - Example
 

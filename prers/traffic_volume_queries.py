@@ -2,14 +2,16 @@ from prer import PreR
 
 
 class TrafficVolumeQueries(PreR):
-    """Shows the count of the different IP protocols received on each query packet grouped by
-    transport protocol
+    """Shows the count of the different IP protocols received
+    on each query packet grouped by transport protocol
 
     - Result
     
-    A dict which has an entry for each transport protocol seen in a window. The key
-    is the transport protocol (as an string, for example "tcp" or "udp") and the value is another
-    dictionary, which keys are IP versions as string, and its value is the count of packets
+    A dict which has an entry for each transport protocol
+    seen in a window. The key is the transport protocol
+    (as an string, for example "tcp" or "udp") and the
+    value is another dictionary, which keys are IP versions
+    as string, and its value is the count of packets
     having that IP version.
 
     - Example

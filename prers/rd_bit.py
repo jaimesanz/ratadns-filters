@@ -2,12 +2,14 @@ from prer import PreR
 
 
 class RdBit(PreR):
-    """Shows the count of queries received in a window that have the rd-bit set.
+    """Shows the count of queries received in a window that
+    have the rd-bit set.
 
     - Result
 
-    A dict having in the key "set" the count of packets that had the rd-bit set,
-    and in the key "clr" the count of packets that didn't have the bit set.
+    A dict having in the key "set" the count of packets that
+    had the rd-bit set, and in the key "clr" the count of
+    packets that didn't have the bit set.
 
     - Example
 
