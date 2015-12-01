@@ -35,7 +35,8 @@ class TestRcode(unittest.TestCase):
                          'queries': [{'qname': '.',
                                       'qtype': 1}]})
         data.add_packet({'dest': 'AABBCCDD', 'source': 'encrypted(ip1)',
-                         'flags': '0', 'queries': [{'qname': 'www.nic.cl.', 'qtype': 1}]})
+                         'flags': '0',
+                         'queries': [{'qname': 'www.nic.cl.', 'qtype': 1}]})
         data.add_packet({'dest': 'AC1FFFFF',
                          'source': 'encrypted(ip1)',
                          'flags': '0',

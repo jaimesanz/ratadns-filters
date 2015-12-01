@@ -19,8 +19,8 @@ class TestClientAddrVSRcode(unittest.TestCase):
                              'queries': [{'qname': 'www.nic.cl.'}]})
 
         for i in range(12):
-            data.add_packet({'flags': '8000', 'source': '87654321', 'queries': [
-                            {'qname': 'www.niclabs.cl.'}]})
+            data.add_packet({'flags': '8000', 'source': '87654321',
+                            'queries': [{'qname': 'www.niclabs.cl.'}]})
 
         for i in range(25):
             data.add_packet({'flags': '8000',

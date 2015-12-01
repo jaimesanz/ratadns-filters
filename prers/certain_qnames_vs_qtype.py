@@ -8,10 +8,10 @@ class CertainQnamesVSQtype(PreR):
 
         - Result
 
-        A dict that has an entry for certain qnames seen in a window 
-        (certain qnames: localhost and [a-m].root-servers.net) The 
+        A dict that has an entry for certain qnames seen in a window
+        (certain qnames: localhost and [a-m].root-servers.net) The
         key is the qname (as a string) and the value is another dictionary,
-        which keys are the qtype of the DNS msg (as an integer) and its 
+        which keys are the qtype of the DNS msg (as an integer) and its
         value is the count of packets having that qtype.
 
         - Example

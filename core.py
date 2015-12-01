@@ -46,7 +46,7 @@ def keys_with_max_vals(d, n):
         result.append([elem[1], -elem[0]])
     return result
 
-############# hedgehog functions ##############
+# hedgehog functions
 
 
 def get_topk_with_skipped_count_2D(count_dict, k):
@@ -70,7 +70,7 @@ def get_topk_with_skipped_count_1D(count_dict, k):
             data["-:SKIPPED:-"] += 1
             data["-:SKIPPED_SUM:-"] += count_dict[key]
     return data
-###############################################
+# end of hedgehog stuff
 
 
 class RedisFile(object):
@@ -109,7 +109,8 @@ def mainloop(options):
                 except PacketWithoutInfoError as pwie:
                     print >> sys.stderr, "The " + \
                         type(fun).__name__ + " PreR"
-                    print >> sys.stderr, "requires the \"" + pwie.info + "\" info."
+                    print >> sys.stderr, "requires the \"" +
+                    pwie.info + "\" info."
                     print >> sys.stderr, "Packet: " + str(packet) + "\n"
 
             if counter >= window:
@@ -268,7 +269,7 @@ class Packet(object):
         except KeyError:
             raise PacketWithoutInfoError('qtype')
 
-    ############# hedgehog stuff ##############
+    # hedgehog stuff
     @property
     def rd_bit(self):
         """Return the rd_bit of the packet

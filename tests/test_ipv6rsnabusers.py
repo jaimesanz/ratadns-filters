@@ -19,7 +19,8 @@ class TestRcode(unittest.TestCase):
                              'source': 'encrypted(ip1)',
                              'flags': '0',
                              'queries': [
-                                 {'qname': 'a-root-servers.net.', 'qtype': '1'}]})
+                                 {'qname': 'a-root-servers.net.', 'qtype': '1'}
+                                ]})
 
         data.set_expected("encrypted(ip1)", 5)
 

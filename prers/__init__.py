@@ -17,7 +17,7 @@ from topn import TopN
 from topnpp import TopNPP
 from topnq import TopNQ
 
-######## Hedghog stuff #######################
+# Hedghog stuff
 from do_bit import DoBit
 from qtype_vs_qnamelen import QtypeVSQnamelen
 from qtype_vs_tld import QtypeVSTld

@@ -8,8 +8,8 @@ class ClientAddrVSRcode(PreR):
 
     - Result
 
-    A dict that has an entry for each different rcode seen in a window. 
-    The key is the rcode (as an integer) and the value is 
+    A dict that has an entry for each different rcode seen in a window.
+    The key is the rcode (as an integer) and the value is
     another dictionary, which keys are the ip address of the client
     (hex) and its value is the count of packets having that ip. If there
     are more than 50 addresses with one same Rcode, it will only show the
