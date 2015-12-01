@@ -3,19 +3,20 @@ from prer import PreR
 
 
 class QtypeVSTld(PreR):
-    """Shows the count of the different TLDs received on each packet with the same qtype
+    """Shows the count of the different TLDs received on each
+    packet with the same qtype
 
     - Result
-    
+
     A dict that has an entry for each qtype seen in a window. The key
-    is the qtype (as an integer) and the value is another dictionary, which keys
-    are the size of the qname (bytes) and its value is the count of packets
-    having that qname size.  If there are more
-    than 200 TLDs, it will only show the top 50 TLDs and two other keys will be 
-    added to the dictionary:
-         "-:SKIPPED:-" -> the amount of TLDs it's not showing
-         "-:SKIPPED_SUM:-:" -> the sum of the count of all the TLDs
-         it's not showing
+    is the qtype (as an integer) and the value is another dictionary,
+    which keys are the size of the qname (bytes) and its value is the
+    count of packets having that qname size.  If there are more
+    than 200 TLDs, it will only show the top 50 TLDs and two other
+    keys will be added to the dictionary:
+        "-:SKIPPED:-" -> the amount of TLDs it's not showing
+        "-:SKIPPED_SUM:-:" -> the sum of the count of all the TLDs
+        it's not showing
 
     - Example
 
@@ -24,9 +25,9 @@ class QtypeVSTld(PreR):
             {
 
                 "cl": 10,
-                "com": 1 
+                "com": 1
             },
-        29: 
+        29:
             {
                 "local": 50
             }
@@ -41,6 +42,7 @@ class QtypeVSTld(PreR):
 
     <FILL>
     """
+
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
         self._qtype_vs_tld = {}
@@ -59,7 +61,7 @@ class QtypeVSTld(PreR):
             if tld not in self._qtype_vs_tld[qtype]:
                 self._qtype_vs_tld[qtype][tld] = 0
 
-            self._qtype_vs_tld[qtype][tld]+=1
+            self._qtype_vs_tld[qtype][tld] += 1
 
     def get_data(self):
         return get_topk_with_skipped_count_2D(self._qtype_vs_tld, self._k)

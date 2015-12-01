@@ -21,9 +21,9 @@ class TrafficVolumeResponses(PreR):
             {
 
                 IPv4: 10,
-                IPv6: 1 
+                IPv6: 1
             },
-        udp: 
+        udp:
             {
                 IPv4: 0
                 IPv6: 34
@@ -39,6 +39,7 @@ class TrafficVolumeResponses(PreR):
 
     <FILL>
     """
+
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
         self._traffic_volume_responses = {}
@@ -54,10 +55,8 @@ class TrafficVolumeResponses(PreR):
                 self._traffic_volume_responses[protocol][ip_version] = 0
             self._traffic_volume_responses[protocol][ip_version] += 1
 
-
     def get_data(self):
         return self._traffic_volume_responses
-
 
     def reset(self):
         self._traffic_volume_responses.clear()

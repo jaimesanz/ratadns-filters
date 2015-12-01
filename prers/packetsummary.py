@@ -4,6 +4,7 @@ __author__ = 'franchoco'
 
 
 class PacketSummary(PreR):
+
     def __init__(self, f):
         PreR.__init__(self, f)
         # Necesito acumular por QTYPE y luego por IP SRC

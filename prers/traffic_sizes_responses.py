@@ -21,9 +21,9 @@ class TrafficSizesResponses(PreR):
             {
 
                 15: 10,
-                28: 1 
+                28: 1
             },
-        udp: 
+        udp:
             {
                 21: 0
             }
@@ -38,6 +38,7 @@ class TrafficSizesResponses(PreR):
 
     <FILL>
     """
+
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
         self._traffic_sizes_responses = {}
@@ -52,10 +53,8 @@ class TrafficSizesResponses(PreR):
                 self._traffic_sizes_responses[protocol][size] = 0
             self._traffic_sizes_responses[protocol][size] += 1
 
-
     def get_data(self):
         return self._traffic_sizes_responses
-
 
     def reset(self):
         self._traffic_sizes_responses.clear()

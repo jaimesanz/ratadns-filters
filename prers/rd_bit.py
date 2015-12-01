@@ -27,13 +27,13 @@ class RdBit(PreR):
 
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
-        self._rd_bit = {"set":0, "clr":0}
+        self._rd_bit = {"set": 0, "clr": 0}
 
     def __call__(self, p):
         if not p.is_answer():
             rd_bit = p.rd_bit
 
-            if rd_bit==1:
+            if rd_bit == 1:
                 self._rd_bit["set"] += 1
             else:
                 self._rd_bit["clr"] += 1
@@ -42,5 +42,5 @@ class RdBit(PreR):
         return self._rd_bit
 
     def reset(self):
-        self._rd_bit["set"]=0
-        self._rd_bit["clr"]=0
+        self._rd_bit["set"] = 0
+        self._rd_bit["clr"] = 0

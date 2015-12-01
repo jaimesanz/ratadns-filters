@@ -2,13 +2,15 @@ from prer import PreR
 
 
 class EdnsBufsiz(PreR):
-    """Shows the count of EDNS queries which have a buffer size contains in some intervals
-    [0-511, 512-1023, 1024-1535, 1536-2047, 2048-2559, 2600-3071, 3072-3583, 3584-4095, 4096-4607]
+    """Shows the count of EDNS queries which have a buffer
+    size contains in some intervals [0-511, 512-1023, 1024-1535,
+    1536-2047, 2048-2559, 2600-3071, 3072-3583, 3584-4095, 4096-4607]
 
     - Result
 
-    A dict that has an entry for each interval (as an string) and the value is the count of the packets
-    having their buffer size in that interval.
+    A dict that has an entry for each interval (as an string) and the
+    value is the count of the packets having their buffer size in
+    that interval.
 
     - Example
 
@@ -27,6 +29,7 @@ class EdnsBufsiz(PreR):
 
     <FILL>
     """
+
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
         self._edns_bufsiz = {
@@ -67,13 +70,11 @@ class EdnsBufsiz(PreR):
             else:
                 self._edns_bufsiz["None"] += 1
 
-
     def get_data(self):
         return self._edns_bufsiz
 
-
     def reset(self):
-         self._edns_bufsiz = {
+        self._edns_bufsiz = {
             "0-511": 0,
             "512-1023": 0,
             "1024-1535": 0,

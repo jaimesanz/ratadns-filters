@@ -12,6 +12,7 @@ class TrafficSizesQueries(PreR):
         for example "tcp" or "udp") and the value is another
     dictionary, which keys are the sizes of the packet
     (as an integer), and its value is the count of packets
+
     having that size.
 
     - Example
@@ -21,9 +22,9 @@ class TrafficSizesQueries(PreR):
             {
 
                 15: 10,
-                28: 1 
+                28: 1
             },
-        udp: 
+        udp:
             {
                 21: 0
             }
@@ -38,6 +39,7 @@ class TrafficSizesQueries(PreR):
 
     <FILL>
     """
+
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
         self._traffic_sizes_queries = {}
@@ -52,10 +54,8 @@ class TrafficSizesQueries(PreR):
                 self._traffic_sizes_queries[protocol][size] = 0
             self._traffic_sizes_queries[protocol][size] += 1
 
-
     def get_data(self):
         return self._traffic_sizes_queries
-
 
     def reset(self):
         self._traffic_sizes_queries.clear()

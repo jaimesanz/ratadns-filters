@@ -2,13 +2,13 @@ from prer import PreR
 
 
 class EdnsVersion(PreR):
-    """Shows the count of the different edns_versions received for each query in
-    a window.
+    """Shows the count of the different edns_versions received 
+    for each query in a window.
 
     - Result
 
-    A dict that has an entry for each edns_version captured where the key is an
-    edns_version (as an integer) and the value is the count of the packets
+    A dict that has an entry for each edns_version captured where the key is
+    an edns_version (as an integer) and the value is the count of the packets
     having that edns_version.
 
     - Example
@@ -37,17 +37,15 @@ class EdnsVersion(PreR):
             if p.is_edns():
                 edns_version = p.edns_version
                 if edns_version not in self._edns_versions:
-                    self._edns_versions[edns_version]=0
-                self._edns_versions[edns_version]+=1
+                    self._edns_versions[edns_version] = 0
+                self._edns_versions[edns_version] += 1
             else:
                 if "none" not in self._edns_versions:
-                    self._edns_versions["none"]=0
-                self._edns_versions["none"]+=1
-
+                    self._edns_versions["none"] = 0
+                self._edns_versions["none"] += 1
 
     def get_data(self):
         return self._edns_versions
-
 
     def reset(self):
         self._edns_versions.clear()
