@@ -109,8 +109,7 @@ def mainloop(options):
                 except PacketWithoutInfoError as pwie:
                     print >> sys.stderr, "The " + \
                         type(fun).__name__ + " PreR"
-                    print >> sys.stderr, "requires the \"" +
-                    pwie.info + "\" info."
+                    print >> sys.stderr, "requires the \"" + pwie.info + "\" info."
                     print >> sys.stderr, "Packet: " + str(packet) + "\n"
 
             if counter >= window:
