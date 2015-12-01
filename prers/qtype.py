@@ -2,13 +2,14 @@ from prer import PreR
 
 
 class Qtype(PreR):
-    """Shows the count of the different qtypes received for each packet in a
-    window.
+    """Shows the count of the different qtypes received
+    for each packet in a window.
 
     - Result
 
-    A dict that has an entry for each qtype received where the key is the qtype
-    (as an integer) and the value is the count of the packets having that qtype.
+    A dict that has an entry for each qtype received
+    where the key is the qtype (as an integer) and
+    the value is the count of the packets having that qtype.
 
     - Example
 

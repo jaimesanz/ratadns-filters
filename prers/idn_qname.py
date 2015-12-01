@@ -3,13 +3,14 @@ from prer import PreR
 
 
 class IdnQname(PreR):
-    """Shows the count of the internationalized domain name queries received in
-    a window.
+    """Shows the count of the internationalized domain name queries received
+    in a window.
 
     - Result
 
-    A dict that has two entries: 'normal' (which has the count of normal domain
-    names) and 'idn' (which has the count of internationalized domain names)
+    A dict that has two entries: 'normal' (which has the count of normal
+    domain names) and 'idn' (which has the count of internationalized
+    domain names)
 
     - Example
 

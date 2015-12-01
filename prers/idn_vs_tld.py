@@ -3,7 +3,8 @@ from prer import PreR
 
 
 class IdnVSTld(PreR):
-    """Shows the count of the different TLDs received on each packet which qname was in IDN format.
+    """Shows the count of the different TLDs received on each packet
+    which qname was in IDN format.
 
     - Result
 

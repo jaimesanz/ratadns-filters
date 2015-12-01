@@ -3,19 +3,19 @@ from prer import PreR
 
 
 class Ipv6RsnAbusers(PreR):
-    """ Shows the count of the different client addresses for each query in a window where the
-    qname ends with "root-servers.net".
+    """ Shows the count of the different client addresses for each query
+    in a window where the qname ends with "root-servers.net".
 
     - Result
 
-    A dict that has an entry for each client address seen in a window that queries a qname
-    ending with "root-servers.net". The key is the client address (hex) and the value is the
-    count of packets having that address. If there are more
-    than 50 addresses, it will only show the top 50 addresses and two other keys will be
-    added to the dictionary:
-         "-:SKIPPED:-" -> the amount of client addresses it's not showing
-         "-:SKIPPED_SUM:-:" -> the sum of the count of all the client addresses
-         it's not showing
+    A dict that has an entry for each client address seen in a window
+    that queries a qname ending with "root-servers.net". The key is
+    the client address (hex) and the value is the count of packets having
+    that address. If there are more than 50 addresses, it will only show
+    the top 50 addresses and two other keys will be added to the dictionary:
+        "-:SKIPPED:-" -> the amount of client addresses it's not showing
+        "-:SKIPPED_SUM:-:" -> the sum of the count of all the client addresses
+        it's not showing
 
 
     - Example

@@ -3,8 +3,8 @@ from prer import PreR
 
 class ChaosTypesAndNames(PreR):
 
-    """Shows the count of the different queries grouped by qtype received on each packet with the same qname
-    and with qclass 3 (chaos class)
+    """Shows the count of the different queries grouped by qtype received on
+    each packet with the same qname and with qclass 3 (chaos class)
 
     - Result
 

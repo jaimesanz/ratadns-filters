@@ -2,14 +2,14 @@ from prer import PreR
 
 
 class Opcode(PreR):
-    """Shows the count of the different opcodes received for each query in a
-    window.
+    """Shows the count of the different opcodes received for
+    each query in a window.
 
     - Result
 
-    A dict that has an entry for each opcode captured where the key is the
-    opcode (as an integer) and the value is the count of the packets having that
-    opcode.
+    A dict that has an entry for each opcode captured where
+    the key is the opcode (as an integer) and the value is
+    the count of the packets having that opcode.
 
     - Example
 

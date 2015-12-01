@@ -21,10 +21,11 @@ def hex_to_ip(h):
     o4 = int(h[6:7], 16)
     return str(o1) + "." + str(o2) + "." + str(o3) + "." + str(o4)
 
+
 def is_ipv4(ip_hex):
     """Checks if given IP is in IPv4 format
     Return type: Boolean"""
-    return len(ip_hex)==8
+    return len(ip_hex) == 8
 
 
 def keys_with_max_vals(d, n):
@@ -46,11 +47,15 @@ def keys_with_max_vals(d, n):
     return result
 
 ############# hedgehog functions ##############
+
+
 def get_topk_with_skipped_count_2D(count_dict, k):
     data = {}
     for outter_key in count_dict.keys():
-        data[outter_key] = get_topk_with_skipped_count_1D(count_dict[outter_key], k)
+        data[outter_key] = get_topk_with_skipped_count_1D(
+            count_dict[outter_key], k)
     return data
+
 
 def get_topk_with_skipped_count_1D(count_dict, k):
     data = {}
@@ -66,6 +71,7 @@ def get_topk_with_skipped_count_1D(count_dict, k):
             data["-:SKIPPED_SUM:-"] += count_dict[key]
     return data
 ###############################################
+
 
 class RedisFile(object):
 
@@ -101,9 +107,10 @@ def mainloop(options):
                 try:
                     fun(packet)
                 except PacketWithoutInfoError as pwie:
-                    print >> sys.stderr, "The "+type(fun).__name__+" PreR"
-                    print >> sys.stderr, "requires the \""+pwie.info+"\" info."
-                    print >> sys.stderr, "Packet: "+str(packet)+"\n"
+                    print >> sys.stderr, "The " + \
+                        type(fun).__name__ + " PreR"
+                    print >> sys.stderr, "requires the \"" + pwie.info + "\" info."
+                    print >> sys.stderr, "Packet: " + str(packet) + "\n"
 
             if counter >= window:
                 counter = 0
@@ -245,7 +252,6 @@ class Packet(object):
         """Return the window_size where is the packet"""
         return self._window_size
 
-
     def is_answer(self):
         """Return True if the packet is an answer"""
         try:
@@ -261,7 +267,6 @@ class Packet(object):
             return int(self.query['qtype'], 16) in [1, 2, 6, 15]
         except KeyError:
             raise PacketWithoutInfoError('qtype')
-
 
     ############# hedgehog stuff ##############
     @property
@@ -324,14 +329,13 @@ class Packet(object):
         Return type: Integer """
         return 8000
 
-    
     def is_edns(self):
-        """Returns wether or not the packet is EDNS 
+        """Returns wether or not the packet is EDNS
         Return type: Boolean """
         return True
 
     @property
     def edns_bufsiz(self):
-        """Return the edns buffer size  
+        """Return the edns buffer size
         Return type: Integer """
         return 512

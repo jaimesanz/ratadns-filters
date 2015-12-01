@@ -3,8 +3,8 @@ from prer import PreR
 
 
 class ClientSubnet2(PreR):
-    """Shows the count of the different client addresses of each query in a window
-    with the same bogus query classification.
+    """Shows the count of the different client addresses of each 
+    query in a window with the same bogus query classification.
 
     Bogus query classification:
 
@@ -22,15 +22,15 @@ class ClientSubnet2(PreR):
 
     - Result
 
-    A dict that has an entry for each different bogus query classification seen in a window.
-    The key is the classification (string) and the value is another dictionary, which keys
-    are the ip addresses of the clients (hex) and their values are the count of packets
-    having that ip. If there are more than 50 addresses with one same class, it
-    will only show the top 200 addresses and two other keys will be added to the
-    dictionary:
-         "-:SKIPPED:-" -> the amount of client addresses it's not showing
-         "-:SKIPPED_SUM:-:" -> the sum of the count of all the client addresses
-         it's not showing
+    A dict that has an entry for each different bogus query classification 
+    seen in a window. The key is the classification (string) and the value
+    is another dictionary, which keys are the ip addresses of the clients
+    (hex) and their values are the count of packets having that ip. If there
+    are more than 50 addresses with one same class, it will only show the
+    top 200 addresses and two other keys will be added to the dictionary:
+        "-:SKIPPED:-" -> the amount of client addresses it's not showing
+        "-:SKIPPED_SUM:-:" -> the sum of the count of all the client addresses
+        it's not showing
 
     - Example
 

@@ -2,13 +2,13 @@ from prer import PreR
 
 
 class EdnsVersion(PreR):
-    """Shows the count of the different edns_versions received for each query in
-    a window.
+    """Shows the count of the different edns_versions received 
+    for each query in a window.
 
     - Result
 
-    A dict that has an entry for each edns_version captured where the key is an
-    edns_version (as an integer) and the value is the count of the packets
+    A dict that has an entry for each edns_version captured where the key is
+    an edns_version (as an integer) and the value is the count of the packets
     having that edns_version.
 
     - Example
