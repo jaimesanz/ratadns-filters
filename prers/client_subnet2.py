@@ -16,7 +16,7 @@ class ClientSubnet2(PreR):
         rfc1918-ptr: a PTR query for an RFC 1918 address.
         funny-class: a query with an unknown/undefined query class.
         funny-qtype: a query with an unknown/undefined query type.
-        src-port-zero: when the UDP message’s source port equals zero.
+        src-port-zero: when the UDP message's source port equals zero.
         malformed: a malformed DNS message that could not be entirelyparsed.
         ok: not bogus.
 
