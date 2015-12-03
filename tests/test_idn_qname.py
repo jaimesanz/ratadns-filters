@@ -17,9 +17,9 @@ class TestIdnQname(unittest.TestCase):
         data = PacketsExample()
         for i in range(30):
             data.add_packet({'flags': '0', 'queries': [
-                            {'qname': 'www.nandú.cl.'}]})
+                            {'qname': 'www.xn--nand-tra.cl.'}]})
             data.add_packet({'flags': '0', 'queries': [
-                            {'qname': 'www.ñandu.cl.'}]})
+                            {'qname': 'www.xn--andu-fqa.cl.'}]})
 
         for i in range(25):
             data.add_packet({'flags': '0', 'queries': [

@@ -17,7 +17,7 @@ class TestIdnVSTld(unittest.TestCase):
         data = PacketsExample()
         for i in range(3):
             data.add_packet({'flags': '0', 'queries': [
-                            {'qname': 'www.nic.cóm.'}]})
+                            {'qname': 'www.nic.xn--cm-5ja.'}]})
             data.add_packet({'flags': '0', 'queries': [
                             {'qname': 'www.uchile.cl.'}]})
             data.add_packet({
@@ -31,9 +31,9 @@ class TestIdnVSTld(unittest.TestCase):
                 'queries': [
                     {'qname':
                         "data-agkn-com-1198526359." +
-                        "us-east-1.elb.amazonaws.com.imunimacuñ.cl."}]})
+                        "us-east-1.elb.amazonaws.com.xn--imunimacu-t6a.cl."}]})
 
-        data.set_expected(unicode('cóm', "utf8").encode("idna"), 3)
+        data.set_expected(unicode('xn--cm-5ja', "utf8").encode("idna"), 3)
         data.set_expected(unicode('cl', "utf8").encode("idna"), 3)
 
         data.put_information(

@@ -35,13 +35,7 @@ class IdnVSTld(PreR):
         if not p.is_answer():
             qname = p.qname
             tld = qname.split(".")[-2]
-            try:
-                idna.ToASCII(qname)
-                # not idn
-            except UnicodeError as e:
-                # not idn
-                pass
-            except:
+            if qname.decode("idna") != qname:
                 # idn
                 tld_key = unicode(tld, "utf8").encode("idna")
                 if tld_key not in self._idn_vs_tld:
