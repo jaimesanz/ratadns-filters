@@ -17,13 +17,13 @@ class TestIdnQname(unittest.TestCase):
         data = PacketsExample()
         for i in range(30):
             data.add_packet({'flags': '0', 'queries': [
-                            {'qname': 'www.xn--nand-tra.cl.'}]})
+                            {'qname': u'www.xn--nand-tra.cl.'}]})
             data.add_packet({'flags': '0', 'queries': [
-                            {'qname': 'www.xn--andu-fqa.cl.'}]})
+                            {'qname': u'www.xn--andu-fqa.cl.'}]})
 
         for i in range(25):
             data.add_packet({'flags': '0', 'queries': [
-                            {'qname': 'www.uchile.cl.'}]})
+                            {'qname': u'www.uchile.cl.'}]})
 
         data.set_expected('normal', 25)
         data.set_expected('idn', 60)

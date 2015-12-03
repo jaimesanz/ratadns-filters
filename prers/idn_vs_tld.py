@@ -37,7 +37,7 @@ class IdnVSTld(PreR):
             tld = qname.split(".")[-2]
             if qname.decode("idna") != qname:
                 # idn
-                tld_key = unicode(tld, "utf8").encode("idna")
+                tld_key = tld.encode("idna")
                 if tld_key not in self._idn_vs_tld:
                     self._idn_vs_tld[tld_key] = 0
                 self._idn_vs_tld[tld_key] += 1
