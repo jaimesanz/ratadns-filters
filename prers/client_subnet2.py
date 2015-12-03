@@ -77,7 +77,6 @@ class ClientSubnet2(PreR):
             for line in f:
                 self.approved_qtypes[line.rstrip()] = 1
 
-
     def __call__(self, p):
         if not p.is_answer():
             is_ok = True
