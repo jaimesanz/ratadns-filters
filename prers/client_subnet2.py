@@ -62,6 +62,21 @@ class ClientSubnet2(PreR):
         PreR.__init__(self, f)
         self._client_subnet2 = {}
         self._k = 200
+        self.approved_tlds = {}
+        self.funny_classes = {}
+        self.approved_qtypes = {}
+        with open('prers/data/iana_approved_tlds.txt') as f:
+            # first line contains meta info about iana, must be skipped
+            next(f)
+            for line in f:
+                self.approved_tlds[line.rstrip()] = 1
+        with open('prers/data/funny_classes.txt') as f:
+            for line in f:
+                self.funny_classes[line.rstrip()] = 1
+        with open('prers/data/iana_approved_qtypes.txt') as f:
+            for line in f:
+                self.approved_qtypes[line.rstrip()] = 1
+
 
     def __call__(self, p):
         if not p.is_answer():
@@ -131,26 +146,20 @@ class ClientSubnet2(PreR):
     def is_non_auth_tld(self, p):
         # IMPORTANT: data/iana_approved_tlds.txt must be updated from
         # https://data.iana.org/TLD/tlds-alpha-by-domain.txt daily
-        with open('prers/data/iana_approved_tlds.txt') as f:
-            approved_tlds = [line.rstrip() for line in f][1:]
-            qname = p.qname
-            tld = qname.split(".")[-2]
-            return tld.upper() not in approved_tlds
+        qname = p.qname
+        tld = qname.split(".")[-2]
+        return tld.upper() not in self.approved_tlds
 
     def is_funny_class(self, p):
         # reference
         # http://www.iana.org/assignments/dns-parameters/
         # dns-parameters.xhtml#dns-parameters-2
         # 2, 5-253, 256-65279
-        with open('prers/data/funny_classes.txt') as f:
-            funny_classes = [line.rstrip() for line in f]
-            qclass = p.qclass
-            return qclass in funny_classes
+        qclass = p.qclass
+        return qclass in self.funny_classes
 
     def is_funny_qtype(self, p):
-        with open('prers/data/iana_approved_qtypes.txt') as f:
-            approved_qtypes = [line.rstrip() for line in f]
-            return str(p.qtype) not in approved_qtypes
+        return str(p.qtype) not in self.approved_qtypes
 
     def is_rfc1918_ptr(self, p):
         if len(p.dest) > 8:
