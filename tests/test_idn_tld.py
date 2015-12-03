@@ -15,18 +15,25 @@ class TestIdnVSTld(unittest.TestCase):
 
     def data_example(self):
         data = PacketsExample()
-        for i in range(30):
+        for i in range(3):
             data.add_packet({'flags': '0', 'queries': [
                             {'qname': 'www.nic.cóm.'}]})
             data.add_packet({'flags': '0', 'queries': [
                             {'qname': 'www.uchile.cl.'}]})
+            data.add_packet({'flags': '0', 'queries': [
+                            {'qname': 'data-agkn-com-1198526359.us-east-1.elb.amazonaws.com.imunimacu.cl.'}]})
+            data.add_packet({'flags': '0', 'queries': [
+                            {'qname': 'data-agkn-com-1198526359.us-east-1.elb.amazonaws.com.imunimacuñ.cl.'}]})
 
-        data.set_expected(unicode('cóm', "utf8").encode("idna"), 30)
+        data.set_expected(unicode('cóm', "utf8").encode("idna"), 3)
+        data.set_expected(unicode('cl', "utf8").encode("idna"), 3)
 
         data.put_information(
             'IdnVSTld', [
                 unicode(
-                    'cóm', "utf8").encode("idna")])
+                    'cóm', "utf8").encode("idna"),
+                unicode(
+                    'cl', "utf8").encode("idna")])
 
         return data
 
@@ -34,7 +41,9 @@ class TestIdnVSTld(unittest.TestCase):
         self.reinit()
 
         example = self.data_example()
+
         for packet in example:
+            # print packet
             self.__p1(packet)
 
         result = self.__p1.get_data()

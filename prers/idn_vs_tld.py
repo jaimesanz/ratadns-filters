@@ -38,7 +38,10 @@ class IdnVSTld(PreR):
             try:
                 idna.ToASCII(qname)
                 # not idn
-            except Exception as e:
+            except UnicodeError as e:
+                # not idn
+                pass
+            except:
                 # idn
                 tld_key = unicode(tld, "utf8").encode("idna")
                 if tld_key not in self._idn_vs_tld:

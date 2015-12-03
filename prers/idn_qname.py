@@ -41,7 +41,11 @@ class IdnQname(PreR):
                 # if this fails, it means this is NOT a normal domain name (for
                 # instance, it has a weird character)
                 self._idn_qname["normal"] += 1
+            except UnicodeError as e:
+                # normal
+                self._idn_qname["normal"] += 1
             except Exception as e:
+                # weird
                 self._idn_qname["idn"] += 1
 
     def get_data(self):
