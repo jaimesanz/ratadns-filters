@@ -19,9 +19,8 @@ class TestDoBit(unittest.TestCase):
                 {'qname': 'www.nic.cl'}]})
 
         data.set_expected("set", 5)
-        data.set_expected("clr", 0)
 
-        data.put_information('doBit', ["set", "clr"])
+        data.put_information('doBit', ["set"])
 
         return data
 

@@ -27,20 +27,23 @@ class TcBit(PreR):
 
     def __init__(self, f, **kwargs):
         PreR.__init__(self, f)
-        self._tc_bit = {"set": 0, "clr": 0}
+        self._tc_bit = {}
 
     def __call__(self, p):
         if p.is_answer():
             tc_bit = p.tc_bit
 
             if tc_bit == 1:
+                if "set" not in self._tc_bit:
+                    self._tc_bit["set"] = 0
                 self._tc_bit["set"] += 1
             else:
+                if "clr" not in self._tc_bit:
+                    self._tc_bit["clr"] = 0
                 self._tc_bit["clr"] += 1
 
     def get_data(self):
         return self._tc_bit
 
     def reset(self):
-        self._tc_bit["set"] = 0
-        self._tc_bit["clr"] = 0
+        self._tc_bit.clear()

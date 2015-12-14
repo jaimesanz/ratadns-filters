@@ -19,9 +19,8 @@ class TestRdBit(unittest.TestCase):
                 {'qname': 'www.nic.cl'}]})
 
         data.set_expected("set", 5)
-        data.set_expected("clr", 0)
 
-        data.put_information('rdBit', ["set", "clr"])
+        data.put_information('rdBit', ["set"])
 
         return data
 

@@ -18,10 +18,9 @@ class TestTcBit(unittest.TestCase):
             data.add_packet({'flags': '8000', 'queries': [
                 {'qname': 'www.nic.cl'}]})
 
-        data.set_expected("set", 0)
         data.set_expected("clr", 5)
 
-        data.put_information('tcBit', ["set", "clr"])
+        data.put_information('tcBit', ["clr"])
 
         return data
 
